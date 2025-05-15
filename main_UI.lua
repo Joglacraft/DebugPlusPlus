@@ -1,4 +1,5 @@
 DPP.main_menu = function ()
+   DPP.reload_lists()
    return {
       n = G.UIT.C, config = {align = "tl", minw = 22.5, minh = 12.5, padding = 0.15}, nodes = {
          
@@ -8,22 +9,6 @@ DPP.main_menu = function ()
             }},
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.3}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = "Mod options", scale = 0.4, colour = G.C.WHITE}}
-            }},
-
-            {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
-                UIBox_button{
-                    label = {"Reload lists"},
-                    button = "DPP_reload_lists",
-                    minw = 1.6,
-                    minh = 0.4,
-                    scale = 0.3
-                },
-            }},
-            {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-               {n = G.UIT.T,config = {align = "tm", text = "Reloads all the registered", scale = 0.2, colour = G.C.GREY}}
-            }},
-            {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-               {n = G.UIT.T,config = {align = "tm", text = "card modifiers (suit, seals, etc)", scale = 0.2, colour = G.C.GREY}}
             }},
 
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
@@ -465,11 +450,32 @@ DPP.main_menu = function ()
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = "Blind", scale = 0.4, colour = G.C.WHITE}}
             }},
+
+            {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
+               {n = G.UIT.T,config = {align = "tm", text = "Set blind", scale = 0.3, colour = G.C.GREY}}
+            }},
+            {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
+               create_option_cycle{
+                  options = {"Unavailable"},
+                  ref_table = DPP.blind,
+                  ref_value = "selected",
+                  minw = 2,
+                  scale = 0.6,
+                  colour = G.C.GREY
+               }
+            }},
+            {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
+               UIBox_button{
+                  label = {"Apply"},
+                  colour = G.C.GREY,
+                  minw = 1.8,
+                  minh = 0.4,
+                  scale = 0.4
+               },
+            }},
+
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = "Player Chips", scale = 0.3, colour = G.C.GREY}}
-            }},
-            {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
@@ -626,26 +632,6 @@ DPP.main_menu = function ()
                   colour = G.C.GREY
                }}},
             }},
-            }},
-
-            {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
-               create_option_cycle{
-                  options = {"Unavailable"},
-                  ref_table = DPP.blind,
-                  ref_value = "selected",
-                  minw = 2,
-                  scale = 0.6,
-                  colour = G.C.GREY
-               }
-            }},
-            {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
-               UIBox_button{
-                  label = {"Apply"},
-                  colour = G.C.GREY,
-                  minw = 1.8,
-                  minh = 0.4,
-                  scale = 0.4
-               },
             }},
             
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {

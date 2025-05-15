@@ -128,6 +128,6 @@ end
 
 
 function G.FUNCS.DPP_set_money(e)
-    if not G.GAME.jokers then return end
+    if not G.jokers then return end
     ease_dollars(e.config.ref_table[1],true)
 end
