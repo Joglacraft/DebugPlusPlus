@@ -1,9 +1,5 @@
 
 DPP = {
-   test = {
-      a = {},
-      b = ""
-   },
    -- config values in the config file
    set_blind_number = "1",
    card = {
@@ -49,6 +45,7 @@ DPP = {
    },
    run = {
       chips = 0,
+      blind_chips = 0
    }
 }
 
