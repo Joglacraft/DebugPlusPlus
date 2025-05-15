@@ -1,0 +1,14 @@
+{
+	"id": "dpp",
+	"name": "Debug Plus Plus",
+	"display_name": "Debug++",
+	"author": ["Jogla"],
+	"description": "A mod to ease the debugging of card features",
+	"prefix": "dpp",
+	"main_file": "main.lua",
+	"priority": 0,
+	"badge_colour": "",
+	"badge_text_colour": "",
+	"version": "0.1.0",
+	"dependencies": []
+}

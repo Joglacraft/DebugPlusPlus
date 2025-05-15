@@ -1,0 +1,133 @@
+
+function G.FUNCS.DPP_main_menu()
+      G.FUNCS.overlay_menu{
+         definition = DPP.main_menu(),
+         config = {},
+         pause = false
+    }
+end
+
+function G.FUNCS.DPP_reload_lists()
+    DPP.reload_lists()
+    G.FUNCS.DPP_main_menu()
+end
+
+function G.FUNCS.DPP_set_area_limit(e)
+    print("E")
+   local area = e.config.ref_table[1]
+   local limit = e.config.ref_table[2]
+   if G[area] then
+      local new_limit = G[area].config.card_limit + limit
+      DPP.set_area_limit(area,new_limit)
+   end
+end
+
+function G.FUNCS.DPP_change_menu_background(args)
+    DPP.config.background_colour.number = args.cycle_config.current_option
+    if args.to_val == "None" then DPP.config.background_colour.selected = nil
+    elseif args.to_val == "Black" then DPP.config.background_colour.selected = "BLACK"
+    end
+    G.FUNCS.DPP_main_menu()
+end
+
+function G.FUNCS.DPP_update_rank(args)
+   DPP.card.rank.number = args.cycle_config.current_option
+   DPP.card.rank.selected = args.to_val
+end
+
+function G.FUNCS.DPP_set_rank()
+    if not G.hand then return end
+    for _,v in pairs(G.hand.highlighted) do
+        _ = SMODS.change_base(v,nil,DPP.card.rank.selected)
+    end
+end
+
+function G.FUNCS.DPP_update_suit(args)
+   DPP.card.suit.number = args.cycle_config.current_option
+   DPP.card.suit.selected = args.to_val
+end
+
+function G.FUNCS.DPP_set_suit()
+    if not G.hand then return end
+    for _,v in pairs(G.hand.highlighted) do
+        _ = SMODS.change_base(v,DPP.card.suit.selected,nil)
+    end
+end
+
+function G.FUNCS.DPP_update_enhancement(args)
+    DPP.card.enhancement.number = args.cycle_config.current_option
+    DPP.card.enhancement.selected = args.to_val
+end
+
+function G.FUNCS.DPP_set_enhancement()
+    if not G.hand then return end
+    for _,v in pairs(G.hand.highlighted) do
+        v:set_ability(DPP.card.enhancement.key[DPP.card.enhancement.number])
+    end
+end
+
+function G.FUNCS.DPP_update_edition(args)
+    DPP.card.edition.number = args.cycle_config.current_option
+    DPP.card.edition.selected = args.to_val
+end
+
+function G.FUNCS.DPP_set_edition()
+    if not G.hand or not G.consumeables then return end
+    for _,v in pairs(G.hand.highlighted) do
+        v:set_edition(DPP.card.edition.key[DPP.card.edition.number],true,true)
+    end
+    for _,v in pairs(G.consumeables.highlighted) do
+        v:set_edition(DPP.card.edition.key[DPP.card.edition.number],true,true)
+    end
+end
+
+function G.FUNCS.DPP_update_seal(args)
+    DPP.card.seal.number = args.cycle_config.current_option
+    DPP.card.seal.selected = args.to_val
+end
+
+function G.FUNCS.DPP_set_seal()
+    if not G.hand then return end
+    if DPP.card.seal.selected == "None" then
+        for _,v in pairs(G.hand.highlighted) do
+            v.seal = nil
+        end
+    else
+        for _,v in pairs(G.hand.highlighted) do
+            v.seal = DPP.card.seal.selected
+        end
+    end
+end
+
+function G.FUNCS.DPP_update_sticker(args)
+    DPP.card.sticker.number = args.cycle_config.current_option
+    DPP.card.sticker.selected = args.to_val
+end
+
+function G.FUNCS.DPP_add_sticker()
+    if not G.jokers then return end
+    for _,v in pairs(G.jokers.highlighted) do
+        v.ability[DPP.card.sticker.selected] = true
+    end
+end
+
+function G.FUNCS.DPP_remove_sticker()
+    if not G.jokers then return end
+    for _,v in pairs(G.jokers.highlighted) do
+        v.ability[DPP.card.sticker.selected] = nil
+    end
+end
+
+function G.FUNCS.DPP_ease_hands(e)
+    ease_hands_played(e.config.ref_table[1],true)
+end
+
+function G.FUNCS.DPP_ease_discards(e)
+    ease_discard(e.config.ref_table[1],true)
+end
+
+
+function G.FUNCS.DPP_set_money(e)
+    if not G.GAME.jokers then return end
+    ease_dollars(e.config.ref_table[1],true)
+end
