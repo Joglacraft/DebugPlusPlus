@@ -1,5 +1,6 @@
 DPP.main_menu = function ()
    DPP.reload_lists()
+   
    return {
       n = G.UIT.ROOT, config = {align = "tl", minw = 22.75, minh = 12.5, padding = 0.15, colour = G.C.CLEAR}, nodes = {
 
@@ -145,10 +146,7 @@ DPP.main_menu = function ()
          }},
 
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.3}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Sticker", scale = 0.3, colour = G.C.GREY}}
-         }},
-         {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "(Applies to selected cards)", scale = 0.2, colour = G.C.GREY}}
+            {n = G.UIT.T,config = {align = "tm", text = "Sticker", scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             create_option_cycle{
@@ -545,22 +543,23 @@ DPP.main_menu = function ()
          }},
 
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Set blind", scale = 0.3, colour = G.C.GREY}}
+            {n = G.UIT.T,config = {align = "tm", text = "Set Boss blind", scale = 0.3, colour = G.C.GREY}}
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             create_option_cycle{
-               options = {"Unavailable"},
+               options = DPP.blind.options,
                ref_table = DPP.blind,
                ref_value = "selected",
+               opt_callback = "DPP_change_blind",
                minw = 2,
                scale = 0.6,
-               colour = G.C.GREY
+               no_pips = true
             }
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             UIBox_button{
                label = {"Apply"},
-               colour = G.C.GREY,
+               button = "DPP_set_blind",
                minw = 1.8,
                minh = 0.4,
                scale = 0.3
@@ -662,30 +661,34 @@ DPP.main_menu = function ()
                {n = G.UIT.C, nodes = { -- Horizontal tab
                UIBox_button{
                   label = {"-3"},
+                  button = "DPP_set_ante",
                   minw = 0.6,
                   minh = 0.4,
-                  colour = G.C.GREY
+                  ref_table = {-3}
                }}},
                {n = G.UIT.C, nodes = { -- Horizontal tab
                UIBox_button{
                   label = {"-1"},
+                  button = "DPP_set_ante",
                   minw = 0.6,
                   minh = 0.4,
-                  colour = G.C.GREY
+                  ref_table = {-1}
                }}},
                {n = G.UIT.C, nodes = { -- Horizontal tab
                UIBox_button{
                   label = {"+1"},
+                  button = "DPP_set_ante",
                   minw = 0.6,
                   minh = 0.4,
-                  colour = G.C.GREY
+                  ref_table = {1}
                }}},
                {n = G.UIT.C, nodes = { -- Horizontal tab
                UIBox_button{
                   label = {"+3"},
+                  button = "DPP_set_ante",
                   minw = 0.6,
                   minh = 0.4,
-                  colour = G.C.GREY
+                  ref_table = {3}
                }}},
             }},
             }},

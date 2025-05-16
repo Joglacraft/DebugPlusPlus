@@ -197,3 +197,38 @@ function G.FUNCS.DPP_set_blind_chips(e)
     end
 end
 
+function G.FUNCS.DPP_change_blind(args)
+    DPP.blind.number = args.cycle_config.current_option
+    DPP.blind.selected = args.to_val
+end
+
+function G.FUNCS.DPP_set_blind()
+    if not G.blind_select then return end
+    local par = G.blind_select_opts.boss.parent
+    if DPP.blind.selected == "Random" then
+        G.GAME.round_resets.blind_choices.Boss = get_new_boss()
+    else
+        G.GAME.round_resets.blind_choices.Boss = DPP.blind.key[DPP.blind.number]
+    end
+
+    G.blind_select_opts.boss = UIBox{
+        T = {par.T.x, 0, 0, 0, },
+        definition =
+        {n=G.UIT.ROOT, config={align = "cm", colour = G.C.CLEAR}, nodes={
+            UIBox_dyn_container({create_UIBox_blind_choice('Boss')},false,get_blind_main_colour('Boss'), mix_colours(G.C.BLACK, get_blind_main_colour('Boss'), 0.8))
+        }},
+        config = {align="bmi",
+                offset = {x=0,y=G.ROOM.T.y + 9},
+                major = par,
+                xy_bond = 'Weak'
+                }
+    }
+    par.config.object = G.blind_select_opts.boss
+    par.config.object:recalculate()
+    G.blind_select_opts.boss.parent = par
+    G.blind_select_opts.boss.alignment.offset.y = 0
+end
+
+function G.FUNCS.DPP_set_ante(e)
+    ease_ante(e.config.ref_table[1])
+end
