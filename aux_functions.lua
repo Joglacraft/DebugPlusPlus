@@ -1,3 +1,25 @@
+function DPP.add_tab(args)
+    args = args or
+    {
+        meta = {id = "error"},
+        content =       
+        {n = G.UIT.C, nodes = {{n = G.UIT.C, config = {align = "tm", colour = G.C[DPP.config.background_colour.selected], padding = 0.05, outline = 1, outline_colour = G.C.WHITE, r = 0.15}, nodes = { -- Tab
+            {n = G.UIT.R, config = {align = "cm", minw = DPP.config.big_menu_width, minh = 0.5, colour = G.C.RED, r = 0.15, padding = 0.1}, nodes = { -- Title
+                {n = G.UIT.T,config = {align = "cm", text = "ERROR", scale = 0.4, colour = G.C.WHITE}}
+            }}}}
+        }},
+    }
+    table.insert(DPP.TABS,args)
+end
+
+function DPP.load_tab(id)
+    id = id or "error"
+    for _,v in pairs(DPP.TABS) do
+        if v.meta.id == id then
+            return v.content
+        end
+    end
+end
 function DPP.reload_lists()
 
     DPP.card.rank.options = {}
@@ -49,7 +71,7 @@ function DPP.reload_default_values()
     DPP.card.edition.selected = DPP.card.edition.options[1]
     DPP.card.seal.selected = DPP.card.seal.options[1]
     DPP.card.sticker.selected = DPP.card.sticker.options[1]
-    DPP.blind.selected = "Random"
+    DPP.blind.selected = DPP.blind.options[1]
 end
 
 G.FUNCS.DPP_load_text_input = function(e)

@@ -2,7 +2,7 @@
 function G.FUNCS.DPP_main_menu()
       G.FUNCS.overlay_menu{
          definition = DPP.main_menu(),
-         config = {},
+         config = {no_esc = true},
          pause = false
     }
 end
@@ -231,4 +231,10 @@ end
 
 function G.FUNCS.DPP_set_ante(e)
     ease_ante(e.config.ref_table[1])
+end
+
+function G.FUNCS.DPP_set_gamespeed()
+    if tonumber(DPP.gamespeed) then
+        G.SETTINGS.GAMESPEED = DPP.gamespeed
+    end
 end

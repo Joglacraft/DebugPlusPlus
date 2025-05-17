@@ -1,5 +1,9 @@
 
 DPP = {
+   TABS = {},
+   local_config = {
+      is_open = false
+   },
    -- config values in the config file
    set_blind_number = "1",
    card = {
@@ -46,7 +50,8 @@ DPP = {
    run = {
       chips = 0,
       blind_chips = 0
-   }
+   },
+   gamespeed = 1
 }
 
 
@@ -54,8 +59,8 @@ DPP = {
 DPP.config = SMODS.current_mod.config
 local files = {
    "callback_functions",
-   "main_UI",
-   "aux_functions"
+   "aux_functions",
+   "main_UI"
 }
 
 
@@ -70,11 +75,19 @@ DPP.reload_lists()
 DPP.reload_default_values()
 
 
+
+
+
 SMODS.Keybind({
     key_pressed = "tab",
     event = "pressed",
     action = function()
-            G.FUNCS.DPP_main_menu()
-    end
+      if not DPP.local_config.is_open or not G.OVERLAY_MENU then
+         G.FUNCS.DPP_main_menu()
+         DPP.local_config.is_open = true
+      elseif DPP.local_config.is_open then
+         G.FUNCS.exit_overlay_menu()
+         DPP.local_config.is_open = false
+      end
+   end
 })
-
