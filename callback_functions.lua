@@ -153,10 +153,12 @@ function G.FUNCS.DPP_remove_sticker()
 end
 
 function G.FUNCS.DPP_ease_hands(e)
+    if not G.jokers then return end
     ease_hands_played(e.config.ref_table[1],true)
 end
 
 function G.FUNCS.DPP_ease_discards(e)
+    if not G.jokers then return end
     ease_discard(e.config.ref_table[1],true)
 end
 
@@ -230,6 +232,7 @@ function G.FUNCS.DPP_set_blind()
 end
 
 function G.FUNCS.DPP_set_ante(e)
+    if not G.jokers then return end
     ease_ante(e.config.ref_table[1])
 end
 
