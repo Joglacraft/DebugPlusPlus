@@ -765,9 +765,19 @@ function DPP.main_menu ()
             UIBox_button{
                label = {"Apply"},
                button = "DPP_set_gamespeed",
-               minw = 1.6,
+               minw = 1.2,
                minh = 0.4,
-               scale = 0.3
+               scale = 0.3,
+               ref_table = {1}
+            }}},
+            {n = G.UIT.C, nodes = { -- Horizontal tab
+            UIBox_button{
+               label = {"/10"},
+               button = "DPP_set_gamespeed",
+               minw = 1.2,
+               minh = 0.4,
+               scale = 0.3,
+               ref_table = {10}
             }}},
          }}
       }}}}

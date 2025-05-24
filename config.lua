@@ -4,6 +4,6 @@ return {
         options = {"None", "Black"},
         selected = "BLACK",
         number = 1
-    }
-
+    },
+    allow_UI_overide = false,
 }

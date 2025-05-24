@@ -236,8 +236,8 @@ function G.FUNCS.DPP_set_ante(e)
     ease_ante(e.config.ref_table[1])
 end
 
-function G.FUNCS.DPP_set_gamespeed()
+function G.FUNCS.DPP_set_gamespeed(e)
     if tonumber(DPP.gamespeed) then
-        G.SETTINGS.GAMESPEED = DPP.gamespeed
+        G.SETTINGS.GAMESPEED = tonumber(DPP.gamespeed)/e.config.ref_table[1]
     end
 end
