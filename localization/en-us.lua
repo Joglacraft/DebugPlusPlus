@@ -2,6 +2,7 @@ return {
     misc = {
         dictionary = {
             dpp_name = "DebugPlusPlus",
+            dpp_close = "Close DebugPlusPlus",
 
             -- Config tab
             dpp_cfg_label = "Mod options",
@@ -39,7 +40,7 @@ return {
             -- Run tab
             dpp_run_label = "Run",
             dpp_run_blind_label = "Blind",
-            dpp_run_set_blind = "Set boos blind",
+            dpp_run_set_blind = "Set boss blind",
             dpp_run_player_chips = "Player chips",
             dpp_run_blind_chips = "Required chips",
             dpp_run_ante_label = "Ante",

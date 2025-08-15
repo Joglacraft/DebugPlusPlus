@@ -10,7 +10,7 @@ function G.FUNCS.DPP_main_menu()
             offset = {x=0,y=0},
             major = G.ROOM_ATTACH,
             bond = 'Weak',
-            no_esc = true
+            no_esc = false
         },
     }
 end

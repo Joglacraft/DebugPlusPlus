@@ -2,6 +2,7 @@ return {
     misc = {
         dictionary = {
             dpp_name = "DebugPlusPlus",
+            dpp_close = "Cerrar DebugPlusPlus",
 
             -- Config tab
             dpp_cfg_label = "Opciones del mod",

@@ -49,3 +49,17 @@ function Game:update(dt)
 
     return ref(self,dt)
 end
+
+local ref = create_UIBox_options
+
+function create_UIBox_options(args)  
+    local tbl = ref()
+    local dpp_button = UIBox_button{ label = {localize("dpp_name")}, button = "DPP_main_menu", minw = 5}
+
+    local t = create_UIBox_generic_options({ contents = {
+        dpp_button,
+    }})
+
+    table.insert(tbl.nodes[1].nodes[1].nodes[1].nodes,1,dpp_button)
+    return tbl
+end

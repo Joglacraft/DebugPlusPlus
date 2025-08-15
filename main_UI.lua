@@ -72,6 +72,12 @@ function DPP.main_menu ()
                no_pips = true
             },
          }},
+         UIBox_button{
+            label = {localize("dpp_close")},
+            scale = 1,
+            minw = 2, minh = 0.5
+         },
+         {n = G.UIT.R, config = {minh = 0.1}}
       }}}},
       
       {n = G.UIT.C, nodes = {{n = G.UIT.C, config = {align = "tm", colour = G.C[DPP.config.background_colour.selected], padding = 0.05, outline = 1, outline_colour = G.C.WHITE, r = 0.15}, nodes = { -- Tab
