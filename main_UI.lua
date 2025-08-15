@@ -46,20 +46,20 @@ end
 
 function DPP.main_menu ()
    DPP.reload_lists()
-   
+
    return {
       n = G.UIT.ROOT, config = {align = "tl", minw = 22.75, minh = 13, padding = 0.15, colour = G.C.CLEAR}, nodes = {
 
       {n = G.UIT.C, nodes = {{n = G.UIT.C, config = {align = "tm", colour = G.C[DPP.config.background_colour.selected], padding = 0.05, outline = 1, outline_colour = G.C.WHITE, r = 0.15}, nodes = { -- Tab
          {n = G.UIT.R, config = {align = "cm", minw = DPP.config.big_menu_width, minh = 0.5, colour = G.C.RED, r = 0.15, padding = 0.1}, nodes = { -- Title
-            {n = G.UIT.T,config = {align = "cm", text = "DebugPlusPlus", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "cm", text = localize("dpp_name"), scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.3}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Mod options", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_cfg_label"), scale = 0.4, colour = G.C.WHITE}}
          }},
 
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Background colour", scale = 0.3, colour = G.C.GREY}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_cfg_background_colour"), scale = 0.3, colour = G.C.GREY}}
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             create_option_cycle{
@@ -76,13 +76,13 @@ function DPP.main_menu ()
       
       {n = G.UIT.C, nodes = {{n = G.UIT.C, config = {align = "tm", colour = G.C[DPP.config.background_colour.selected], padding = 0.05, outline = 1, outline_colour = G.C.WHITE, r = 0.15}, nodes = { -- Tab
          {n = G.UIT.R, config = {align = "cm", minw = DPP.config.big_menu_width, minh = 0.5, colour = G.C.RED, r = 0.15, padding = 0.1}, nodes = { -- Title
-            {n = G.UIT.T,config = {align = "cm", text = "Card", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "cm", text = localize("dpp_card_label"), scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.3}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "(Applies to selected cards)", scale = 0.2, colour = G.C.GREY}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_card_disclaimer"), scale = 0.2, colour = G.C.GREY}}
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Rank", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_card_rank"), scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
                create_option_cycle{
@@ -95,7 +95,7 @@ function DPP.main_menu ()
                   no_pips = true
                },
                UIBox_button{
-                  label = {"Apply"},
+                  label = {localize("dpp_gen_apply")},
                   button = "DPP_set_rank",
                   minw = 1.6,
                   minh = 0.4,
@@ -104,7 +104,7 @@ function DPP.main_menu ()
          }},
          
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Suit", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_card_suit"), scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
                create_option_cycle{
@@ -117,7 +117,7 @@ function DPP.main_menu ()
                   no_pips = true
                },
                UIBox_button{
-                  label = {"Apply"},
+                  label = {localize("dpp_gen_apply")},
                   button = "DPP_set_suit",
                   minw = 1.6,
                   minh = 0.4,
@@ -126,7 +126,7 @@ function DPP.main_menu ()
          }},
                      
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.3}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Enhancement", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_card_enhancement"), scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             create_option_cycle{
@@ -139,7 +139,7 @@ function DPP.main_menu ()
                   no_pips = true
             },
             UIBox_button{
-                  label = {"Apply"},
+                  label = {localize("dpp_gen_apply")},
                   button = "DPP_set_enhancement",
                   minw = 1.6,
                   minh = 0.4,
@@ -148,7 +148,7 @@ function DPP.main_menu ()
          }},
 
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.3}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Edition", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_card_edition"), scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             create_option_cycle{
@@ -161,7 +161,7 @@ function DPP.main_menu ()
                   no_pips = true
             },
             UIBox_button{
-                  label = {"Apply"},
+                  label = {localize("dpp_gen_apply")},
                   button = "DPP_set_edition",
                   minw = 1.6,
                   minh = 0.4,
@@ -170,7 +170,7 @@ function DPP.main_menu ()
          }},
                   
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.3}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Seal", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_card_seal"), scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             create_option_cycle{
@@ -183,7 +183,7 @@ function DPP.main_menu ()
                   no_pips = true
             },
             UIBox_button{
-                  label = {"Apply"},
+                  label = {localize("dpp_gen_apply")},
                   button = "DPP_set_seal",
                   minw = 1.6,
                   minh = 0.4,
@@ -192,7 +192,7 @@ function DPP.main_menu ()
          }},
 
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.3}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Sticker", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_card_sticker"), scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             create_option_cycle{
@@ -207,7 +207,7 @@ function DPP.main_menu ()
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
                {n = G.UIT.C, nodes = { -- Horizontal tab
                UIBox_button{
-                  label = {"Remove"},
+                  label = {localize("dpp_gen_remove")},
                   button = "DPP_remove_sticker",
                   minw = 1.2,
                   minh = 0.4,
@@ -215,7 +215,7 @@ function DPP.main_menu ()
                }}},
                {n = G.UIT.C, nodes = { -- Horizontal tab
                UIBox_button{
-                  label = {"Add"},
+                  label = {localize("dpp_gen_add")},
                   button = "DPP_add_sticker",
                   minw = 1.2,
                   minh = 0.4,
@@ -228,13 +228,15 @@ function DPP.main_menu ()
 
       {n = G.UIT.C, nodes = {{n = G.UIT.C, config = {align = "tm", colour = G.C[DPP.config.background_colour.selected], padding = 0.05, outline = 1, outline_colour = G.C.WHITE, r = 0.15}, nodes = { -- Tab
          {n = G.UIT.R, config = {align = "cm", minw = DPP.config.big_menu_width, minh = 0.5, colour = G.C.RED, r = 0.15, padding = 0.1}, nodes = { -- Title
-            {n = G.UIT.T,config = {align = "cm", text = "Player", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "cm", text = localize("dpp_player_label"), scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Hand", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_hand_label"), scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Size", scale = 0.3, colour = G.C.GREY}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_slots")..": ", scale = 0.3, colour = G.C.GREY}},
+            {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "hand_size"}}, scale = 0.3, colours = {G.C.GOLD}}}},
+
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -271,7 +273,8 @@ function DPP.main_menu ()
             }}},
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Selection limit", scale = 0.3, colour = G.C.GREY}}
+            {n = G.UIT.T, config = {align = "tm", text = localize("dpp_player_highlight")..": ", scale = 0.3, colour = G.C.GREY}},
+            {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "hand_highlight"}}, scale = 0.3, colours = {G.C.GOLD}}}},
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -309,7 +312,8 @@ function DPP.main_menu ()
          }},
 
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Hands", scale = 0.3, colour = G.C.GREY}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_hands_label")..": ", scale = 0.3, colour = G.C.GREY}},
+            {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "hands"}}, scale = 0.3, colours = {G.C.GOLD}}}},
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -345,9 +349,16 @@ function DPP.main_menu ()
                   ref_table = {3}
             }}},
          }},
-
+         {n = G.UIT.R, config = {align = "cm"}, nodes = {create_toggle{
+            label = localize("dpp_player_unlimited"),
+            ref_table = DPP.vars,
+            ref_value = "unlimited_hands",
+            scale = 0.5,
+            w = 1, h = .5
+         }}},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Discards", scale = 0.3, colour = G.C.GREY}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_discards_label")..": ", scale = 0.3, colour = G.C.GREY}},
+            {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "discards"}}, scale = 0.3, colours = {G.C.GOLD}}}},
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -383,12 +394,19 @@ function DPP.main_menu ()
                   ref_table = {3}
             }}},
          }},
-
+         {n = G.UIT.R, config = {align = "cm"}, nodes = {create_toggle{
+            label = localize("dpp_player_unlimited"),
+            ref_table = DPP.vars,
+            ref_value = "unlimited_discards",
+            scale = 0.5,
+            w = 1, h = .5
+         }}},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Jokers", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_jokers_label"), scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Slots", scale = 0.3, colour = G.C.GREY}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_slots")..": ", scale = 0.3, colour = G.C.GREY}},
+            {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "joker_highlight"}}, scale = 0.3, colours = {G.C.GOLD}}}},
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -425,7 +443,8 @@ function DPP.main_menu ()
             }}},
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Selection limit", scale = 0.3, colour = G.C.GREY}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_highlight")..": ", scale = 0.3, colour = G.C.GREY}},
+            {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "joker_highlight"}}, scale = 0.3, colours = {G.C.GOLD}}}},
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -464,10 +483,11 @@ function DPP.main_menu ()
          
 
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Consumeables", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_consumable_label"), scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Slots", scale = 0.3, colour = G.C.GREY}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_slots")..": ", scale = 0.3, colour = G.C.GREY}},
+            {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "consumeable_size"}}, scale = 0.3, colours = {G.C.GOLD}}}},
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -504,7 +524,8 @@ function DPP.main_menu ()
             }}},
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Selection limit", scale = 0.3, colour = G.C.GREY}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_highlight")..": ", scale = 0.3, colour = G.C.GREY}},
+            {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "consumeable_highlight"}}, scale = 0.3, colours = {G.C.GOLD}}}},
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -543,7 +564,8 @@ function DPP.main_menu ()
          
          
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.5}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Money", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_money")..": ", scale = 0.4, colour = G.C.WHITE}},
+            {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "dollars"}}, scale = 0.4, colours = {G.C.GOLD}}}},
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -579,18 +601,25 @@ function DPP.main_menu ()
                ref_table = {5}
             }}},
          }},
+         {n = G.UIT.R, config = {align = "cm"}, nodes = {create_toggle{
+            label = localize("dpp_player_unlimited"),
+            ref_table = DPP.vars,
+            ref_value = "unlimited_money",
+            scale = 0.5,
+            w = 1, h = .5
+         }}},
       }}}},
 
       {n = G.UIT.C, nodes = {{n = G.UIT.C, config = {align = "tm", colour = G.C[DPP.config.background_colour.selected], padding = 0.05, outline = 1, outline_colour = G.C.WHITE, r = 0.15}, nodes = { -- Tab
          {n = G.UIT.R, config = {align = "cm", minw = DPP.config.big_menu_width, minh = 0.5, colour = G.C.RED, r = 0.15, padding = 0.1}, nodes = { -- Title
-            {n = G.UIT.T,config = {align = "cm", text = "Run", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "cm", text = localize("dpp_run_label"), scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Blind", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_run_blind_label"), scale = 0.4, colour = G.C.WHITE}}
          }},
 
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Set Boss blind", scale = 0.3, colour = G.C.GREY}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_run_set_blind"), scale = 0.3, colour = G.C.GREY}}
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             create_option_cycle{
@@ -606,7 +635,7 @@ function DPP.main_menu ()
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             UIBox_button{
-               label = {"Apply"},
+               label = {localize("dpp_gen_apply")},
                button = "DPP_set_blind",
                minw = 1.8,
                minh = 0.4,
@@ -615,7 +644,7 @@ function DPP.main_menu ()
          }},
 
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Player Chips", scale = 0.3, colour = G.C.GREY}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_run_player_chips"), scale = 0.3, colour = G.C.GREY}}
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
             DPP.create_text_input{
@@ -631,7 +660,7 @@ function DPP.main_menu ()
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             {n = G.UIT.C, nodes = { -- Horizontal tab
             UIBox_button{
-               label = {"Sub"},
+               label = {localize("dpp_gen_subtract")},
                button = "DPP_set_chips",
                minw = 0.8,
                minh = 0.4,
@@ -640,7 +669,7 @@ function DPP.main_menu ()
             }}},
             {n = G.UIT.C, nodes = { -- Horizontal tab
             UIBox_button{
-               label = {"Set"},
+               label = {localize("dpp_gen_set")},
                button = "DPP_set_chips",
                minw = 0.8,
                minh = 0.4,
@@ -649,7 +678,7 @@ function DPP.main_menu ()
             }}},
             {n = G.UIT.C, nodes = { -- Horizontal tab
             UIBox_button{
-               label = {"Add"},
+               label = {localize("dpp_gen_add")},
                button = "DPP_set_chips",
                minw = 0.8,
                minh = 0.4,
@@ -659,7 +688,7 @@ function DPP.main_menu ()
          }},
 
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Required chips", scale = 0.3, colour = G.C.GREY}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_run_blind_chips"), scale = 0.3, colour = G.C.GREY}}
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
             DPP.create_text_input{
@@ -675,7 +704,7 @@ function DPP.main_menu ()
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             {n = G.UIT.C, nodes = { -- Horizontal tab
             UIBox_button{
-               label = {"Sub"},
+               label = {localize("dpp_gen_subtract")},
                button = "DPP_set_blind_chips",
                minw = 0.8,
                minh = 0.4,
@@ -684,7 +713,7 @@ function DPP.main_menu ()
             }}},
             {n = G.UIT.C, nodes = { -- Horizontal tab
             UIBox_button{
-               label = {"Set"},
+               label = {localize("dpp_gen_set")},
                button = "DPP_set_blind_chips",
                minw = 0.8,
                minh = 0.4,
@@ -693,7 +722,7 @@ function DPP.main_menu ()
             }}},
             {n = G.UIT.C, nodes = { -- Horizontal tab
             UIBox_button{
-               label = {"Add"},
+               label = {localize("dpp_gen_add")},
                button = "DPP_set_blind_chips",
                minw = 0.8,
                minh = 0.4,
@@ -704,7 +733,7 @@ function DPP.main_menu ()
          
          
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Ante", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_run_ante_label"), scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -744,10 +773,10 @@ function DPP.main_menu ()
 
       {n = G.UIT.C, nodes = {{n = G.UIT.C, config = {align = "tm", colour = G.C[DPP.config.background_colour.selected], padding = 0.05, outline = 1, outline_colour = G.C.WHITE, r = 0.15}, nodes = { -- Tab
          {n = G.UIT.R, config = {align = "cm", minw = DPP.config.big_menu_width, minh = 0.5, colour = G.C.RED, r = 0.15, padding = 0.1}, nodes = { -- Title
-            {n = G.UIT.T,config = {align = "cm", text = "Game", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "cm", text = localize("dpp_game_label"), scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = "Game speed", scale = 0.4, colour = G.C.WHITE}}
+            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_game_speed_label"), scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {
             DPP.create_text_input{
@@ -763,7 +792,7 @@ function DPP.main_menu ()
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
             {n = G.UIT.C, nodes = { -- Horizontal tab
             UIBox_button{
-               label = {"Apply"},
+               label = {localize("dpp_gen_apply")},
                button = "DPP_set_gamespeed",
                minw = 1.2,
                minh = 0.4,

@@ -54,18 +54,17 @@ DPP = {
    gamespeed = 1
 }
 
+SMODS.Atlas{key = "modicon", path = "modicon.png", px = 32, py = 32}
+
 
 -- Load mod files
 DPP.config = SMODS.current_mod.config
 local files = {
    "callback_functions",
    "aux_functions",
+   "overrides",
    "main_UI"
 }
-
-
-
-
 
 for k, v in pairs(files) do -- Load this mod's files
 	assert(SMODS.load_file('/'..v..'.lua'))()

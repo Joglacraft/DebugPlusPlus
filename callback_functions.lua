@@ -1,9 +1,17 @@
 
 function G.FUNCS.DPP_main_menu()
-      G.FUNCS.overlay_menu{
-         definition = DPP.main_menu(),
-         config = {no_esc = true},
-         pause = false
+    if G.OVERLAY_MENU then
+        G.OVERLAY_MENU:remove()
+    end
+    G.OVERLAY_MENU = UIBox{
+        definition = DPP.main_menu(),
+        config = {
+            align = "cm",
+            offset = {x=0,y=0},
+            major = G.ROOM_ATTACH,
+            bond = 'Weak',
+            no_esc = true
+        },
     }
 end
 
