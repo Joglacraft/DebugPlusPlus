@@ -2,11 +2,30 @@ return {
     misc = {
         dictionary = {
             dpp_name = "DebugPlusPlus",
+            dpp_open = "Open DebugPlusPlus",
             dpp_close = "Close DebugPlusPlus",
 
             -- Config tab
             dpp_cfg_label = "Mod options",
             dpp_cfg_background_colour = "Background colour",
+            dpp_cfg_menu_disclaimer = "(Or press [TAB] to open the menu)",
+            dpp_cfg_menu_button_toggle = "Add DebugPlusPlus pause menu button",
+
+            -- Credits tab
+            dpp_credits_label = "Credits",
+            dpp_credits_localization_label = "Localization",
+            dpp_credits_special_thanks_label = "Special thanks",
+
+            -- Languages
+            ["dpp_lan_en-us"] = "English",
+            ["dpp_lan_es_ES"] = "Spanish",
+            ["dpp_lan_zh_CN"] = "Chinese",
+
+            -- Names
+            ["dpp_names_Jogla"] = "Jogla",
+            ["dpp_names_GoldenLeaf"] = "GoldenLeaf",
+            ["dpp_names_bepisfever"] = "BepisFever",
+            
 
             -- Misc
             dpp_gen_apply = "Apply",

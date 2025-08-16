@@ -2,11 +2,29 @@ return {
     misc = {
         dictionary = {
             dpp_name = "DebugPlusPlus",
+            dpp_open = "Abrir DebugPlusPlus",
             dpp_close = "Cerrar DebugPlusPlus",
 
             -- Config tab
             dpp_cfg_label = "Opciones del mod",
             dpp_cfg_background_colour = "Color del fondo",
+            dpp_cfg_menu_disclaimer = "O pulsa [TAB] para abrir el menú)",
+            dpp_cfg_menu_button_toggle = "Añadir butón de DebugPlusPlus en el menú de pausa",
+
+            -- Credits tab
+            dpp_credits_label = "Créditos",
+            dpp_credits_localization_label = "Localización",
+            dpp_credits_special_thanks_label = "Gracias a:",
+
+            -- Languages
+            ["dpp_lan_en-us"] = "Inglés",
+            ["dpp_lan_es_ES"] = "Español",
+            ["dpp_lan_zh_CN"] = "Chino",
+
+            -- Names
+            ["dpp_names_Jogla"] = "Jogla",
+            ["dpp_names_GoldenLeaf"] = "GoldenLeaf",
+            ["dpp_names_bepisfever"] = "BepisFever",
 
             -- Misc
             dpp_gen_apply = "Aplicar",

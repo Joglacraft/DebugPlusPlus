@@ -60,6 +60,6 @@ function create_UIBox_options(args)
         dpp_button,
     }})
 
-    table.insert(tbl.nodes[1].nodes[1].nodes[1].nodes,1,dpp_button)
+    if DPP.config.display_menu_button then table.insert(tbl.nodes[1].nodes[1].nodes[1].nodes,1,dpp_button) end
     return tbl
 end

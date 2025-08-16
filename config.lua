@@ -6,4 +6,5 @@ return {
         number = 1
     },
     allow_UI_overide = false,
+    display_menu_button = true
 }

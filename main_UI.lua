@@ -818,3 +818,46 @@ function DPP.main_menu ()
       }}}}
    }}
 end
+
+
+
+SMODS.current_mod.config_tab = function ()
+   return { n = G.UIT.ROOT, config = {minw = 8, minh = 5, colour = G.C.CLEAR, align = "tm", padding = 0.2}, nodes = {
+      {n = G.UIT.R, config = {align = "tm"}, nodes = {UIBox_button{ label = {localize("dpp_open")}, button = "DPP_main_menu", minw = 5}}},
+      {n = G.UIT.R, config = {align = "tm"}, nodes = {{n = G.UIT.T, config = {text = localize("dpp_cfg_menu_disclaimer"), scale = 0.3, colour = G.C.WHITE}}}},
+      {n = G.UIT.R, config = {align = "tm"}, nodes = {create_toggle{
+         label = localize("dpp_cfg_menu_button_toggle"),
+         scale = 1,
+         minw = 2, minh = 0.5,
+         ref_table = DPP.config,
+         ref_value = "display_menu_button"
+      }}}
+   }}
+end
+
+SMODS.current_mod.extra_tabs = function ()
+   return {
+      label = localize("dpp_credits_label"),
+      tab_definition_function = function ()
+         return { n = G.UIT.ROOT, config = {minw = 8, minh = 5, colour = G.C.BLACK, align = "tm", padding = 0.2, r = 0.1}, nodes = {
+            { n = G.UIT.R, config = {align = "tm"}, nodes = {{n = G.UIT.T, config = {text = localize("dpp_credits_localization_label"), colour = G.C.GOLD, scale = 0.6}}}},
+            { n = G.UIT.R, config = {align = "tm"}, nodes = {
+               {n = G.UIT.C, config = {padding = 0.05}, nodes = {
+                  { n = G.UIT.R, config = {align = "tm"}, nodes = {{n = G.UIT.T, config = {text = localize("dpp_lan_en-us"), colour = G.C.GOLD, scale = 0.3}}}},
+                  { n = G.UIT.R, config = {align = "tm"}, nodes = {{n = G.UIT.T, config = {text = localize("dpp_lan_es_ES"), colour = G.C.GOLD, scale = 0.3}}}},
+                  { n = G.UIT.R, config = {align = "tm"}, nodes = {{n = G.UIT.T, config = {text = localize("dpp_lan_zh_CN"), colour = G.C.GOLD, scale = 0.3}}}},
+
+               }},
+               {n = G.UIT.C, config = {minw = 0.2}},
+               {n = G.UIT.C, config = {padding = 0.05}, nodes = {
+                  { n = G.UIT.R, config = {align = "tm"}, nodes = {{n = G.UIT.T, config = {text = localize("dpp_names_Jogla"), colour = G.C.WHITE, scale = 0.3}}}},
+                  { n = G.UIT.R, config = {align = "tm"}, nodes = {{n = G.UIT.T, config = {text = localize("dpp_names_Jogla"), colour = G.C.WHITE, scale = 0.3}}}},
+                  { n = G.UIT.R, config = {align = "tm"}, nodes = {{n = G.UIT.T, config = {text = localize("dpp_names_GoldenLeaf"), colour = G.C.WHITE, scale = 0.3}}}},
+               }},
+            }},
+            { n = G.UIT.R, config = {align = "tm"}, nodes = {{n = G.UIT.T, config = {text = localize("dpp_credits_special_thanks_label"), colour = G.C.PURPLE, scale = 0.6}}}},
+            { n = G.UIT.R, config = {align = "tm"}, nodes = {{n = G.UIT.T, config = {text = localize("dpp_names_bepisfever"), colour = G.C.WHITE, scale = 0.3}}}},
+         }}
+      end
+   }
+end
