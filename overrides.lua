@@ -54,12 +54,44 @@ local ref = create_UIBox_options
 
 function create_UIBox_options(args)  
     local tbl = ref()
-    local dpp_button = UIBox_button{ label = {localize("dpp_name")}, button = "DPP_main_menu", minw = 5}
+    if DPP.config.display_menu_button then
+        local dpp_button = UIBox_button{ label = {localize("dpp_name")}, button = "DPP_main_menu", minw = 2.4}
+        local exists = false
+        local t_node = tbl.nodes[1].nodes[1].nodes[1].nodes
 
-    local t = create_UIBox_generic_options({ contents = {
-        dpp_button,
-    }})
+        for k,v in pairs(t_node) do
+            if v.nodes[1].config and v.nodes[1].config.button == "settings" then
+                v.nodes[1].nodes[1].config.minw = 2.4
+                local btn = v
+                t_node[k] = {n = G.UIT.R, nodes = {{n = G.UIT.C, nodes = {
+                    {n = G.UIT.C, nodes = {dpp_button}},
+                    {n = G.UIT.C, config = {minw = 0.2}},
+                    {n = G.UIT.C, nodes = {btn}},
+                }}}}
+                exists = true
+            end 
+        end
 
-    if DPP.config.display_menu_button then table.insert(tbl.nodes[1].nodes[1].nodes[1].nodes,1,dpp_button) end
+        for k,v in pairs(t_node) do
+            if v.nodes[1].config and v.nodes[1].config.button == "setup_run" then
+                v.nodes[1].nodes[1].config.minw = 2.4
+                t_node[4].nodes[1].nodes[1].config.minw = 2.4
+                local old_new_run = t_node[3]
+                local old_go_menu = t_node[4]
+                t_node[3] = {n = G.UIT.R, nodes = {{n = G.UIT.C, nodes = {
+                    {n = G.UIT.C, nodes = {old_new_run}},
+                    {n = G.UIT.C, config = {minw = 0.2}},
+                    {n = G.UIT.C, nodes = {old_go_menu}},
+                }}}}
+                t_node[4] = nil
+            end
+        end
+
+        if not exists then
+            dpp_button = UIBox_button{ label = {localize("dpp_name")}, button = "DPP_main_menu", minw = 5}
+            table.insert(tbl.nodes[1].nodes[1].nodes[1].nodes,1,dpp_button)
+        end
+    end
+    --if DPP.config.display_menu_button then table.insert(tbl.nodes[1].nodes[1].nodes[1].nodes,1,dpp_button) end
     return tbl
 end
