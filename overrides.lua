@@ -55,13 +55,22 @@ local ref = create_UIBox_options
 function create_UIBox_options(args)  
     local tbl = ref()
     if DPP.config.display_menu_button then
-        local dpp_button = UIBox_button{ label = {localize("dpp_name")}, button = "DPP_main_menu", minw = 2.4}
+        local dpp_button = UIBox_button{ label = {localize("dpp_name")}, button = "DPP_main_menu", minw = 3.4}
         local exists = false
         local t_node = tbl.nodes[1].nodes[1].nodes[1].nodes
 
         for k,v in pairs(t_node) do
+            if v.nodes[1].nodes[1].config then
+                if v.nodes[1].nodes[1].config.minw == 5 then
+                    v.nodes[1].nodes[1].config.minw = 7
+                elseif v.nodes[1].nodes[1].config.minw == 2.4 then
+                    v.nodes[1].nodes[1].config.minw = 3.4
+                end
+            end
+        end
+        for k,v in pairs(t_node) do
             if v.nodes[1].config and v.nodes[1].config.button == "settings" then
-                v.nodes[1].nodes[1].config.minw = 2.4
+                v.nodes[1].nodes[1].config.minw = 3.4
                 local btn = v
                 t_node[k] = {n = G.UIT.R, nodes = {{n = G.UIT.C, nodes = {
                     {n = G.UIT.C, nodes = {dpp_button}},
@@ -74,8 +83,8 @@ function create_UIBox_options(args)
 
         for k,v in pairs(t_node) do
             if v.nodes[1].config and v.nodes[1].config.button == "setup_run" then
-                v.nodes[1].nodes[1].config.minw = 2.4
-                t_node[4].nodes[1].nodes[1].config.minw = 2.4
+                v.nodes[1].nodes[1].config.minw = 3.4
+                t_node[4].nodes[1].nodes[1].config.minw = 3.4
                 local old_new_run = t_node[3]
                 local old_go_menu = t_node[4]
                 t_node[3] = {n = G.UIT.R, nodes = {{n = G.UIT.C, nodes = {
@@ -88,7 +97,7 @@ function create_UIBox_options(args)
         end
 
         if not exists then
-            dpp_button = UIBox_button{ label = {localize("dpp_name")}, button = "DPP_main_menu", minw = 5}
+            dpp_button = UIBox_button{ label = {localize("dpp_name")}, button = "DPP_main_menu", minw = 7}
             table.insert(tbl.nodes[1].nodes[1].nodes[1].nodes,1,dpp_button)
         end
     end
