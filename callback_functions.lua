@@ -3,6 +3,7 @@ function G.FUNCS.DPP_main_menu()
     if G.OVERLAY_MENU then
         G.OVERLAY_MENU:remove()
     end
+    DPP.local_config.is_open = true
     G.OVERLAY_MENU = UIBox{
         definition = DPP.main_menu(),
         config = {

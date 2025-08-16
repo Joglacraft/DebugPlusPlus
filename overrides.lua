@@ -28,14 +28,14 @@ function Game:update(dt)
         DPP.vars.discards = 0
     end
     if G.jokers and G.jokers.config then
-        DPP.vars.joker_size = G.jokers.config.card_count
+        DPP.vars.joker_size = G.jokers.config.card_limit
         DPP.vars.joker_highlight = G.jokers.config.highlighted_limit
     else
         DPP.vars.joker_size = 0
         DPP.vars.joker_highlight = 0
     end
     if G.consumeables and G.consumeables.config then
-        DPP.vars.consumeable_size = G.consumeables.config.card_count
+        DPP.vars.consumeable_size = G.consumeables.config.card_limit
         DPP.vars.consumeable_highlight = G.consumeables.config.highlighted_limit
     else
         DPP.vars.consumeable_size = 0
