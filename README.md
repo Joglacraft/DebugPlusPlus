@@ -1,5 +1,7 @@
 Debug Plus Plus is a mod for **Balatro** that eases some common actions when debugging and creating mods. To open and close the main UI, press [TAB] or use the button in the pause menu. (Can be toggled in the mod's settings menu)  
-![](/DebugPlusPlus/assets/other/screenshot_1.png)
+
+![](/assets/other/screenshot_1.png)
+
 **IMPORTANT**
 
 Requires [Steamodded](https://github.com/Steamodded/smods) >1.0.0 to work.  
