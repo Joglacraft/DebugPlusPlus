@@ -6,7 +6,7 @@ Requires [Steamodded](https://github.com/Steamodded/smods) >1.0.0 to work.
 
 This mod is meant to be used in conjunction with [DebugPlus](https://github.com/WilsontheWolf/DebugPlus).
 
-It is discouraged to use this mod in a multiplayer/competitive setting. I am not held responsible in any way for any missuse of the mod.
+It is discouraged to use this mod in a multiplayer/competitive setting. I am not held responsible in any way for any misuse of the mod.
 
 # Features
 
