@@ -135,29 +135,21 @@ function G.FUNCS.DPP_update_sticker(args)
     DPP.card.sticker.selected = args.to_val
 end
 
-function G.FUNCS.DPP_add_sticker()
-    if not G.jokers then return end
-    for _,v in pairs(G.hand.highlighted) do
-        v.ability[DPP.card.sticker.selected] = true
+function G.FUNCS.DPP_toggle_sticker (e)
+    if G.jokers then
+        for _,v in ipairs(G.jokers.cards) do
+            SMODS.Stickers[DPP.card.sticker.selected]:apply(v,e.config.ref_table[1])
+        end
     end
-    for _,v in pairs(G.jokers.highlighted) do
-        v.ability[DPP.card.sticker.selected] = true
+    if G.consumeables then
+        for _,v in ipairs(G.consumeables) do
+            SMODS.Stickers[DPP.card.sticker.selected]:apply(v,e.config.ref_table[1])
+        end
     end
-    for _,v in pairs(G.consumeables.highlighted) do
-        v.ability[DPP.card.sticker.selected] = true
-    end
-end
-
-function G.FUNCS.DPP_remove_sticker()
-    if not G.jokers then return end
-    for _,v in pairs(G.hand.highlighted) do
-        v.ability[DPP.card.sticker.selected] = nil
-    end
-    for _,v in pairs(G.jokers.highlighted) do
-        v.ability[DPP.card.sticker.selected] = nil
-    end
-    for _,v in pairs(G.consumeables.highlighted) do
-        v.ability[DPP.card.sticker.selected] = true
+    if G.hand then
+        for _,v in ipairs(G.hand) do
+            SMODS.Stickers[DPP.card.sticker.selected]:apply(v,e.config.ref_table[1])
+        end
     end
 end
 

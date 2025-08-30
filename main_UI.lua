@@ -214,7 +214,8 @@ function DPP.main_menu ()
                {n = G.UIT.C, nodes = { -- Horizontal tab
                UIBox_button{
                   label = {localize("dpp_gen_remove")},
-                  button = "DPP_remove_sticker",
+                  button = "DPP_toggle_sticker",
+                  ref_table = {false},
                   minw = 1.2,
                   minh = 0.4,
                   scale = 0.3
@@ -222,7 +223,8 @@ function DPP.main_menu ()
                {n = G.UIT.C, nodes = { -- Horizontal tab
                UIBox_button{
                   label = {localize("dpp_gen_add")},
-                  button = "DPP_add_sticker",
+                  button = "DPP_toggle_sticker",
+                  ref_table = {true},
                   minw = 1.2,
                   minh = 0.4,
                   scale = 0.3
