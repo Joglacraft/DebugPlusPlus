@@ -801,7 +801,7 @@ function DPP.main_menu ()
                loc_title = "dpp_"..v.key.."_label",
                area = v.key
          },
-         {n = G.UIT.R, nodes = v.value[DPP.vars.pages[v.key]]},
+         {n = G.UIT.R, config = {align = "cm"}, nodes = v.value[DPP.vars.pages[v.key]]},
          }}}}
    end
 
