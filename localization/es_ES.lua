@@ -28,7 +28,7 @@ return {
 
             -- Misc
             dpp_gen_apply = "Aplicar",
-            dpp_gen_subtract = "Rmv",
+            dpp_gen_remove = "Eliminar",
             dpp_gen_mod = "Modificar",
             dpp_gen_set = "Pon",
             

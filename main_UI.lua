@@ -38,8 +38,19 @@ end
 function DPP._main_menu ()
    DPP.reload_lists()
    local t = {
-      n = G.UIT.ROOT, config = {align = "tl", minw = 22.75, minh = 12.5, padding = 0.15, colour = G.C.CLEAR}, nodes = {
-         DPP.test.UI_1.content
+      n = G.UIT.ROOT, config = {align = "tl", minw = 22.75, minh = 12.5, padding = 0.15, colour = G.C.CLEAR, id = "outer"}, nodes = {
+         {n = G.UIT.R, config = {minw = 2, minh = 2, colour = G.C.GREEN}, nodes = {
+            {n = G.UIT.O, config = {object = UIBox{
+               definition = {n = G.UIT.ROOT, config = {minw = 1, minh = 1, colour = G.C.RED}},
+               config = {
+                     align = "cm",
+                     offset = {x=0,y=0},
+                     major = G.ROOM_ATTACH,
+                     bond = 'Weak',
+                     no_esc = false
+               },
+            }, id = "inner"}}
+         }}
       }}
    return t
 end
@@ -47,9 +58,7 @@ end
 function DPP.main_menu ()
    DPP.reload_lists()
 
-   return {
-      n = G.UIT.ROOT, config = {align = "tl", minw = 22.75, minh = 13, padding = 0.15, colour = G.C.CLEAR}, nodes = {
-
+   local meta = {
       {n = G.UIT.C, nodes = {{n = G.UIT.C, config = {align = "tm", colour = G.C[DPP.config.background_colour.selected], padding = 0.05, outline = 1, outline_colour = G.C.WHITE, r = 0.15}, nodes = { -- Tab
          {n = G.UIT.R, config = {align = "cm", minw = DPP.config.big_menu_width, minh = 0.5, colour = G.C.RED, r = 0.15, padding = 0.1}, nodes = { -- Title
             {n = G.UIT.T,config = {align = "cm", text = localize("dpp_name"), scale = 0.4, colour = G.C.WHITE}}
@@ -78,8 +87,10 @@ function DPP.main_menu ()
             minw = 2, minh = 0.5
          },
          {n = G.UIT.R, config = {minh = 0.1}}
-      }}}},
-      
+      }}}}
+   }
+
+   local card = {
       {n = G.UIT.C, nodes = {{n = G.UIT.C, config = {align = "tm", colour = G.C[DPP.config.background_colour.selected], padding = 0.05, outline = 1, outline_colour = G.C.WHITE, r = 0.15}, nodes = { -- Tab
          {n = G.UIT.R, config = {align = "cm", minw = DPP.config.big_menu_width, minh = 0.5, colour = G.C.RED, r = 0.15, padding = 0.1}, nodes = { -- Title
             {n = G.UIT.T,config = {align = "cm", text = localize("dpp_card_label"), scale = 0.4, colour = G.C.WHITE}}
@@ -217,7 +228,7 @@ function DPP.main_menu ()
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
                {n = G.UIT.C, nodes = { -- Horizontal tab
                UIBox_button{
-                  label = {localize("dpp_gen_remove")},
+                  label = {localize("dpp_gen_apply")},
                   button = "DPP_toggle_sticker",
                   ref_table = {false},
                   minw = 1.2,
@@ -226,7 +237,7 @@ function DPP.main_menu ()
                }}},
                {n = G.UIT.C, nodes = { -- Horizontal tab
                UIBox_button{
-                  label = {localize("dpp_gen_add")},
+                  label = {localize("dpp_gen_remove")},
                   button = "DPP_toggle_sticker",
                   ref_table = {true},
                   minw = 1.2,
@@ -235,9 +246,10 @@ function DPP.main_menu ()
                }}},
             }},
          }},
-      }}}},
+      }}}}
+   }
 
-
+   local player = {
       {n = G.UIT.C, nodes = {{n = G.UIT.C, config = {align = "tm", colour = G.C[DPP.config.background_colour.selected], padding = 0.05, outline = 1, outline_colour = G.C.WHITE, r = 0.15}, nodes = { -- Tab
          {n = G.UIT.R, config = {align = "cm", minw = DPP.config.big_menu_width, minh = 0.5, colour = G.C.RED, r = 0.15, padding = 0.1}, nodes = { -- Title
             {n = G.UIT.T,config = {align = "cm", text = localize("dpp_player_label"), scale = 0.4, colour = G.C.WHITE}}
@@ -616,7 +628,9 @@ function DPP.main_menu ()
             w = 1, h = .5
          }}},
       }}}},
+   }
 
+   local run = {
       {n = G.UIT.C, nodes = {{n = G.UIT.C, config = {align = "tm", colour = G.C[DPP.config.background_colour.selected], padding = 0.05, outline = 1, outline_colour = G.C.WHITE, r = 0.15}, nodes = { -- Tab
          {n = G.UIT.R, config = {align = "cm", minw = DPP.config.big_menu_width, minh = 0.5, colour = G.C.RED, r = 0.15, padding = 0.1}, nodes = { -- Title
             {n = G.UIT.T,config = {align = "cm", text = localize("dpp_run_label"), scale = 0.4, colour = G.C.WHITE}}
@@ -775,7 +789,9 @@ function DPP.main_menu ()
             }}},
          }}}}
       }},
+   }
 
+   local game = {
       {n = G.UIT.C, nodes = {{n = G.UIT.C, config = {align = "tm", colour = G.C[DPP.config.background_colour.selected], padding = 0.05, outline = 1, outline_colour = G.C.WHITE, r = 0.15}, nodes = { -- Tab
          {n = G.UIT.R, config = {align = "cm", minw = DPP.config.big_menu_width, minh = 0.5, colour = G.C.RED, r = 0.15, padding = 0.1}, nodes = { -- Title
             {n = G.UIT.T,config = {align = "cm", text = localize("dpp_game_label"), scale = 0.4, colour = G.C.WHITE}}
@@ -815,6 +831,15 @@ function DPP.main_menu ()
             }}},
          }}
       }}}}
+   }
+
+   return {
+      n = G.UIT.ROOT, config = {align = "tl", minw = 22.75, minh = 13, padding = 0.15, colour = G.C.CLEAR}, nodes = {
+      meta[1],
+      card[1],
+      player[1],
+      run[1],
+      game[1]
    }}
 end
 
