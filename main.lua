@@ -1,6 +1,7 @@
 
 DPP = {
    TABS = {},
+   libs = {},
    local_config = {
       is_open = false
    },
@@ -49,7 +50,8 @@ DPP = {
    },
    run = {
       chips = 0,
-      blind_chips = 0
+      blind_chips = 0,
+      dollars = 0,
    },
    gamespeed = 1
 }

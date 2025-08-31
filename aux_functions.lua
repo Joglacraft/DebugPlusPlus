@@ -129,3 +129,145 @@ function DPP.create_text_input(args)
             }}
     return t
 end
+
+---Replaces given characters by a specific one.
+---@param s string|number|boolean -- The value to replace characters of.
+---@param t table? `{{{"a","b",...},"c"},...}` A table with the characters to look for and replace with.
+---@return string s The return value, as a string
+function DPP.replace_text_input (s,t)
+    s = tostring(s)
+    t = t or {
+        {{"o","O"},"0"},
+        {{"d"},"."},
+        {{"m"},"-"}
+    }
+    local ret = ""
+    --print("\n---\nNEW TEST: "..s.."\n---")
+    for i=1, string.len(s) do
+        local char = string.sub(s,i,i)
+        --print("Testing: " .. char)
+        for _, v in ipairs(t) do
+            for _, vv in ipairs(v[1]) do
+                if char == vv then 
+                    --print("Replaced: "..char.. " > ".. v[2]) 
+                    char = v[2]
+                end
+            end
+        end
+        ret = ret..tostring(char)
+        --print("Added: "..char.." , s: "..ret)
+    end
+    return ret
+end
+
+-- Ported from 'Fool's Gambit', still made by me.
+
+---Allows to easily create multi-line texts.
+---@param args {text:table|string,colour:string,scale:number,padding:number,tooltip:{}|nil,align:"tl"|"tm"|"tr"|"cl"|"cm"|"cr"|"bl"|"bm"|"br",mode:"R"|"C"} The settings for the text.
+---`text = {"No text"}` is a table (array), each string represents an entire line.
+---`colour = "white` is the colour of the text.<br>
+---`scale = 0.3` is the size of the text.<br>
+---`padding = 0.05` is the distance between lines.<br>
+---`tooltip` is a tooltip that will appear when hovering over the text.<br>
+---`align = "cm"` sets the alignment of the text. `l`,`m`,`r` for horizontal, `t`,`m`,`b` for vertical alignment.<br>
+---`mode = "R"` sets the container alignment for rows or colums.<br>
+---
+---@return table node The entire node structure. Do note it has a wrapper node.
+function UIText (args)
+	if not args or not type(args) == "table" then return 
+	{ n = G.UIT.R, nodes = {{n = G.UIT.T, config = {text = "ERROR", scale = 0.3, colour = G.C.RED}}}} end
+	
+	local text = args.text or {"No text"}
+	local colour = args.colour or "white"
+	local scale = args.scale or 0.3
+	local padding = args.padding or 0.05
+	local hover = args.tooltip or nil
+	local align = args.align or "cm"
+	local mode = args.mode or "R"
+	
+	local ret = {n = G.UIT[string.upper(mode)], config = {padding = padding}, nodes = {}}
+	
+	if type(text) ~= "table" then return ret end
+	for _,text in ipairs(text) do
+		local tooltip = nil
+
+		if hover then
+			tooltip = {text = {}}
+			for _,h_text in ipairs(hover) do
+				if h_text == "" then h_text = " " end
+				table.insert(tooltip.text,h_text)
+			end
+		end
+
+		local cur_txt = {n = G.UIT.R, config = {align = align, padding = 0}, nodes = {
+			{n = G.UIT.T, config = { text = text, colour = G.C[string.upper(colour)], scale = scale, tooltip = tooltip, padding = 0}}
+		}}
+		
+		table.insert(ret.nodes,cur_txt)
+	end
+
+	return ret
+end
+
+--- Custom function to make buttons:tm:
+---@param args {label:{}[],vars:{},w:number,h:number,ref_table:table,ref_value:string,colour:table,text_scale:number,text_col:table,font:string,func:string,button:string,type:"R"|"C"}
+---@return table node The button node
+---`label = {{{"Word 1"},{"Word 2"}...},{"New line"}...}` - The button's label text. It is highly customizable, supporting raw text `strings`, `ref_table` + `ref_value` combinations, custom `font`, `colour` and `scale`.\
+---`w = 2.7, h = 0.9` - Minimum **width** and **height** of the button.\
+---`colour = G.C.RED` - Colour of the button.\
+---`text_scale = 0.3` - Default text scale. Can be overwritten in each text component.\
+---`text_col = G.C.WHITE` - Default text colour. Can be overwritten in each text component.\
+---`font = nil` - Default font. Can be overwritten in each text component.\
+---`type = C` - Defines how to align the buttons.\
+---`func` - Function to run in `G.FUNCS[func]` every frame the button is present.\
+---`button` - Function to run `G.FUNCS.[button]` when the button is pressed.
+function UIBox_adv_button (args)
+    args = args or {}
+    args.label = args.label or { -- HORRID EXAMPLE ON HOW TO SET THESE UP !!!
+        {
+            {"ERROR"},{" NO TEXT"}
+        }
+    }
+    args.vars = args.vars or {}
+    args.w = args.w or 2.7
+    args.h = args.h or 0.9
+    args.ref_table = args.ref_table or nil
+    args.ref_value = args.ref_value or nil
+    args.colour = args.colour or G.C.RED
+    args.text_scale = args.text_scale or 0.3
+    args.text_col = args.text_col or G.C.WHITE
+    args.font = args.font or nil
+    if not args.type and (args.type ~= "R" or args.type ~= "C") then args.type = "R" end
+
+    local texts = {}
+
+    for _,v in ipairs(args.label) do
+        local line = {n = G.UIT.R, config = {align = "cm", colour = G.C.CLEAR, minw = 0.2, minh = 0.2}, nodes = {}}
+        for kk,vv in pairs(v) do
+            local text = {n = G.UIT.T, config = {
+                text = vv[1] or vv.string,
+                ref_table = vv.ref_table,
+                ref_value = vv.ref_value,
+                colour = vv.colour or args.text_col or G.C.WHITE,
+                scale = args.text_scale or vv.scale or 0.3,
+                font = (vv.font and SMODS.Fonts[vv.font]) or (args.font and SMODS.Fonts[args.font])
+            }}
+            table.insert(line.nodes,text)
+        end
+        table.insert(texts,line)
+    end
+
+    return {n = G.UIT[args.type], config = {
+        minw = args.w,
+        minh = args.h,
+        align = "cm",
+        colour = args.colour,
+        func = args.func, 
+        button =args.button,
+        ref_table = args.ref_table,
+        ref_value = args.ref_value,
+        r = 0.1,
+        hover = true},
+        nodes = texts
+    }
+end

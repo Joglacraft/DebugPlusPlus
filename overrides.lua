@@ -1,3 +1,5 @@
+to_big = to_big or function (x) return x end
+
 local ref = Game.update
 function Game:update(dt)
     if not DPP.vars then DPP.vars = {} end

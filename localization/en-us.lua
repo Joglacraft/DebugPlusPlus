@@ -30,13 +30,14 @@ return {
             -- Misc
             dpp_gen_apply = "Apply",
             dpp_gen_subtract = "Sub",
-            dpp_gen_add = "Add",
-            dpp_gen_remove = "Remove",
+            dpp_gen_mod = "Modify",
             dpp_gen_set = "Set",
             
             -- Card tab
             dpp_card_label = "Card",
-            dpp_card_disclaimer = "(Applies to selected card)",
+            dpp_card_disclaimer = {
+                "(Applies to selected card)"
+            },
             dpp_card_rank = "Rank",
             dpp_card_suit = "Suit",
             dpp_card_enhancement = "Enhancement",

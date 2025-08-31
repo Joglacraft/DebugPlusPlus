@@ -85,7 +85,11 @@ function DPP.main_menu ()
             {n = G.UIT.T,config = {align = "cm", text = localize("dpp_card_label"), scale = 0.4, colour = G.C.WHITE}}
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.3}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_card_disclaimer"), scale = 0.2, colour = G.C.GREY}}
+            UIText{
+               text = G.localization.misc.dictionary["dpp_card_disclaimer"],
+               colour = "grey",
+               scale = 0.3
+            }
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0}, nodes = {
             {n = G.UIT.T,config = {align = "tm", text = localize("dpp_card_rank"), scale = 0.4, colour = G.C.WHITE}}
@@ -576,38 +580,33 @@ function DPP.main_menu ()
             {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "dollars"}}, scale = 0.4, colours = {G.C.GOLD}}}},
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
-            {n = G.UIT.C, nodes = { -- Horizontal tab
-            UIBox_button{
-               label = {"-5"},
-               minw = 0.6,
-               minh = 0.4,
-               button = "DPP_set_money",
-               ref_table = {-5}
-            }}},
-            {n = G.UIT.C, nodes = { -- Horizontal tab
-            UIBox_button{
-               label = {"-1"},
-               minw = 0.6,
-               minh = 0.4,
-               button = "DPP_set_money",
-               ref_table = {-1}
-            }}},
-            {n = G.UIT.C, nodes = { -- Horizontal tab
-            UIBox_button{
-               label = {"+1"},
-               minw = 0.6,
-               minh = 0.4,
-               button = "DPP_set_money",
-               ref_table = {1}
-            }}},
-            {n = G.UIT.C, nodes = { -- Horizontal tab
-            UIBox_button{
-               label = {"+5"},
-               minw = 0.6,
-               minh = 0.4,
-               button = "DPP_set_money",
-               ref_table = {5}
-            }}},
+            DPP.create_text_input{
+               id = "set_player_dollars",
+               ref_table = DPP.run,
+               ref_value = "dollars",
+               prompt_text = "Input number",
+               max_length = 12,
+               w = 2.4,
+               h = 0.2
+            },
+         }},
+         {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
+            UIBox_adv_button{
+               label = {{{localize("dpp_gen_set")}}},
+               w = 1.2, h = 0.4,
+               scale = 0.3,
+               ref_table = {"set"},
+               type = "C",
+               button = "DPP_set_money"
+            },
+            UIBox_adv_button{
+               label = {{{localize("dpp_gen_mod")}}},
+               w = 1.2, h = 0.4,
+               scale = 0.3,
+               ref_table = {"var"},
+               type = "C",
+               button = "DPP_set_money"
+            }
          }},
          {n = G.UIT.R, config = {align = "cm"}, nodes = {create_toggle{
             label = localize("dpp_player_unlimited"),
@@ -652,7 +651,17 @@ function DPP.main_menu ()
          }},
 
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_run_player_chips"), scale = 0.3, colour = G.C.GREY}}
+            UIText{
+               text = {localize("dpp_run_player_chips")},
+               scale = 0.3,
+               colour = "grey",
+               tooltip = {
+                  "Symbol replacements:",
+                  "o / O > 0 (zero)",
+                  "d > .",
+                  "m > -"
+               }
+            }
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
             DPP.create_text_input{
@@ -666,37 +675,36 @@ function DPP.main_menu ()
             }
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
-            {n = G.UIT.C, nodes = { -- Horizontal tab
-            UIBox_button{
-               label = {localize("dpp_gen_subtract")},
-               button = "DPP_set_chips",
-               minw = 0.8,
-               minh = 0.4,
+            UIBox_adv_button{
+               label = {{{localize("dpp_gen_set")}}},
+               w = 1.2, h = 0.4,
                scale = 0.3,
-               ref_table = {"subtract"}
-            }}},
-            {n = G.UIT.C, nodes = { -- Horizontal tab
-            UIBox_button{
-               label = {localize("dpp_gen_set")},
-               button = "DPP_set_chips",
-               minw = 0.8,
-               minh = 0.4,
+               ref_table = {"set"},
+               type = "C",
+               button = "DPP_set_chips"
+            },
+            UIBox_adv_button{
+               label = {{{localize("dpp_gen_mod")}}},
+               w = 1.2, h = 0.4,
                scale = 0.3,
-               ref_table = {"set"}
-            }}},
-            {n = G.UIT.C, nodes = { -- Horizontal tab
-            UIBox_button{
-               label = {localize("dpp_gen_add")},
-               button = "DPP_set_chips",
-               minw = 0.8,
-               minh = 0.4,
-               scale = 0.3,
-               ref_table = {"add"}
-            }}},
+               ref_table = {"var"},
+               type = "C",
+               button = "DPP_set_chips"
+            }
          }},
 
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
-            {n = G.UIT.T,config = {align = "tm", text = localize("dpp_run_blind_chips"), scale = 0.3, colour = G.C.GREY}}
+            UIText{
+               text = {localize("dpp_run_blind_chips")},
+               scale = 0.3,
+               colour = "grey",
+               tooltip = {
+                  "Symbol replacements:",
+                  "o / O > 0 (zero)",
+                  "d > .",
+                  "m > -"
+               }
+            }
          }},
          {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
             DPP.create_text_input{
@@ -710,33 +718,22 @@ function DPP.main_menu ()
             }
          }},
          {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
-            {n = G.UIT.C, nodes = { -- Horizontal tab
-            UIBox_button{
-               label = {localize("dpp_gen_subtract")},
-               button = "DPP_set_blind_chips",
-               minw = 0.8,
-               minh = 0.4,
+            UIBox_adv_button{
+               label = {{{localize("dpp_gen_set")}}},
+               w = 1.2, h = 0.4,
                scale = 0.3,
-               ref_table = {"subtract"}
-            }}},
-            {n = G.UIT.C, nodes = { -- Horizontal tab
-            UIBox_button{
-               label = {localize("dpp_gen_set")},
-               button = "DPP_set_blind_chips",
-               minw = 0.8,
-               minh = 0.4,
+               ref_table = {"set"},
+               type = "C",
+               button = "DPP_set_blind_chips"
+            },
+            UIBox_adv_button{
+               label = {{{localize("dpp_gen_mod")}}},
+               w = 1.2, h = 0.4,
                scale = 0.3,
-               ref_table = {"set"}
-            }}},
-            {n = G.UIT.C, nodes = { -- Horizontal tab
-            UIBox_button{
-               label = {localize("dpp_gen_add")},
-               button = "DPP_set_blind_chips",
-               minw = 0.8,
-               minh = 0.4,
-               scale = 0.3,
-               ref_table = {"add"}
-            }}},
+               ref_table = {"var"},
+               type = "C",
+               button = "DPP_set_blind_chips"
+            }
          }},
          
          

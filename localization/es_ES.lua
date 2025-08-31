@@ -29,13 +29,15 @@ return {
             -- Misc
             dpp_gen_apply = "Aplicar",
             dpp_gen_subtract = "Rmv",
-            dpp_gen_add = "Añd",
-            dpp_gen_remove = "Rmv",
+            dpp_gen_mod = "Modificar",
             dpp_gen_set = "Pon",
             
             -- Card tab
             dpp_card_label = "Carta",
-            dpp_card_disclaimer = "(Se aplica a las cartas seleccionadas)",
+            dpp_card_disclaimer = {
+                "(Se aplica a las",
+                "cartas seleccionadas)"
+            },
             dpp_card_rank = "Categoría",
             dpp_card_suit = "Palo",
             dpp_card_enhancement = "Mejora",

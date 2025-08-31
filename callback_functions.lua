@@ -165,56 +165,37 @@ end
 
 
 function G.FUNCS.DPP_set_money(e)
+    DPP.run.dollars = tonumber(DPP.replace_text_input(DPP.run.dollars)) or DPP.run.dollars
     if not G.jokers then return end
-    ease_dollars(e.config.ref_table[1],true)
+    if e.config.ref_table[1] == "set" then
+        ease_dollars(DPP.run.dollars-G.GAME.dollars,true)
+    elseif e.config.ref_table[1] == "var" then
+        ease_dollars(DPP.run.dollars,true)
+    end
 end
 
 function G.FUNCS.DPP_set_chips(e)
 
-    local str = ""
-    for i=1, string.len(DPP.run.chips) do
-        local char = string.sub(DPP.run.chips,i,i)
-        if char == "o" or char == "O" then
-            char = "0"
-        end
-        str = str..tostring(char)
-    end
-    DPP.run.chips = tonumber(str)
+    DPP.run.chips = tonumber(DPP.replace_text_input(DPP.run.chips)) or DPP.run.chips
 
     if tonumber(DPP.run.chips) then
-        DPP.run.chips = tonumber(DPP.run.chips)
-        DPP.run.chips =  math.abs(DPP.run.chips)
-        if e.config.ref_table[1] == "subtract" then
-            G.GAME.chips = G.GAME.chips - DPP.run.chips
-        elseif e.config.ref_table[1] == "set" then
-            G.GAME.chips = DPP.run.chips
-        elseif e.config.ref_table[1] == "add" then
-            G.GAME.chips = G.GAME.chips + DPP.run.chips
+        if e.config.ref_table[1] == "set" then
+            G.GAME.chips = to_big(DPP.run.chips)
+        elseif e.config.ref_table[1] == "var" then
+            G.GAME.chips = to_big(G.GAME.chips + DPP.run.chips)
         end
     end
 end
 
 function G.FUNCS.DPP_set_blind_chips(e)
-
-    local str = ""
-    for i=1, string.len(DPP.run.blind_chips) do
-        local char = string.sub(DPP.run.blind_chips,i,i)
-        if char == "o" or char == "O" then
-            char = "0"
-        end
-        str = str..tostring(char)
-    end
-    DPP.run.blind_chips = tonumber(str)
+    DPP.run.blind_chips = tonumber(DPP.replace_text_input(DPP.run.blind_chips)) or DPP.run.blind_chips
 
     if G.GAME.blind and tonumber(DPP.run.blind_chips) then
-        DPP.run.chips =  math.abs(DPP.run.chips)
-        if e.config.ref_table[1] == "subtract" then
-            G.GAME.blind.chips = G.GAME.blind.chips - DPP.run.blind_chips
-        elseif e.config.ref_table[1] == "set" then
-            G.GAME.blind.chips = DPP.run.blind_chips
-        elseif e.config.ref_table[1] == "add" then
-            G.GAME.blind.chips = G.GAME.blind.chips + DPP.run.blind_chips
-        end 
+        if e.config.ref_table[1] == "set" then
+            G.GAME.blind.chips = to_big(DPP.run.blind_chips)
+        elseif e.config.ref_table[1] == "var" then
+            G.GAME.blind.chips = to_big(G.GAME.blind.chips + DPP.run.blind_chips)
+        end
         G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
         G.FUNCS.blind_chip_UI_scale(G.hand_text_area.blind_chips)
         G.HUD_blind:recalculate()
@@ -260,15 +241,7 @@ end
 
 function G.FUNCS.DPP_set_gamespeed(e)
 
-    local str = ""
-    for i=1, string.len(DPP.gamespeed) do
-        local char = string.sub(DPP.gamespeed,i,i)
-        if char == "o" or char == "O" then
-            char = "0"
-        end
-        str = str..tostring(char)
-    end
-    DPP.gamespeed = tonumber(str)
+    DPP.gamespeed = tonumber(DPP.replace_text_input(DPP.gamespeed)) or DPP.gamespeed
 
     if tonumber(DPP.gamespeed) then
         G.SETTINGS.GAMESPEED = tonumber(DPP.gamespeed)/e.config.ref_table[1]
