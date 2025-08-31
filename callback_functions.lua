@@ -176,9 +176,9 @@ end
 
 function G.FUNCS.DPP_set_chips(e)
 
-    DPP.run.chips = to_big(DPP.replace_text_input(DPP.run.chips)) or DPP.run.chips
+    DPP.run.chips = tonumber(DPP.replace_text_input(DPP.run.chips)) or DPP.run.chips
 
-    if to_big(DPP.run.chips) then
+    if tonumber(DPP.run.chips) then
         if e.config.ref_table[1] == "set" then
             G.GAME.chips = to_big(DPP.run.chips)
         elseif e.config.ref_table[1] == "var" then
@@ -188,9 +188,9 @@ function G.FUNCS.DPP_set_chips(e)
 end
 
 function G.FUNCS.DPP_set_blind_chips(e)
-    DPP.run.blind_chips = to_big(DPP.replace_text_input(DPP.run.blind_chips)) or DPP.run.blind_chips
+    DPP.run.blind_chips = tonumber(DPP.replace_text_input(DPP.run.blind_chips)) or DPP.run.blind_chips
 
-    if G.GAME.blind and to_big(DPP.run.blind_chips) then
+    if G.GAME.blind and tonumber(DPP.run.blind_chips) then
         if e.config.ref_table[1] == "set" then
             G.GAME.blind.chips = to_big(DPP.run.blind_chips)
         elseif e.config.ref_table[1] == "var" then
