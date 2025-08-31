@@ -6,10 +6,10 @@ return {
             dpp_close = "Cerrar DebugPlusPlus",
 
             -- Config tab
-            dpp_cfg_label = "Opciones del mod",
-            dpp_cfg_background_colour = "Color del fondo",
-            dpp_cfg_menu_disclaimer = "O pulsa [TAB] para abrir el menú)",
-            dpp_cfg_menu_button_toggle = "Añadir butón de DebugPlusPlus en el menú de pausa",
+            dpp_meta_label = "Opciones del mod",
+            dpp_meta_background_colour = "Color del fondo",
+            dpp_meta_menu_disclaimer = "O pulsa [TAB] para abrir el menú)",
+            dpp_meta_menu_button_toggle = "Añadir butón de DebugPlusPlus en el menú de pausa",
 
             -- Credits tab
             dpp_credits_label = "Créditos",

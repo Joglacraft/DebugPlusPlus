@@ -4,7 +4,7 @@ function DPP.add_tab(args)
         meta = {id = "error"},
         content =       
         {n = G.UIT.C, nodes = {{n = G.UIT.C, config = {align = "tm", colour = G.C[DPP.config.background_colour.selected], padding = 0.05, outline = 1, outline_colour = G.C.WHITE, r = 0.15}, nodes = { -- Tab
-            {n = G.UIT.R, config = {align = "cm", minw = DPP.config.big_menu_width, minh = 0.5, colour = G.C.RED, r = 0.15, padding = 0.1}, nodes = { -- Title
+            {n = G.UIT.R, config = {align = "cm", minw = DPP.menu_width, minh = 0.5, colour = G.C.RED, r = 0.15, padding = 0.1}, nodes = { -- Title
                 {n = G.UIT.T,config = {align = "cm", text = "ERROR", scale = 0.4, colour = G.C.WHITE}}
             }}}}
         }},

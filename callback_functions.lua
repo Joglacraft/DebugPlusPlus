@@ -16,7 +16,8 @@ function G.FUNCS.DPP_main_menu()
     }
 end
 
-function G.FUNCS.DPP_reload_lists()
+function G.FUNCS.DPP_reload_lists(e)
+    DPP.vars.pages[e.config.ref_table[1]] = DPP.vars.pages[e.config.ref_table[1]] + e.config.ref_table[2]
     DPP.reload_lists()
     G.FUNCS.DPP_main_menu()
 end

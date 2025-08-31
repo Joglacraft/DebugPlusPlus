@@ -53,7 +53,18 @@ DPP = {
       blind_chips = 0,
       dollars = 0,
    },
-   gamespeed = 1
+   gamespeed = 1,
+   menu_width = 2.75,
+   vars = {
+      pages = {
+         meta = 1,
+         card = 1,
+         player = 1,
+         run = 1,
+         game = 1
+      }
+      -- Some are filled out in overrides.lua
+   }
 }
 
 SMODS.Atlas{key = "modicon", path = "modicon.png", px = 32, py = 32}
