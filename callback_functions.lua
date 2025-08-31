@@ -165,7 +165,7 @@ end
 
 
 function G.FUNCS.DPP_set_money(e)
-    DPP.run.dollars = tonumber(DPP.replace_text_input(DPP.run.dollars)) or DPP.run.dollars
+    DPP.run.dollars = to_big(DPP.replace_text_input(DPP.run.dollars)) or DPP.run.dollars
     if not G.jokers then return end
     if e.config.ref_table[1] == "set" then
         ease_dollars(DPP.run.dollars-G.GAME.dollars,true)
@@ -176,9 +176,9 @@ end
 
 function G.FUNCS.DPP_set_chips(e)
 
-    DPP.run.chips = tonumber(DPP.replace_text_input(DPP.run.chips)) or DPP.run.chips
+    DPP.run.chips = to_big(DPP.replace_text_input(DPP.run.chips)) or DPP.run.chips
 
-    if tonumber(DPP.run.chips) then
+    if to_big(DPP.run.chips) then
         if e.config.ref_table[1] == "set" then
             G.GAME.chips = to_big(DPP.run.chips)
         elseif e.config.ref_table[1] == "var" then
@@ -188,9 +188,9 @@ function G.FUNCS.DPP_set_chips(e)
 end
 
 function G.FUNCS.DPP_set_blind_chips(e)
-    DPP.run.blind_chips = tonumber(DPP.replace_text_input(DPP.run.blind_chips)) or DPP.run.blind_chips
+    DPP.run.blind_chips = to_big(DPP.replace_text_input(DPP.run.blind_chips)) or DPP.run.blind_chips
 
-    if G.GAME.blind and tonumber(DPP.run.blind_chips) then
+    if G.GAME.blind and to_big(DPP.run.blind_chips) then
         if e.config.ref_table[1] == "set" then
             G.GAME.blind.chips = to_big(DPP.run.blind_chips)
         elseif e.config.ref_table[1] == "var" then
