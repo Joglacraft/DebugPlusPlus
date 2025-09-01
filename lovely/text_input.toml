@@ -27,3 +27,15 @@ payload = '''
 
 '''
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "engine/controller.lua"
+pattern = '''
+    if not _RELEASE_MODE then
+'''
+position = "at"
+payload = '''
+    if not _RELEASE_MODE and DPP.config.open_og_debug then
+'''
+match_indent = true

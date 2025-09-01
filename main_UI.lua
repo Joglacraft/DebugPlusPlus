@@ -821,6 +821,13 @@ SMODS.current_mod.config_tab = function ()
          minw = 2, minh = 0.5,
          ref_table = DPP.config,
          ref_value = "require_ctrl"
+      }}},
+      {n = G.UIT.R, config = {align = "tm"}, nodes = {create_toggle{
+         label = localize("dpp_meta_open_og_debug"),
+         scale = 1,
+         minw = 2, minh = 0.5,
+         ref_table = DPP.config,
+         ref_value = "open_og_debug"
       }}}
    }}
 end
