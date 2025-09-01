@@ -177,7 +177,7 @@ end
 
 function G.FUNCS.DPP_set_chips(e)
 
-    DPP.run.chips = tonumber(DPP.replace_text_input(DPP.run.chips)) or DPP.run.chips
+    DPP.run.chips = tonumber(DPP.run.chips) or DPP.run.chips
 
     if tonumber(DPP.run.chips) then
         if e.config.ref_table[1] == "set" then
@@ -189,7 +189,7 @@ function G.FUNCS.DPP_set_chips(e)
 end
 
 function G.FUNCS.DPP_set_blind_chips(e)
-    DPP.run.blind_chips = tonumber(DPP.replace_text_input(DPP.run.blind_chips)) or DPP.run.blind_chips
+    DPP.run.blind_chips = tonumber(DPP.run.blind_chips) or DPP.run.blind_chips
 
     if G.GAME.blind and tonumber(DPP.run.blind_chips) then
         if e.config.ref_table[1] == "set" then
@@ -242,7 +242,7 @@ end
 
 function G.FUNCS.DPP_set_gamespeed(e)
 
-    DPP.gamespeed = tonumber(DPP.replace_text_input(DPP.gamespeed)) or DPP.gamespeed
+    DPP.gamespeed = tonumber(DPP.gamespeed) or DPP.gamespeed
 
     if tonumber(DPP.gamespeed) then
         G.SETTINGS.GAMESPEED = tonumber(DPP.gamespeed)/e.config.ref_table[1]

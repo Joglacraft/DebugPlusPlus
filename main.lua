@@ -101,5 +101,6 @@ SMODS.Keybind({
          G.FUNCS.exit_overlay_menu()
          DPP.local_config.is_open = false
       end
-   end
+   end,
+   held_keys = DPP.config.require_ctrl and {"lctrl"} or {}
 })

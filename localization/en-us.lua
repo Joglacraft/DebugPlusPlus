@@ -10,6 +10,7 @@ return {
             dpp_meta_background_colour = "Background colour",
             dpp_meta_menu_disclaimer = "(Or press [TAB] to open the menu)",
             dpp_meta_menu_button_toggle = "Add DebugPlusPlus pause menu button",
+            dpp_meta_require_ctrl = "Require to hold Ctrl too to toggle the menu",
 
             -- Credits tab
             dpp_credits_label = "Credits",

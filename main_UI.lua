@@ -212,6 +212,11 @@ function DPP.main_menu ()
                   }}},
                }},
             }},
+            UIBox_button{
+               label = {"Card inspector"},
+               minw = 2.5,
+               minh = 0.4,
+            }
          }
       }},
       {key = "player", value = {
@@ -627,12 +632,6 @@ function DPP.main_menu ()
                   text = {localize("dpp_run_player_chips")},
                   scale = 0.3,
                   colour = "grey",
-                  tooltip = {
-                     "Symbol replacements:",
-                     "o / O > 0 (zero)",
-                     "d > .",
-                     "m > -"
-                  }
                }
             }},
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
@@ -670,12 +669,6 @@ function DPP.main_menu ()
                   text = {localize("dpp_run_blind_chips")},
                   scale = 0.3,
                   colour = "grey",
-                  tooltip = {
-                     "Symbol replacements:",
-                     "o / O > 0 (zero)",
-                     "d > .",
-                     "m > -"
-                  }
                }
             }},
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
@@ -821,6 +814,13 @@ SMODS.current_mod.config_tab = function ()
          minw = 2, minh = 0.5,
          ref_table = DPP.config,
          ref_value = "display_menu_button"
+      }}},
+      {n = G.UIT.R, config = {align = "tm"}, nodes = {create_toggle{
+         label = localize("dpp_meta_require_ctrl"),
+         scale = 1,
+         minw = 2, minh = 0.5,
+         ref_table = DPP.config,
+         ref_value = "require_ctrl"
       }}}
    }}
 end

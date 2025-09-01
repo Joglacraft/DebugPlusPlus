@@ -1,0 +1,29 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = '''
+  local corpus = '123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'..(hook.config.ref_table.extended_corpus and " 0!$&()<>?:{}+-=,.[]_" or '')
+'''
+position = "at"
+payload = '''
+  local corpus = '123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.." 0!$&()<>?:{}+-=,.[]_"
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = '''
+  if args.key == '[' or args.key == ']' then return end
+  if args.key == '0' then args.key = 'o' end
+'''
+position = "at"
+payload = '''
+
+'''
+match_indent = true
