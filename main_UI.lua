@@ -226,8 +226,7 @@ function DPP.main_menu ()
             }},
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_slots")..": ", scale = 0.3, colour = G.C.GREY}},
-               {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "hand_size"}}, scale = 0.3, colours = {G.C.GOLD}}}},
-
+               {n = G.UIT.T, config = {ref_table = DPP.vars, ref_value = "hand_size", scale = 0.3, colour = G.C.GOLD}},
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
                {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -265,7 +264,7 @@ function DPP.main_menu ()
             }},
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
                {n = G.UIT.T, config = {align = "tm", text = localize("dpp_player_highlight")..": ", scale = 0.3, colour = G.C.GREY}},
-               {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "hand_highlight"}}, scale = 0.3, colours = {G.C.GOLD}}}},
+               {n = G.UIT.T, config = {ref_table = DPP.vars, ref_value = "hand_highlight", scale = 0.3, colour = G.C.GOLD}},
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
                {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -304,7 +303,7 @@ function DPP.main_menu ()
 
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_hands_label")..": ", scale = 0.3, colour = G.C.GREY}},
-               {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "hands"}}, scale = 0.3, colours = {G.C.GOLD}}}},
+               {n = G.UIT.T, config = {ref_table = DPP.vars, ref_value = "hands", scale = 0.3, colour = G.C.GOLD}},
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
                {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -349,7 +348,7 @@ function DPP.main_menu ()
             }}},
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_discards_label")..": ", scale = 0.3, colour = G.C.GREY}},
-               {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "discards"}}, scale = 0.3, colours = {G.C.GOLD}}}},
+               {n = G.UIT.T, config = {ref_table = DPP.vars, ref_value = "discards", scale = 0.3, colour = G.C.GOLD}},
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
                {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -397,7 +396,7 @@ function DPP.main_menu ()
             }},
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_slots")..": ", scale = 0.3, colour = G.C.GREY}},
-               {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "joker_size"}}, scale = 0.3, colours = {G.C.GOLD}}}},
+               {n = G.UIT.T, config = {ref_table = DPP.vars, ref_value = "joker_size", scale = 0.3, colour = G.C.GOLD}},
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
                {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -435,7 +434,7 @@ function DPP.main_menu ()
             }},
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_highlight")..": ", scale = 0.3, colour = G.C.GREY}},
-               {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "joker_highlight"}}, scale = 0.3, colours = {G.C.GOLD}}}},
+               {n = G.UIT.T, config = {ref_table = DPP.vars, ref_value = "joker_highlight", scale = 0.3, colour = G.C.GOLD}},
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
                {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -478,7 +477,7 @@ function DPP.main_menu ()
             }},
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_slots")..": ", scale = 0.3, colour = G.C.GREY}},
-               {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "consumeable_size"}}, scale = 0.3, colours = {G.C.GOLD}}}},
+               {n = G.UIT.T, config = {ref_table = DPP.vars, ref_value = "consumeable_size", scale = 0.3, colour = G.C.GOLD}},
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
                {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -516,7 +515,7 @@ function DPP.main_menu ()
             }},
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_highlight")..": ", scale = 0.3, colour = G.C.GREY}},
-               {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "consumeable_highlight"}}, scale = 0.3, colours = {G.C.GOLD}}}},
+               {n = G.UIT.T, config = {ref_table = DPP.vars, ref_value = "consumeable_highlight", scale = 0.3, colour = G.C.GOLD}},
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
                {n = G.UIT.C, nodes = { -- Horizontal tab
@@ -556,7 +555,7 @@ function DPP.main_menu ()
          {
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.5}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_money")..": ", scale = 0.4, colour = G.C.WHITE}},
-               {n = G.UIT.O, config = {object = DynaText{string = {{ref_table = DPP.vars, ref_value = "dollars"}}, scale = 0.4, colours = {G.C.GOLD}}}},
+               {n = G.UIT.T, config = {ref_table = DPP.vars, ref_value = "dollars", scale = 0.4, colour = G.C.GOLD}},
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
                DPP.create_text_input{
