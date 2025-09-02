@@ -110,23 +110,23 @@ function G.FUNCS.DPP_set_seal()
     if not G.hand then return end
     if DPP.card.seal.selected == "None" then
         for _,v in pairs(G.hand.highlighted) do
-            v.seal = nil
+            v:set_seal(nil,true,true)
         end
         for _,v in pairs(G.jokers.highlighted) do
-            v.seal = nil
+            v:set_seal(nil,true,true)
         end
         for _,v in pairs(G.consumeables.highlighted) do
-            v.seal = nil
+            v:set_seal(nil,true,true)
         end
     else
         for _,v in pairs(G.hand.highlighted) do
-            v.seal = DPP.card.seal.selected
+            v:set_seal(DPP.card.seal.selected,true,true)
         end
         for _,v in pairs(G.jokers.highlighted) do
-            v.seal = DPP.card.seal.selected
+            v:set_seal(DPP.card.seal.selected,true,true)
         end
         for _,v in pairs(G.consumeables.highlighted) do
-            v.seal = DPP.card.seal.selected
+            v:set_seal(DPP.card.seal.selected,true,true)
         end
     end
 end
