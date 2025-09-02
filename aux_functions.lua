@@ -91,6 +91,98 @@ G.FUNCS.DPP_load_text_input = function(e)
     end
 end
 
+function DPP.create_option_cycle(args)
+  args = args or {}
+  args.colour = args.colour or G.C.RED
+  args.options = args.options or {
+    'Option 1',
+    'Option 2'
+  }
+  args.current_option = args.current_option or 1
+  args.current_option_val = args.options[args.current_option]
+  args.opt_callback = args.opt_callback or nil
+  args.scale = args.scale or 1
+  args.ref_table = args.ref_table or nil
+  args.ref_value = args.ref_value or nil
+  args.w = (args.w or 2.5)*args.scale
+  args.h = (args.h or 0.8)*args.scale
+  args.text_scale = (args.text_scale or 0.5)*args.scale
+  args.l = '<'
+  args.r = '>'
+  args.focus_args = args.focus_args or {}
+  args.focus_args.type = 'cycle'
+
+  local info = nil
+  if args.info then 
+    info = {}
+    for k, v in ipairs(args.info) do 
+      table.insert(info, {n=G.UIT.R, config={align = "cm", minh = 0.05}, nodes={
+        {n=G.UIT.T, config={text = v, scale = 0.3*args.scale, colour = G.C.UI.TEXT_LIGHT}}
+      }})
+    end
+    info =  {n=G.UIT.R, config={align = "cm", minh = 0.05}, nodes=info}
+  end
+
+  local disabled = #args.options < 2
+  local pips = {}
+  for i = 1, #args.options do 
+    pips[#pips+1] = {n=G.UIT.B, config={w = 0.1*args.scale, h = 0.1*args.scale, r = 0.05, id = 'pip_'..i, colour = args.current_option == i and G.C.WHITE or G.C.BLACK}}
+  end
+  
+  local choice_pips = not args.no_pips and {n=G.UIT.R, config={align = "cm", padding = (0.05 - (#args.options > 15 and 0.03 or 0))*args.scale}, nodes=pips} or nil
+
+  local t = 
+        {n=G.UIT.C, config={align = "cm", padding = 0.1, r = 0.1, colour = G.C.CLEAR, id = args.id and (not args.label and args.id or nil) or nil, focus_args = args.focus_args}, nodes={
+          {n=G.UIT.C, config={align = "cm",r = 0.1, minw = 0.6*args.scale, hover = true, colour = not disabled and args.colour or G.C.BLACK,shadow = not disabled, button = not disabled and 'option_cycle' or nil, ref_table = args, ref_value = 'l', focus_args = {type = 'none'}}, nodes={
+            {n=G.UIT.T, config={ref_table = args, ref_value = 'l', scale = args.text_scale, colour = not disabled and G.C.UI.TEXT_LIGHT or G.C.UI.TEXT_INACTIVE}}
+          }},
+          args.mid and
+          {n=G.UIT.C, config={id = 'cycle_main'}, nodes={
+              {n=G.UIT.R, config={align = "cm", minh = 0.05}, nodes={
+                args.mid
+              }},
+              not disabled and choice_pips or nil
+          }}
+          or {n=G.UIT.C, config={id = 'cycle_main', align = "cm", minw = args.w, minh = args.h, r = 0.1, padding = 0.05, colour = args.colour,emboss = 0.025, hover = true, can_collide = true, on_demand_tooltip = args.on_demand_tooltip}, nodes={
+            {n=G.UIT.R, config={align = "cm"}, nodes={
+              {n=G.UIT.R, config={align = "cm"}, nodes={
+                {n=G.UIT.T, config={ref_table = args, ref_value = "current_option_val", colour = G.C.UI.TEXT_LIGHT, shadow = true, float = true, silent = true, bump = true, scale = args.text_scale}},
+              }},
+              {n=G.UIT.R, config={align = "cm", minh = 0.05}, nodes={
+              }},
+              not disabled and choice_pips or nil
+            }}
+          }},
+          {n=G.UIT.C, config={align = "cm",r = 0.1, minw = 0.6*args.scale, hover = not disabled, colour = not disabled and args.colour or G.C.BLACK,shadow = not disabled, button = not disabled and 'option_cycle' or nil, ref_table = args, ref_value = 'r', focus_args = {type = 'none'}}, nodes={
+            {n=G.UIT.T, config={ref_table = args, ref_value = 'r', scale = args.text_scale, colour = not disabled and G.C.UI.TEXT_LIGHT or G.C.UI.TEXT_INACTIVE}}
+          }},
+        }}
+
+  if args.cycle_shoulders then 
+    t =    
+    {n=G.UIT.R, config={align = "cm", colour = G.C.CLEAR}, nodes = {
+      {n=G.UIT.C, config={minw = 0.7,align = "cm", colour = G.C.CLEAR,func = 'set_button_pip', focus_args = {button = 'leftshoulder', type = 'none', orientation = 'cm', scale = 0.7, offset = {x = -0.1, y = 0}}}, nodes = {}},
+      {n=G.UIT.C, config={id = 'cycle_shoulders', padding = 0.1}, nodes={t}},
+      {n=G.UIT.C, config={minw = 0.7,align = "cm", colour = G.C.CLEAR,func = 'set_button_pip', focus_args = {button = 'rightshoulder', type = 'none', orientation = 'cm', scale = 0.7, offset = {x = 0.1, y = 0}}}, nodes = {}},
+    }}
+  else
+    t = 
+    {n=G.UIT.R, config={align = "cm", colour = G.C.CLEAR, padding = 0.0}, nodes = {
+      t
+    }}
+  end
+  if args.label or args.info then 
+    t = {n=G.UIT.R, config={align = "cm", padding = 0.05, id = args.id or nil}, nodes={
+      args.label and {n=G.UIT.R, config={align = "cm"}, nodes={
+        {n=G.UIT.T, config={text = args.label, scale = 0.5*args.scale, colour = G.C.UI.TEXT_LIGHT}}
+      }} or nil,
+      t,
+      info,
+    }}
+  end
+  return t
+end
+
 function DPP.create_text_input(args)
     args = args or {}
     args.colour = copy_table(args.colour) or copy_table(G.C.BLUE)

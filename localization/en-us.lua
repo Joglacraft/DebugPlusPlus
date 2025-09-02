@@ -6,7 +6,7 @@ return {
             dpp_close = "Close DebugPlusPlus",
 
             -- Config tab
-            dpp_meta_label = "Mod options",
+            dpp_meta_label = "Mod",
             dpp_meta_background_colour = "Background colour",
             dpp_meta_menu_disclaimer = "(Or press [TAB] to open the menu)",
             dpp_meta_menu_button_toggle = "Add DebugPlusPlus pause menu button",

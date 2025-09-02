@@ -40,7 +40,7 @@ function DPP.main_menu ()
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_meta_background_colour"), scale = 0.3, colour = G.C.GREY}}
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
-               create_option_cycle{
+               DPP.create_option_cycle{
                   options = DPP.config.background_colour.options,
                   ref_table = DPP.config.background_colour,
                   ref_value = "selected",
@@ -72,7 +72,7 @@ function DPP.main_menu ()
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_card_rank"), scale = 0.4, colour = G.C.WHITE}}
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
-                  create_option_cycle{
+                  DPP.create_option_cycle{
                      options = DPP.card.rank.options,
                      ref_table = DPP.card.rank,
                      ref_value = "selected",
@@ -94,7 +94,7 @@ function DPP.main_menu ()
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_card_suit"), scale = 0.4, colour = G.C.WHITE}}
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
-                  create_option_cycle{
+                  DPP.create_option_cycle{
                      options = DPP.card.suit.options,
                      ref_table = DPP.card.suit,
                      ref_value = "selected",
@@ -116,7 +116,7 @@ function DPP.main_menu ()
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_card_enhancement"), scale = 0.4, colour = G.C.WHITE}}
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
-               create_option_cycle{
+               DPP.create_option_cycle{
                      options = DPP.card.enhancement.options,
                      ref_table = DPP.card.enhancement,
                      ref_value = "selected",
@@ -138,7 +138,7 @@ function DPP.main_menu ()
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_card_edition"), scale = 0.4, colour = G.C.WHITE}}
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
-               create_option_cycle{
+               DPP.create_option_cycle{
                      options = DPP.card.edition.options,
                      ref_table = DPP.card.edition,
                      ref_value = "selected",
@@ -160,7 +160,7 @@ function DPP.main_menu ()
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_card_seal"), scale = 0.4, colour = G.C.WHITE}}
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
-               create_option_cycle{
+               DPP.create_option_cycle{
                      options = DPP.card.seal.options,
                      ref_table = DPP.card.seal,
                      ref_value = "selected",
@@ -182,7 +182,7 @@ function DPP.main_menu ()
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_card_sticker"), scale = 0.4, colour = G.C.WHITE}}
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
-               create_option_cycle{
+               DPP.create_option_cycle{
                   options = DPP.card.sticker.options,
                   ref_table = DPP.card.suit,
                   ref_value = "selected",
@@ -208,14 +208,18 @@ function DPP.main_menu ()
                      ref_table = {true},
                      minw = 1.2,
                      minh = 0.4,
-                     scale = 0.3
+                     scale = 0.3,
+                     trim = {1, 10}
                   }}},
                }},
             }},
+         },
+         {
             UIBox_button{
                label = {"Card inspector"},
                minw = 2.5,
                minh = 0.4,
+               scale = 0.35
             }
          }
       }},
@@ -605,7 +609,7 @@ function DPP.main_menu ()
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_run_set_blind"), scale = 0.3, colour = G.C.GREY}}
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
-               create_option_cycle{
+               DPP.create_option_cycle{
                   options = DPP.blind.options,
                   ref_table = DPP.blind,
                   current_option = DPP.blind.number,

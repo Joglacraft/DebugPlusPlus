@@ -64,7 +64,8 @@ DPP = {
          game = 1
       }
       -- Some are filled out in overrides.lua
-   }
+   },
+   keys = {}
 }
 
 SMODS.Atlas{key = "modicon", path = "modicon.png", px = 32, py = 32}
@@ -91,9 +92,10 @@ DPP.reload_default_values()
 
 
 SMODS.Keybind({
-    key_pressed = "tab",
-    event = "pressed",
-    action = function()
+   key_pressed = "tab",
+   event = "pressed",
+   action = function()
+      if DPP.config.require_ctrl and not DPP.keys.lctrl then return end
       if not DPP.local_config.is_open or not G.OVERLAY_MENU then
          G.FUNCS.DPP_main_menu()
          DPP.local_config.is_open = true
@@ -102,5 +104,20 @@ SMODS.Keybind({
          DPP.local_config.is_open = false
       end
    end,
-   held_keys = DPP.config.require_ctrl and {"lctrl"} or {}
+})
+
+SMODS.Keybind({
+   key_pressed = "lctrl",
+   event = "pressed",
+   action = function()
+      DPP.keys.lctrl = true
+   end,
+})
+
+SMODS.Keybind({
+   key_pressed = "lctrl",
+   event = "released",
+   action = function()
+      DPP.keys.lctrl = false
+   end,
 })
