@@ -240,6 +240,11 @@ function G.FUNCS.DPP_set_ante(e)
     ease_ante(e.config.ref_table[1])
 end
 
+function G.FUNCS.DPP_set_round(e)
+    if not G.jokers then return end
+    ease_round(e.config.ref_table[1])
+end
+
 function G.FUNCS.DPP_set_gamespeed(e)
 
     DPP.gamespeed = tonumber(DPP.gamespeed) or DPP.gamespeed

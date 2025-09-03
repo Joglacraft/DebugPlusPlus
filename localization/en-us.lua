@@ -39,7 +39,7 @@ return {
             dpp_card_label = "Card",
             dpp_card_disclaimer = {
                 "(Applies to",
-                "selected card)"
+                "selected cards)"
             },
             dpp_card_rank = "Rank",
             dpp_card_suit = "Suit",
@@ -67,6 +67,9 @@ return {
             dpp_run_player_chips = "Player chips",
             dpp_run_blind_chips = "Required chips",
             dpp_run_ante_label = "Ante",
+            dpp_run_round_label = "Round",
+            dpp_run_win_label = "Win run",
+            dpp_run_lose_label = "Lose run",
 
             -- Game tab
             dpp_game_label = "Game",

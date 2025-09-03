@@ -1,6 +1,7 @@
 local function create_title (args)
    args.loc_title = args.loc_title or "dpp_name"
    args.area = args.area or nil
+   args.pages = args.pages or 1
 
    return
    {n = G.UIT.R, config = {align = "tm", colour = G.C.CLEAR, r = 0}, nodes = { -- Title
@@ -9,7 +10,8 @@ local function create_title (args)
          type = "C",
          w = 0.4, h = 0.4,
          ref_table = {args.area,-1},
-         button = "DPP_reload_lists"
+         button = (args.pages > 1 and "DPP_reload_lists") or nil,
+         colour = (args.pages <= 1 and G.C.UI.TEXT_INACTIVE) or nil,
       },
       {n = G.UIT.C, config = {align = "cm", minw = DPP.menu_width-1, minh = 0.5, colour = G.C.RED, r = 0.15}, nodes = { -- Title
          UIText{
@@ -23,7 +25,8 @@ local function create_title (args)
          type = "C",
          w = 0.4, h = 0.4,
          ref_table = {args.area,1},
-         button = "DPP_reload_lists"
+         button = (args.pages > 1 and "DPP_reload_lists") or nil,
+         colour = (args.pages <= 1 and G.C.UI.TEXT_INACTIVE) or nil
       },
    }}
    
@@ -46,6 +49,7 @@ function DPP.main_menu ()
                   ref_value = "selected",
                   current_option = DPP.config.background_colour.number,
                   scale = 0.6,
+                  w = 4,
                   opt_callback = "DPP_change_menu_background",
                   no_pips = true
                },
@@ -78,6 +82,7 @@ function DPP.main_menu ()
                      ref_value = "selected",
                      current_option = DPP.card.rank.number,
                      scale = 0.6,
+                     w = 4,
                      opt_callback = "DPP_update_rank",
                      no_pips = true
                   },
@@ -100,6 +105,7 @@ function DPP.main_menu ()
                      ref_value = "selected",
                      current_option = DPP.card.suit.number,
                      scale = 0.6,
+                     w = 4,
                      opt_callback = "DPP_update_suit",
                      no_pips = true
                   },
@@ -122,6 +128,7 @@ function DPP.main_menu ()
                      ref_value = "selected",
                      current_option = DPP.card.enhancement.number,
                      scale = 0.6,
+                     w = 4,
                      opt_callback = "DPP_update_enhancement",
                      no_pips = true
                },
@@ -133,7 +140,15 @@ function DPP.main_menu ()
                      scale = 0.3
                },
             }},
-
+         },
+         {
+            {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.3}, nodes = {
+               UIText{
+                  text = G.localization.misc.dictionary["dpp_card_disclaimer"],
+                  colour = "grey",
+                  scale = 0.3
+               }
+            }},
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.3}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_card_edition"), scale = 0.4, colour = G.C.WHITE}}
             }},
@@ -144,6 +159,7 @@ function DPP.main_menu ()
                      ref_value = "selected",
                      current_option = DPP.card.edition.number,
                      scale = 0.6,
+                     w = 4,
                      opt_callback = "DPP_update_edition",
                      no_pips = true
                },
@@ -166,6 +182,7 @@ function DPP.main_menu ()
                      ref_value = "selected",
                      current_option = DPP.card.seal.number,
                      scale = 0.6,
+                     w = 4,
                      opt_callback = "DPP_update_seal",
                      no_pips = true
                },
@@ -188,6 +205,7 @@ function DPP.main_menu ()
                   ref_value = "selected",
                   current_option = DPP.card.sticker.number,
                   scale = 0.6,
+                  w = 4,
                   opt_callback = "DPP_update_sticker",
                   no_pips = true
                },
@@ -615,8 +633,8 @@ function DPP.main_menu ()
                   current_option = DPP.blind.number,
                   ref_value = "selected",
                   opt_callback = "DPP_change_blind",
-                  minw = 2,
                   scale = 0.6,
+                  w = 4,
                   no_pips = true
                }
             }},
@@ -742,6 +760,66 @@ function DPP.main_menu ()
                   ref_table = {3}
                }}},
             }},
+
+            {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {
+               {n = G.UIT.T,config = {align = "tm", text = localize("dpp_run_round_label"), scale = 0.4, colour = G.C.WHITE}}
+            }},
+            {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
+               {n = G.UIT.C, nodes = { -- Horizontal tab
+               UIBox_button{
+                  label = {"-3"},
+                  button = "DPP_set_round",
+                  minw = 0.6,
+                  minh = 0.4,
+                  ref_table = {-3}
+               }}},
+               {n = G.UIT.C, nodes = { -- Horizontal tab
+               UIBox_button{
+                  label = {"-1"},
+                  button = "DPP_set_round",
+                  minw = 0.6,
+                  minh = 0.4,
+                  ref_table = {-1}
+               }}},
+               {n = G.UIT.C, nodes = { -- Horizontal tab
+               UIBox_button{
+                  label = {"+1"},
+                  button = "DPP_set_round",
+                  minw = 0.6,
+                  minh = 0.4,
+                  ref_table = {1}
+               }}},
+               {n = G.UIT.C, nodes = { -- Horizontal tab
+               UIBox_button{
+                  label = {"+3"},
+                  button = "DPP_set_round",
+                  minw = 0.6,
+                  minh = 0.4,
+                  ref_table = {3}
+               }}},
+            }},
+
+            {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
+               {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
+                  {n = G.UIT.C, nodes = { -- Horizontal tab
+                  UIBox_button{
+                     label = {localize("dpp_run_lose_label")},
+                     button = "DT_lose_game",
+                     minw = 1.2,
+                     minh = 0.4,
+                     scale = 0.3
+                  }}},
+                  {n = G.UIT.C, nodes = { -- Horizontal tab
+                  UIBox_button{
+                     label = {localize("dpp_run_win_label")},
+                     button = "DT_win_game",
+                     minw = 1.2,
+                     minh = 0.4,
+                     scale = 0.3,
+                     trim = {1, 10}
+                  }}},
+               }},
+            }},
          }
       }},
       {key = "game", value = {
@@ -795,7 +873,8 @@ function DPP.main_menu ()
          {n = G.UIT.C, nodes = {{n = G.UIT.C, config = {align = "tm", colour = G.C[DPP.config.background_colour.selected], padding = 0.05, outline = 1, outline_colour = G.C.WHITE, r = 0.15}, nodes = { -- Tab
          create_title {
                loc_title = "dpp_"..v.key.."_label",
-               area = v.key
+               area = v.key,
+               pages = #v.value
          },
          {n = G.UIT.R, config = {align = "cm"}, nodes = v.value[DPP.vars.pages[v.key]]},
          }}}}

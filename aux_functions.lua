@@ -132,30 +132,25 @@ function DPP.create_option_cycle(args)
   local choice_pips = not args.no_pips and {n=G.UIT.R, config={align = "cm", padding = (0.05 - (#args.options > 15 and 0.03 or 0))*args.scale}, nodes=pips} or nil
 
   local t = 
-        {n=G.UIT.C, config={align = "cm", padding = 0.1, r = 0.1, colour = G.C.CLEAR, id = args.id and (not args.label and args.id or nil) or nil, focus_args = args.focus_args}, nodes={
-          {n=G.UIT.C, config={align = "cm",r = 0.1, minw = 0.6*args.scale, hover = true, colour = not disabled and args.colour or G.C.BLACK,shadow = not disabled, button = not disabled and 'option_cycle' or nil, ref_table = args, ref_value = 'l', focus_args = {type = 'none'}}, nodes={
-            {n=G.UIT.T, config={ref_table = args, ref_value = 'l', scale = args.text_scale, colour = not disabled and G.C.UI.TEXT_LIGHT or G.C.UI.TEXT_INACTIVE}}
-          }},
-          args.mid and
-          {n=G.UIT.C, config={id = 'cycle_main'}, nodes={
-              {n=G.UIT.R, config={align = "cm", minh = 0.05}, nodes={
-                args.mid
-              }},
-              not disabled and choice_pips or nil
-          }}
-          or {n=G.UIT.C, config={id = 'cycle_main', align = "cm", minw = args.w, minh = args.h, r = 0.1, padding = 0.05, colour = args.colour,emboss = 0.025, hover = true, can_collide = true, on_demand_tooltip = args.on_demand_tooltip}, nodes={
-            {n=G.UIT.R, config={align = "cm"}, nodes={
+        {n=G.UIT.R, config={align = "cm", padding = 0.1, r = 0.1, colour = G.C.CLEAR, id = args.id and (not args.label and args.id or nil) or nil, focus_args = args.focus_args}, nodes={
+          {n = G.UIT.R, config = {align = "cm"}, nodes = {
+            {n=G.UIT.C, config={id = 'cycle_main', align = "cm", minw = args.w, minh = args.h, r = 0.1, padding = 0.05, colour = args.colour,emboss = 0.025, hover = true, can_collide = true, on_demand_tooltip = args.on_demand_tooltip}, nodes={
               {n=G.UIT.R, config={align = "cm"}, nodes={
-                {n=G.UIT.T, config={ref_table = args, ref_value = "current_option_val", colour = G.C.UI.TEXT_LIGHT, shadow = true, float = true, silent = true, bump = true, scale = args.text_scale}},
+                {n=G.UIT.R, config={align = "cm"}, nodes={
+                  {n=G.UIT.T, config={ref_table = args, ref_value = "current_option_val", colour = G.C.UI.TEXT_LIGHT, shadow = true, float = true, silent = true, bump = true, scale = args.text_scale}},
+                }},
               }},
-              {n=G.UIT.R, config={align = "cm", minh = 0.05}, nodes={
-              }},
-              not disabled and choice_pips or nil
-            }}
+            }},
           }},
-          {n=G.UIT.C, config={align = "cm",r = 0.1, minw = 0.6*args.scale, hover = not disabled, colour = not disabled and args.colour or G.C.BLACK,shadow = not disabled, button = not disabled and 'option_cycle' or nil, ref_table = args, ref_value = 'r', focus_args = {type = 'none'}}, nodes={
-            {n=G.UIT.T, config={ref_table = args, ref_value = 'r', scale = args.text_scale, colour = not disabled and G.C.UI.TEXT_LIGHT or G.C.UI.TEXT_INACTIVE}}
-          }},
+          {n = G.UIT.R, config = {align = "cm"}, nodes = {
+            {n=G.UIT.C, config={align = "cm",r = 0.3, minw = (args.w/2)-0.1, minh = 0.6*args.scale, hover = true, colour = not disabled and args.colour or G.C.BLACK,shadow = not disabled, button = not disabled and 'option_cycle' or nil, ref_table = args, ref_value = 'l', focus_args = {type = 'none'}}, nodes={
+              {n=G.UIT.T, config={ref_table = args, ref_value = 'l', scale = args.text_scale, colour = not disabled and G.C.UI.TEXT_LIGHT or G.C.UI.TEXT_INACTIVE}}
+            }},
+            {n=G.UIT.C, config={align = "cm",r = 0.3, minw = (args.w/2)-0.1, minh = 0.6*args.scale, hover = not disabled, colour = not disabled and args.colour or G.C.BLACK,shadow = not disabled, button = not disabled and 'option_cycle' or nil, ref_table = args, ref_value = 'r', focus_args = {type = 'none'}}, nodes={
+              {n=G.UIT.T, config={ref_table = args, ref_value = 'r', scale = args.text_scale, colour = not disabled and G.C.UI.TEXT_LIGHT or G.C.UI.TEXT_INACTIVE}}
+            }},
+          }}
+          
         }}
 
   if args.cycle_shoulders then 
@@ -302,7 +297,7 @@ function UIText (args)
 end
 
 --- Custom function to make buttons:tm:
----@param args {label:{}[],vars:{},w:number,h:number,ref_table:table,ref_value:string,colour:table,text_scale:number,text_col:table,font:string,func:string,button:string,type:"R"|"C"}
+---@param args {label:{}[],vars:{},w:number|nil,h:number|nil,ref_table:table|nil,ref_value:string|nil,hover:boolean|nil,shadown:boolean|nil,colour:table|nil,text_scale:number|nil,text_col:table|nil,font:string|nil,func:string|nil,button:string|nil,type:"R"|"C"|nil}
 ---@return table node The button node
 ---`label = {{{"Word 1"},{"Word 2"}...},{"New line"}...}` - The button's label text. It is highly customizable, supporting raw text `strings`, `ref_table` + `ref_value` combinations, custom `font`, `colour` and `scale`.\
 ---`w = 2.7, h = 0.9` - Minimum **width** and **height** of the button.\
@@ -325,6 +320,8 @@ function UIBox_adv_button (args)
     args.h = args.h or 0.9
     args.ref_table = args.ref_table or nil
     args.ref_value = args.ref_value or nil
+    args.hover = args.hover or true
+    args.shadow = args.shadow or true
     args.colour = args.colour or G.C.RED
     args.text_scale = args.text_scale or 0.3
     args.text_col = args.text_col or G.C.WHITE
@@ -350,16 +347,17 @@ function UIBox_adv_button (args)
     end
 
     return {n = G.UIT[args.type], config = {
-        minw = args.w,
-        minh = args.h,
-        align = "cm",
-        colour = args.colour,
-        func = args.func, 
-        button =args.button,
-        ref_table = args.ref_table,
-        ref_value = args.ref_value,
-        r = 0.1,
-        hover = true},
-        nodes = texts
+      minw = args.w,
+      minh = args.h,
+      align = "cm",
+      colour = args.colour,
+      func = args.func, 
+      button = args.button,
+      ref_table = args.ref_table,
+      ref_value = args.ref_value,
+      r = 0.1,
+      hover = args.hover,
+      shadow = args.shadow},
+      nodes = texts
     }
 end

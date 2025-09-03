@@ -54,7 +54,7 @@ DPP = {
       dollars = 0,
    },
    gamespeed = 1,
-   menu_width = 2.75,
+   menu_width = 3,
    vars = {
       pages = {
          meta = 1,
@@ -88,7 +88,7 @@ DPP.reload_lists()
 DPP.reload_default_values()
 
 
-
+create_UIBox_debug_tools()
 
 
 SMODS.Keybind({
