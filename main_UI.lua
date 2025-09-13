@@ -831,13 +831,13 @@ function DPP.dropdown_tab (args)
    end
 
    local page_cycler = {n = G.UIT.C, config = {align = "cm", padding = 0.1}, nodes = {
-      {n = G.UIT.C, config = {button = "DPP_dropdown_tab", ref_table = {type = args.type, page = args.page - 1}, align = "cm", r = 0.1, minw = 0.4, minh = 0.6, colour = G.C.BLUE}, nodes = {{n = G.UIT.T, config = {align = "cm", text = "<", scale = 0.5, colour = G.C.WHITE}}}},
-      {n = G.UIT.C, config = {align = "cm", r = 0.1, minw = 2, minh = 0.6, colour = G.C.BLUE}, nodes = {
-         {n = G.UIT.T, config = {align = "cm", text = "Page ", scale = 0.5, colour = G.C.WHITE}},
-         {n = G.UIT.T, config = {align = "cm", ref_table = args.type, ref_value = "page", scale = 0.5, colour = G.C.WHITE}},
-         {n = G.UIT.T, config = {align = "cm", text = "/"..max_pages, scale = 0.5, colour = G.C.WHITE}},
+      {n = G.UIT.C, config = {shadow = true, button = (max_pages > 1 and "DPP_dropdown_tab") or nil, ref_table = {type = args.type, page = args.page - 1}, align = "cm", r = 0.1, minw = 0.4, minh = 0.6, colour = (max_pages > 1 and G.C.BLUE) or G.C.GREY}, nodes = {{emboss = 0.1, n = G.UIT.T, config = {align = "cm", text = "<", scale = 0.5, colour = G.C.WHITE}}}},
+      {n = G.UIT.C, config = {shadow = true, align = "cm", r = 0.1, minw = 2, minh = 0.6, colour = G.C.BLUE}, nodes = {
+         {n = G.UIT.T, config = {emboss = 0.1, align = "cm", text = "Page ", scale = 0.5, colour = G.C.WHITE}},
+         {n = G.UIT.T, config = {emboss = 0.1, align = "cm", ref_table = args.type, ref_value = "page", scale = 0.5, colour = G.C.WHITE}},
+         {n = G.UIT.T, config = {emboss = 0.1, align = "cm", text = "/"..max_pages, scale = 0.5, colour = G.C.WHITE}},
       }},
-      {n = G.UIT.C, config = {button = "DPP_dropdown_tab", ref_table = {type = args.type, page = args.page + 1}, align = "cm", r = 0.1, minw = 0.4, minh = 0.6, colour = G.C.BLUE}, nodes = {{n = G.UIT.T, config = {align = "cm", text = ">", scale = 0.5, colour = G.C.WHITE}}}},
+      {n = G.UIT.C, config = {shadow = true, button = (max_pages > 1 and "DPP_dropdown_tab") or nil, ref_table = {type = args.type, page = args.page + 1}, align = "cm", r = 0.1, minw = 0.4, minh = 0.6, colour = (max_pages > 1 and G.C.BLUE) or G.C.GREY}, nodes = {{emboss = 0.1, n = G.UIT.T, config = {align = "cm", text = ">", scale = 0.5, colour = G.C.WHITE}}}},
    }}
 
    local entries_label = {n = G.UIT.T, config = {align = "cm", text = "Total entries: "..#args.type['options'], scale = 0.5, colour = G.C.WHITE}}

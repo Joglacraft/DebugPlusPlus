@@ -26,49 +26,43 @@ function DPP.reload_lists()
     for _,v in pairs(SMODS.Ranks) do
         DPP.card.rank.options[#DPP.card.rank.options+1] = v.key
     end
-    table.sort( DPP.card.rank.options)
+    table.sort(DPP.card.rank.options)
 
     DPP.card.suit.options = {}
     for _,v in pairs(SMODS.Suits) do
         DPP.card.suit.options[#DPP.card.suit.options+1] = v.key
     end
+    table.sort(DPP.card.suit.options)
 
     DPP.card.enhancement.options = {"c_base"}
     for _,v in pairs(G.P_CENTER_POOLS.Enhanced) do
         DPP.card.enhancement.options[#DPP.card.enhancement.options+1] = v.key
     end
+    --table.sort(DPP.card.enhancement.options)
 
     DPP.card.edition.options = {}
-    DPP.card.edition.key = {}
     for _,v in pairs(G.P_CENTER_POOLS.Edition) do
         DPP.card.edition.options[#DPP.card.edition.options+1] = v.key
     end
+    --table.sort(DPP.card.edition.options)
 
     DPP.card.seal.options = {"None"}
     for _,v in pairs(SMODS.Seals) do
         DPP.card.seal.options[#DPP.card.seal.options+1] = v.key
     end
+    table.sort(DPP.card.seal.options)
 
     DPP.card.sticker.options = {}
     for _,v in pairs(SMODS.Stickers) do
         DPP.card.sticker.options[#DPP.card.sticker.options+1] = v.key
     end
+    table.sort(DPP.card.sticker.options)
 
     DPP.blind.options = {"Random"}
-    DPP.blind.key = {"random"}
     for _,v in pairs(G.P_BLINDS) do
         DPP.blind.options[#DPP.blind.options+1] = v.key
     end
-end
-
-function DPP.reload_default_values()
-    DPP.card.rank.selected = DPP.card.rank.options[1]
-    DPP.card.suit.selected = DPP.card.suit.options[1]
-    DPP.card.enhancement.selected = DPP.card.enhancement.options[1]
-    DPP.card.edition.selected = DPP.card.edition.options[1]
-    DPP.card.seal.selected = DPP.card.seal.options[1]
-    DPP.card.sticker.selected = DPP.card.sticker.options[1]
-    DPP.blind.selected = DPP.blind.options[1]
+    table.sort(DPP.blind.options)
 end
 
 G.FUNCS.DPP_load_text_input = function(e)

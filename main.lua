@@ -81,7 +81,6 @@ for k, v in pairs(files) do -- Load this mod's files
 end
 
 DPP.reload_lists()
-DPP.reload_default_values()
 
 
 create_UIBox_debug_tools()
