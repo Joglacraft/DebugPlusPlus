@@ -16,7 +16,27 @@ function G.FUNCS.DPP_main_menu()
     }
 end
 
+function G.FUNCS.DPP_dropdown_tab (e)
+    if not e or not e.config then e = {config = {}} end
+    if G.OVERLAY_MENU then
+        G.OVERLAY_MENU:remove()
+    end
+    G.OVERLAY_MENU = UIBox{
+        definition = DPP.dropdown_tab(e.config.ref_table),
+        config = {
+            align = "cm",
+            offset = {x=0,y=0},
+            major = G.ROOM_ATTACH,
+            bond = 'Weak',
+            no_esc = false
+        },
+    }
+end
+
 function G.FUNCS.DPP_reload_lists(e)
+    if G.OVERLAY_MENU then
+        G.OVERLAY_MENU:remove()
+    end
     DPP.vars.pages[e.config.ref_table[1]] = DPP.vars.pages[e.config.ref_table[1]] + e.config.ref_table[2]
     DPP.reload_lists()
     G.FUNCS.DPP_main_menu()
@@ -47,68 +67,43 @@ function G.FUNCS.DPP_change_menu_background(args)
     G.FUNCS.DPP_main_menu()
 end
 
-function G.FUNCS.DPP_update_rank(args)
-   DPP.card.rank.number = args.cycle_config.current_option
-   DPP.card.rank.selected = args.to_val
-end
-
-function G.FUNCS.DPP_set_rank()
+function G.FUNCS.DPP_set_rank(e)
     if not G.hand then return end
     for _,v in pairs(G.hand.highlighted) do
-        _ = SMODS.change_base(v,nil,DPP.card.rank.selected)
+        _ = SMODS.change_base(v,nil,e.config.ref_table[1])
     end
 end
 
-function G.FUNCS.DPP_update_suit(args)
-   DPP.card.suit.number = args.cycle_config.current_option
-   DPP.card.suit.selected = args.to_val
-end
-
-function G.FUNCS.DPP_set_suit()
+function G.FUNCS.DPP_set_suit(e)
     if not G.hand then return end
     for _,v in pairs(G.hand.highlighted) do
-        _ = SMODS.change_base(v,DPP.card.suit.selected,nil)
+        _ = SMODS.change_base(v,e.config.ref_table[1],nil)
     end
 end
 
-function G.FUNCS.DPP_update_enhancement(args)
-    DPP.card.enhancement.number = args.cycle_config.current_option
-    DPP.card.enhancement.selected = args.to_val
-end
-
-function G.FUNCS.DPP_set_enhancement()
+function G.FUNCS.DPP_set_enhancement(e)
     if not G.hand then return end
     for _,v in pairs(G.hand.highlighted) do
-        v:set_ability(DPP.card.enhancement.key[DPP.card.enhancement.number])
+        v:set_ability(e.config.ref_table[1])
     end
 end
 
-function G.FUNCS.DPP_update_edition(args)
-    DPP.card.edition.number = args.cycle_config.current_option
-    DPP.card.edition.selected = args.to_val
-end
-
-function G.FUNCS.DPP_set_edition()
+function G.FUNCS.DPP_set_edition(e)
     if not G.hand or not G.consumeables then return end
     for _,v in pairs(G.hand.highlighted) do
-        v:set_edition(DPP.card.edition.key[DPP.card.edition.number],true,true)
+        v:set_edition(e.config.ref_table[1],true,true)
     end
     for _,v in pairs(G.jokers.highlighted) do
-        v:set_edition(DPP.card.edition.key[DPP.card.edition.number],true,true)
+        v:set_edition(e.config.ref_table[1],true,true)
     end
     for _,v in pairs(G.consumeables.highlighted) do
-        v:set_edition(DPP.card.edition.key[DPP.card.edition.number],true,true)
+        v:set_edition(e.config.ref_table[1],true,true)
     end
 end
 
-function G.FUNCS.DPP_update_seal(args)
-    DPP.card.seal.number = args.cycle_config.current_option
-    DPP.card.seal.selected = args.to_val
-end
-
-function G.FUNCS.DPP_set_seal()
+function G.FUNCS.DPP_set_seal(e)
     if not G.hand then return end
-    if DPP.card.seal.selected == "None" then
+    if e.config.ref_table[1] == "None" then
         for _,v in pairs(G.hand.highlighted) do
             v:set_seal(nil,true,true)
         end
@@ -120,36 +115,31 @@ function G.FUNCS.DPP_set_seal()
         end
     else
         for _,v in pairs(G.hand.highlighted) do
-            v:set_seal(DPP.card.seal.selected,true,true)
+            v:set_seal(e.config.ref_table[1],true,true)
         end
         for _,v in pairs(G.jokers.highlighted) do
-            v:set_seal(DPP.card.seal.selected,true,true)
+            v:set_seal(e.config.ref_table[1],true,true)
         end
         for _,v in pairs(G.consumeables.highlighted) do
-            v:set_seal(DPP.card.seal.selected,true,true)
+            v:set_seal(e.config.ref_table[1],true,true)
         end
     end
 end
 
-function G.FUNCS.DPP_update_sticker(args)
-    DPP.card.sticker.number = args.cycle_config.current_option
-    DPP.card.sticker.selected = args.to_val
-end
-
-function G.FUNCS.DPP_toggle_sticker (e)
+function G.FUNCS.DPP_set_sticker (e)
     if G.jokers then
-        for _,v in ipairs(G.jokers.cards) do
-            SMODS.Stickers[DPP.card.sticker.selected]:apply(v,e.config.ref_table[1])
+        for _,v in ipairs(G.jokers.highlighted) do
+            SMODS.Stickers[e.config.ref_table[1]]:apply(v,not v.ability[e.config.ref_table[1]])
         end
     end
     if G.consumeables then
-        for _,v in ipairs(G.consumeables) do
-            SMODS.Stickers[DPP.card.sticker.selected]:apply(v,e.config.ref_table[1])
+        for _,v in ipairs(G.consumeables.highlighted) do
+            SMODS.Stickers[e.config.ref_table[1]]:apply(v,not v.ability[e.config.ref_table[1]])
         end
     end
     if G.hand then
-        for _,v in ipairs(G.hand) do
-            SMODS.Stickers[DPP.card.sticker.selected]:apply(v,e.config.ref_table[1])
+        for _,v in ipairs(G.hand.highlighted) do
+            SMODS.Stickers[e.config.ref_table[1]]:apply(v,not v.ability[e.config.ref_table[1]])
         end
     end
 end
@@ -203,18 +193,13 @@ function G.FUNCS.DPP_set_blind_chips(e)
     end
 end
 
-function G.FUNCS.DPP_change_blind(args)
-    DPP.blind.number = args.cycle_config.current_option
-    DPP.blind.selected = args.to_val
-end
-
-function G.FUNCS.DPP_set_blind()
+function G.FUNCS.DPP_set_blind(e)
     if not G.blind_select then return end
     local par = G.blind_select_opts.boss.parent
-    if DPP.blind.selected == "Random" then
+    if e.config.ref_table[1] == "Random" then
         G.GAME.round_resets.blind_choices.Boss = get_new_boss()
     else
-        G.GAME.round_resets.blind_choices.Boss = DPP.blind.key[DPP.blind.number]
+        G.GAME.round_resets.blind_choices.Boss = e.config.ref_table[1]
     end
 
     G.blind_select_opts.boss = UIBox{

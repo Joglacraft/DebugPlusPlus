@@ -64,12 +64,15 @@ return {
             dpp_run_label = "Run",
             dpp_run_blind_label = "Blind",
             dpp_run_set_blind = "Set boss blind",
+            dpp_run_win_blind = "Win blind",
             dpp_run_player_chips = "Player chips",
             dpp_run_blind_chips = "Required chips",
             dpp_run_ante_label = "Ante",
             dpp_run_round_label = "Round",
             dpp_run_win_label = "Win run",
             dpp_run_lose_label = "Lose run",
+            dpp_run_dismiss = "Dismiss",
+            dpp_run_disclaimer = "Modified by DebugPlusPlus",
 
             -- Game tab
             dpp_game_label = "Game",

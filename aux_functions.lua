@@ -26,24 +26,22 @@ function DPP.reload_lists()
     for _,v in pairs(SMODS.Ranks) do
         DPP.card.rank.options[#DPP.card.rank.options+1] = v.key
     end
+    table.sort( DPP.card.rank.options)
 
     DPP.card.suit.options = {}
     for _,v in pairs(SMODS.Suits) do
         DPP.card.suit.options[#DPP.card.suit.options+1] = v.key
     end
 
-    DPP.card.enhancement.options = {"None"}
-    DPP.card.enhancement.key = {"c_base"}
+    DPP.card.enhancement.options = {"c_base"}
     for _,v in pairs(G.P_CENTER_POOLS.Enhanced) do
-            DPP.card.enhancement.options[#DPP.card.enhancement.options+1] = v.name
-            DPP.card.enhancement.key[#DPP.card.enhancement.key+1] = v.key
+        DPP.card.enhancement.options[#DPP.card.enhancement.options+1] = v.key
     end
 
     DPP.card.edition.options = {}
     DPP.card.edition.key = {}
     for _,v in pairs(G.P_CENTER_POOLS.Edition) do
-        DPP.card.edition.options[#DPP.card.edition.options+1] = v.name
-        DPP.card.edition.key[#DPP.card.edition.key+1] = v.key
+        DPP.card.edition.options[#DPP.card.edition.options+1] = v.key
     end
 
     DPP.card.seal.options = {"None"}
@@ -59,8 +57,7 @@ function DPP.reload_lists()
     DPP.blind.options = {"Random"}
     DPP.blind.key = {"random"}
     for _,v in pairs(G.P_BLINDS) do
-        DPP.blind.options[#DPP.blind.options+1] = v.name
-        DPP.blind.key[#DPP.blind.key+1] = v.key
+        DPP.blind.options[#DPP.blind.options+1] = v.key
     end
 end
 
@@ -143,10 +140,10 @@ function DPP.create_option_cycle(args)
             }},
           }},
           {n = G.UIT.R, config = {align = "cm"}, nodes = {
-            {n=G.UIT.C, config={align = "cm",r = 0.3, minw = (args.w/2)-0.1, minh = 0.6*args.scale, hover = true, colour = not disabled and args.colour or G.C.BLACK,shadow = not disabled, button = not disabled and 'option_cycle' or nil, ref_table = args, ref_value = 'l', focus_args = {type = 'none'}}, nodes={
+            {n=G.UIT.C, config={align = "cm",r = 0.3, minw = (args.w/2)-0.1, minh = 0.6*args.scale, hover = true, colour = not disabled and args.colour or G.C.BLACK,shadow = not disabled, button = not disabled and 'option_cycle' or nil, ref_table = args, ref_value = 'l'}, nodes={
               {n=G.UIT.T, config={ref_table = args, ref_value = 'l', scale = args.text_scale, colour = not disabled and G.C.UI.TEXT_LIGHT or G.C.UI.TEXT_INACTIVE}}
             }},
-            {n=G.UIT.C, config={align = "cm",r = 0.3, minw = (args.w/2)-0.1, minh = 0.6*args.scale, hover = not disabled, colour = not disabled and args.colour or G.C.BLACK,shadow = not disabled, button = not disabled and 'option_cycle' or nil, ref_table = args, ref_value = 'r', focus_args = {type = 'none'}}, nodes={
+            {n=G.UIT.C, config={align = "cm",r = 0.3, minw = (args.w/2)-0.1, minh = 0.6*args.scale, hover = not disabled, colour = not disabled and args.colour or G.C.BLACK,shadow = not disabled, button = not disabled and 'option_cycle' or nil, ref_table = args, ref_value = 'r'}, nodes={
               {n=G.UIT.T, config={ref_table = args, ref_value = 'r', scale = args.text_scale, colour = not disabled and G.C.UI.TEXT_LIGHT or G.C.UI.TEXT_INACTIVE}}
             }},
           }}

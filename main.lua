@@ -10,43 +10,39 @@ DPP = {
    card = {
       rank = {
          options = {},
-         selected = "Ace",
-         number = 1
+         page = 1,
+         func = 'rank'
       },
       suit = {
          options = {},
-         selected = "Spades",
-         number = 1,
+         page = 1,
+         func = 'suit'
       },
       enhancement = {
          options = {"None"},
-         key = {"c_base"},
-         selected = "None",
-         value = "None",
-         number = 1,
+         page = 1,
+         func = 'enhancement'
       },
       edition = {
          options = {none = nil},
-         key = {nil},
-         selected = "None",
-         number = 1,
+         page = 1,
+         func = 'edition'
       },
       seal = {
          options = {"None"},
-         selected = "None",
-         number =1
+         page = 1,
+         func = 'seal'
       },
       sticker = {
          options = {"None"},
-         selected = "None",
-         number = 1,
+         page = 1,
+         func = 'sticker'
       }
    },
    blind = {
       options = {"Random"},
-      key = {nil},
-      selected = "Random",
-      number = 1
+      page = 1,
+      func = 'blind'
    },
    run = {
       chips = 0,

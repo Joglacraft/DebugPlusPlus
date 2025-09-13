@@ -1,0 +1,25 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''customize = {n=G.UIT.R, config={minw = 5, align='cl'}, nodes = {
+    UIBox_button{ label = {localize('b_deck_skins')}, col = true, button = "customize_deck", minw = 2.4},
+    { n = G.UIT.C, config = {minw = 0.2}},
+    UIBox_button{ label = {localize('b_textures')}, col = true, button = "textures_button", minw = 2.4, align = 'cl', colour = Malverk.badge_colour},
+}}'''
+position = "after"
+payload = '''
+if Malverk and DPP and DPP.config.display_menu_button then
+    customize = {n=G.UIT.R, config={minw = 5, align='cl'}, nodes = {
+        UIBox_button{ label = {localize('b_deck_skins')}, col = true, button = "customize_deck", minw = 3.4},
+        { n = G.UIT.C, config = {minw = 0.2}},
+        UIBox_button{ label = {localize('b_textures')}, col = true, button = "textures_button", minw = 3.4, align = 'cl', colour = Malverk.badge_colour},
+    }}
+end
+'''
+match_indent = true
