@@ -877,6 +877,7 @@ function DPP.card_inspector_UI (card,path,page)
       ret = ret and ret[key]
       if ret == nil then break end
    end
+   table.sort(ret)
 
    for _,_ in pairs(ret) do total_entries = total_entries + 1 end
 
@@ -918,8 +919,19 @@ function DPP.card_inspector_UI (card,path,page)
       print(max_entries*(page+1))
       print("----")
    ]]
+   local path_string = "card"
+   if #path <= 3 then
+      for i=1, #path do
+         path_string = path_string.."/"..path[i]
+      end
+   else
+      path_string = path_string.."/.../"..path[#path-1].."/"..path[#path]
+   end
 
    local c = {
+      {n = G.UIT.R, config = {align = "cm"}, nodes = {
+         {n = G.UIT.T, config = {text = path_string, scale = 0.3, colour = G.C.WHITE}}
+      }},
       {n = G.UIT.R, config = {align = "cm"}, nodes = {
          {n = G.UIT.T, config = {text = localize("k_page").." "..page+1 .."/"..(math.ceil(total_entries/max_entries)), scale = 0.3, colour = G.C.WHITE}}
       }},
@@ -957,7 +969,7 @@ function DPP.card_inspector_UI (card,path,page)
 
    return {n = G.UIT.ROOT, config = {minw = 2, minh = 2, colour = G.C.BLACK, align = "tm", r = 0.1, outline = 1, outline_colour = G.C.WHITE, padding = 0.1}, nodes = {
       (not card.playing_card and {n = G.UIT.R, config = {align = "cm"}, nodes = c}) or nil,
-      {n = G.UIT.R, config = {align = "cm"}, nodes = t},
+      {n = G.UIT.R, config = {align = "cm", padding = 0.1}, nodes = t},
       (card.playing_card and {n = G.UIT.R, config = {align = "cm"}, nodes = c} or nil)
    }}
 end

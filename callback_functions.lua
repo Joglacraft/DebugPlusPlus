@@ -42,7 +42,7 @@ function G.FUNCS.DPP_reload_inspector_ui(e)
     -- Change path
     if target ~= nil then
         if target == false then path[#path] = nil
-        elseif type(target) == 'string' then path[#path+1] = target end
+        else path[#path+1] = target end
     end
 
     -- Remove card's UI box
