@@ -895,7 +895,7 @@ function DPP.card_inspector_UI (card,path,page)
                   scale = 0.6,
                   ref_table = ret,
                   ref_value = k,
-               } or type(v) ~= "table" and DPP.create_text_input{
+               } or (type(v) == "string" or type(v) == "number") and DPP.create_text_input{
                   id = tostring(i).."_input",
                   ref_table = ret,
                   ref_value = k,
@@ -908,7 +908,7 @@ function DPP.card_inspector_UI (card,path,page)
                   minh = 0.5,
                   button = "DPP_reload_inspector_ui",
                   ref_table = {card = card, target = k, path = path, page = 0}
-               })
+               } or {n = G.UIT.T, config = {text = tostring(v), scale = 0.3, colour = G.C.WHITE}})
             }}
          }}
       end
