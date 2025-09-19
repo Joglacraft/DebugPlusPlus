@@ -24,7 +24,6 @@ pattern = '''
 '''
 position = "at"
 payload = '''
-
 '''
 match_indent = true
 

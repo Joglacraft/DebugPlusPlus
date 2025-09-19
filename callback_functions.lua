@@ -33,6 +33,33 @@ function G.FUNCS.DPP_dropdown_tab (e)
     }
 end
 
+function G.FUNCS.DPP_reload_inspector_ui(e)
+    local card = e.config.ref_table.card
+    local target = e.config.ref_table.target
+    local path = e.config.ref_table.path
+    local page = e.config.ref_table.page
+
+    -- Change path
+    if target ~= nil then
+        if target == false then path[#path] = nil
+        elseif type(target) == 'string' then path[#path+1] = target end
+    end
+
+    -- Remove card's UI box
+    card.children.DPP_card_info:remove()
+    card.children.DPP_card_info = nil
+
+    -- Re-generate card's UI box
+    card.children.DPP_card_info = UIBox{
+    definition = DPP.card_inspector_UI(card, path, page),
+    config = {
+        align = (card.playing_card and "tm" or "bm"),
+        offset = {x=0,y=0},
+        parent = card
+    }
+}
+end
+
 function G.FUNCS.DPP_reload_lists(e)
     if G.OVERLAY_MENU then
         G.OVERLAY_MENU:remove()

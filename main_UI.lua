@@ -140,15 +140,16 @@ function DPP.main_menu ()
                   ref_table = {page = 1, type = DPP.card['sticker']}
                },
             }},
+            {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
+               create_toggle{
+                  label = 'Inspector',
+                  ref_table = DPP.vars,
+                  ref_value = 'enable_card_inspector',
+                  scale = 0.5,
+                  w = 1, h = .5
+               }
+            }},
          },
-         {
-            UIBox_button{
-               label = {"Card inspector"},
-               minw = 2.5,
-               minh = 0.4,
-               scale = 0.35
-            }
-         }
       }},
       {key = "player", value = {
          {
@@ -831,13 +832,13 @@ function DPP.dropdown_tab (args)
    end
 
    local page_cycler = {n = G.UIT.C, config = {align = "cm", padding = 0.1}, nodes = {
-      {n = G.UIT.C, config = {shadow = true, button = (max_pages > 1 and "DPP_dropdown_tab") or nil, ref_table = {type = args.type, page = args.page - 1}, align = "cm", r = 0.1, minw = 0.4, minh = 0.6, colour = (max_pages > 1 and G.C.BLUE) or G.C.GREY}, nodes = {{emboss = 0.1, n = G.UIT.T, config = {align = "cm", text = "<", scale = 0.5, colour = G.C.WHITE}}}},
-      {n = G.UIT.C, config = {shadow = true, align = "cm", r = 0.1, minw = 2, minh = 0.6, colour = G.C.BLUE}, nodes = {
+      {n = G.UIT.C, config = {hover = true, shadow = true, button = (max_pages > 1 and "DPP_dropdown_tab") or nil, ref_table = {type = args.type, page = args.page - 1}, align = "cm", r = 0.1, minw = 0.4, minh = 0.6, colour = (max_pages > 1 and G.C.BLUE) or G.C.GREY}, nodes = {{emboss = 0.1, n = G.UIT.T, config = {align = "cm", text = "<", scale = 0.5, colour = G.C.WHITE}}}},
+      {n = G.UIT.C, config = {hover = true, shadow = true, align = "cm", r = 0.1, minw = 2, minh = 0.6, colour = G.C.BLUE}, nodes = {
          {n = G.UIT.T, config = {emboss = 0.1, align = "cm", text = "Page ", scale = 0.5, colour = G.C.WHITE}},
          {n = G.UIT.T, config = {emboss = 0.1, align = "cm", ref_table = args.type, ref_value = "page", scale = 0.5, colour = G.C.WHITE}},
          {n = G.UIT.T, config = {emboss = 0.1, align = "cm", text = "/"..max_pages, scale = 0.5, colour = G.C.WHITE}},
       }},
-      {n = G.UIT.C, config = {shadow = true, button = (max_pages > 1 and "DPP_dropdown_tab") or nil, ref_table = {type = args.type, page = args.page + 1}, align = "cm", r = 0.1, minw = 0.4, minh = 0.6, colour = (max_pages > 1 and G.C.BLUE) or G.C.GREY}, nodes = {{emboss = 0.1, n = G.UIT.T, config = {align = "cm", text = ">", scale = 0.5, colour = G.C.WHITE}}}},
+      {n = G.UIT.C, config = {hover = true, shadow = true, button = (max_pages > 1 and "DPP_dropdown_tab") or nil, ref_table = {type = args.type, page = args.page + 1}, align = "cm", r = 0.1, minw = 0.4, minh = 0.6, colour = (max_pages > 1 and G.C.BLUE) or G.C.GREY}, nodes = {{emboss = 0.1, n = G.UIT.T, config = {align = "cm", text = ">", scale = 0.5, colour = G.C.WHITE}}}},
    }}
 
    local entries_label = {n = G.UIT.T, config = {align = "cm", text = "Total entries: "..#args.type['options'], scale = 0.5, colour = G.C.WHITE}}
@@ -857,6 +858,107 @@ function DPP.dropdown_tab (args)
          w = 5, h = 0.6,
          button = "DPP_main_menu"
       },
+   }}
+end
+
+function DPP.card_inspector_UI (card,path,page)
+   path = path or {}
+   page = page or 0
+
+   local t = {}
+   local i = 0
+   local max_entries = 5
+   local total_entries = 0
+
+   
+
+   local ret = card
+   for _, key in ipairs(path) do
+      ret = ret and ret[key]
+      if ret == nil then break end
+   end
+
+   for _,_ in pairs(ret) do total_entries = total_entries + 1 end
+
+   for k,v in pairs(ret) do
+      i = i + 1
+      --print(i)
+      if i > max_entries*page and i < (max_entries*(page+1))+1 then
+         t[#t+1] = {n = G.UIT.R, config = {align = "cm"}, nodes = {
+            {n = G.UIT.C, config = {align = "cm"}, nodes = {{n = G.UIT.T, config = {text = tostring(k)..": ", scale = 0.3, colour = G.C.WHITE}}}},
+            {n = G.UIT.C, config = {align = "cm"}, nodes = {
+               ( type(v) == "boolean" and create_toggle{
+                  label = '',
+                  w = 0.1,
+                  h = 0.1,
+                  scale = 0.6,
+                  ref_table = ret,
+                  ref_value = k,
+               } or type(v) ~= "table" and DPP.create_text_input{
+                  id = tostring(i).."_input",
+                  ref_table = ret,
+                  ref_value = k,
+                  w = 1,
+                  h = 0,
+                  text_scale = 0.3
+               } or UIBox_button{
+                  label = {"Table"},
+                  minw = 0.8,
+                  minh = 0.5,
+                  button = "DPP_reload_inspector_ui",
+                  ref_table = {card = card, target = k, path = path, page = 0}
+               })
+            }}
+         }}
+      end
+   end
+   --[[
+      print("----")
+      print(max_entries*page)
+      print(max_entries*(page+1))
+      print("----")
+   ]]
+
+   local c = {
+      {n = G.UIT.R, config = {align = "cm"}, nodes = {
+         {n = G.UIT.T, config = {text = localize("k_page").." "..page+1 .."/"..(math.ceil(total_entries/max_entries)), scale = 0.3, colour = G.C.WHITE}}
+      }},
+      {n = G.UIT.R, config = {align = "cm", minh = 0.1}},
+      {n = G.UIT.R, config = {align = "cm"}, nodes = {
+         {n = G.UIT.C, config = {align = "cm"}, nodes = {
+         UIBox_button{
+            label = {localize("b_back")},
+            minw = 0.8,
+            minh = 0.5,
+            button = (#path > 0 and "DPP_reload_inspector_ui") or nil,
+            colour = (#path > 0 and G.C.RED) or G.C.GREY,
+            ref_table = {card = card, target = false, path = path, page = 0}
+         }}},
+         {n = G.UIT.C, config = {align = "cm"}, nodes = {
+         UIBox_button{
+            label = {"<"},
+            minw = 0.8,
+            minh = 0.5,
+            button = (page > 0 and "DPP_reload_inspector_ui") or nil,
+            colour = (page > 0 and G.C.RED) or G.C.GREY,
+            ref_table = {card = card, path = path, page = page-1}
+         }}},
+         {n = G.UIT.C, config = {align = "cm"}, nodes = {
+         UIBox_button{
+            label = {">"},
+            minw = 0.8,
+            minh = 0.5,
+            button = (page < (math.ceil(total_entries/max_entries)-1) and "DPP_reload_inspector_ui") or nil,
+            colour = (page < (math.ceil(total_entries/max_entries)-1) and G.C.RED) or G.C.GREY,
+            ref_table = {card = card, path = path, page = page + 1}
+         }}},
+      }}
+   }
+
+   return {n = G.UIT.ROOT, config = {minw = 2, minh = 2, colour = G.C.BLACK, align = "tm", r = 0.1, outline = 1, outline_colour = G.C.WHITE, padding = 0.1}, nodes = {
+      (not card.playing_card and {n = G.UIT.R, config = {align = "cm"}, nodes = c}) or nil,
+      {n = G.UIT.R, config = {align = "cm"}, nodes = t},
+      (card.playing_card and {n = G.UIT.R, config = {align = "cm"}, nodes = c} or nil)
    }}
 end
 

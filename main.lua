@@ -57,8 +57,9 @@ DPP = {
          card = 1,
          player = 1,
          run = 1,
-         game = 1
-      }
+         game = 1,
+      },
+      enable_card_inspector = false
       -- Some are filled out in overrides.lua
    },
    keys = {}

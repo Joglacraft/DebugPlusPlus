@@ -106,3 +106,23 @@ function create_UIBox_options(args)
     --if DPP.config.display_menu_button then table.insert(tbl.nodes[1].nodes[1].nodes[1].nodes,1,dpp_button) end
     return tbl
 end
+
+local ref = Card.highlight
+
+function Card:highlight(is_highlighted)
+    local ret = ref(self,is_highlighted)
+    if self.highlighted and self.area and self.area.config.type ~= 'shop' and not self.area.config.collection and DPP.vars.enable_card_inspector then
+        self.children.DPP_card_info = UIBox{
+            definition = DPP.card_inspector_UI(self), 
+            config = {
+                align = (self.playing_card and "tm" or "bm"),
+                offset = {x=0,y=0},
+                parent = self
+            }
+        }
+    elseif self.children.DPP_card_info then
+        self.children.DPP_card_info:remove()
+        self.children.DPP_card_info = nil
+    end
+    return ret
+end

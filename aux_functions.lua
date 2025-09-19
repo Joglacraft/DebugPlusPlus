@@ -181,8 +181,9 @@ function DPP.create_text_input(args)
     args.prompt_text = args.prompt_text or ''
     args.current_prompt_text = ''
     args.id = args.id or "text_input"
-
-    local text = {ref_table = args.ref_table, ref_value = args.ref_value, letters = {}, current_position = string.len(args.ref_table[args.ref_value])}
+    
+    local suc, val = pcall(function () return string.len(args.ref_table[args.ref_value]) end)
+    local text = {ref_table = args.ref_table, ref_value = args.ref_value, letters = {}, current_position = suc and val or 1}
     local ui_letters = {}
     for i = 1, args.max_length do
         text.letters[i] = (args.ref_table[args.ref_value] and (string.sub(args.ref_table[args.ref_value], i, i) or '')) or ''
