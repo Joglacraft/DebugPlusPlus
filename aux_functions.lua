@@ -176,6 +176,7 @@ function DPP.create_text_input(args)
     args.w = args.w or 2.5
     args.h = args.h or 0.7
     args.text_scale = args.text_scale or 0.4
+    args.cursor_scale = args.cursor_scale or 0.4
     args.max_length = args.max_length or 16
     args.all_caps = args.all_caps or false
     args.prompt_text = args.prompt_text or ''
@@ -194,11 +195,11 @@ function DPP.create_text_input(args)
     local position_text_colour = lighten(copy_table(G.C.BLUE), 0.4)
 
     ui_letters[#ui_letters+1] = {n=G.UIT.T, config={ref_table = args, ref_value = 'current_prompt_text', scale = args.text_scale, colour = lighten(copy_table(args.colour), 0.4), id = args.id..'_prompt'}}
-    ui_letters[#ui_letters+1] = {n=G.UIT.B, config={r = 0.03,w=0.1, h=0.4, colour = position_text_colour, id = args.id..'_position', func = 'flash'}}
+    ui_letters[#ui_letters+1] = {n=G.UIT.B, config={r = 0.03,w=0.1, h=args.cursor_scale, colour = position_text_colour, id = args.id..'_position', func = 'flash'}}
 
     local t = 
         {n=G.UIT.C, config={align = "cm", colour = G.C.CLEAR}, nodes = {
-            {n=G.UIT.C, config={id = args.id, align = "cm", padding = 0.05, r = 0.1, hover = true, colour = args.colour,minw = args.w, min_h = args.h, func = "DPP_load_text_input", button = 'select_text_input', shadow = true}, nodes={
+            {n=G.UIT.C, config={id = args.id, align = "cm", padding = 0, r = 0.1, hover = true, colour = args.colour,minw = args.w, min_h = args.h, func = "DPP_load_text_input", button = 'select_text_input', shadow = true}, nodes={
                 {n=G.UIT.R, config={ref_table = args, padding = 0.05, align = "cm", r = 0.1, colour = G.C.CLEAR}, nodes={
                 {n=G.UIT.R, config={ref_table = args, align = "cm", r = 0.1, colour = G.C.CLEAR, func = 'text_input'}, nodes=
                     ui_letters
@@ -352,4 +353,45 @@ function UIBox_adv_button (args)
       shadow = args.shadow},
       nodes = texts
     }
+end
+
+function DPP.create_checkpark(args)
+  args = args or {}
+  args.active_colour = args.active_colour or G.C.RED
+  args.inactive_colour = args.inactive_colour or G.C.BLACK
+  args.w = args.w or 3
+  args.h = args.h or 0.5
+  args.scale = args.scale or 1
+  args.label_scale = args.label_scale or 0.4
+  args.ref_table = args.ref_table or {}
+  args.ref_value = args.ref_value or 'test'
+
+  local check = Sprite(0,0,0.5*args.scale,0.5*args.scale,G.ASSET_ATLAS["icons"], {x=1, y=0})
+  check.states.drag.can = false
+  check.states.visible = false
+
+  local info = nil
+  if args.info then 
+    info = {}
+    for k, v in ipairs(args.info) do 
+      table.insert(info, {n=G.UIT.R, config={align = "cm", minh = 0.05}, nodes={
+        {n=G.UIT.T, config={text = v, scale = 0.25, colour = G.C.UI.TEXT_LIGHT}}
+      }})
+    end
+    info =  {n=G.UIT.R, config={align = "cm", minh = 0.05}, nodes=info}
+  end
+
+  local t = {n=G.UIT.C, config={align = "cm", r = 0.1, padding = 0.03, minw = 0.4*args.scale, minh = 0.4*args.scale, outline_colour = G.C.WHITE, outline = 1.2*args.scale, line_emboss = 0.5*args.scale, ref_table = args,
+    colour = args.inactive_colour,
+    button = 'toggle_button', button_dist = 0.2, hover = true, toggle_callback = args.callback, func = 'toggle', focus_args = {funnel_to = true}}, nodes={
+    {n=G.UIT.O, config={object = check}},
+  }}
+
+   if args.info then 
+     t = {n=args.col and G.UIT.C or G.UIT.R, config={align = "cm"}, nodes={
+       t,
+       info,
+     }}
+   end
+  return t
 end

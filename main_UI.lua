@@ -888,11 +888,8 @@ function DPP.card_inspector_UI (card,path,page)
          t[#t+1] = {n = G.UIT.R, config = {align = "cm"}, nodes = {
             {n = G.UIT.C, config = {align = "cm"}, nodes = {{n = G.UIT.T, config = {text = tostring(k)..": ", scale = 0.3, colour = G.C.WHITE}}}},
             {n = G.UIT.C, config = {align = "cm"}, nodes = {
-               ( type(v) == "boolean" and create_toggle{
-                  label = '',
-                  w = 0.1,
-                  h = 0.1,
-                  scale = 0.6,
+               ( type(v) == "boolean" and DPP.create_checkpark{
+                  scale = 0.5,
                   ref_table = ret,
                   ref_value = k,
                } or (type(v) == "string" or type(v) == "number") and DPP.create_text_input{
@@ -901,11 +898,12 @@ function DPP.card_inspector_UI (card,path,page)
                   ref_value = k,
                   w = 1,
                   h = 0,
-                  text_scale = 0.3
+                  text_scale = 0.3,
+                  cursor_scale = 0.3
                } or UIBox_button{
                   label = {"Table"},
                   minw = 0.8,
-                  minh = 0.5,
+                  minh = 0.4,
                   button = "DPP_reload_inspector_ui",
                   ref_table = {card = card, target = k, path = path, page = 0}
                } or {n = G.UIT.T, config = {text = tostring(v), scale = 0.3, colour = G.C.WHITE}})
