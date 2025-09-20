@@ -107,13 +107,26 @@ function create_UIBox_options(args)
     return tbl
 end
 
+local ref = Card.init
+
+function Card:init(X, Y, W, H, card, center, params)
+    local ret = ref(self,X, Y, W, H, card, center, params)
+    self.DPP_data = {
+        inspector = {
+            path = {},
+            pages = {}
+        }
+    }
+    return ret
+end
+
 local ref = Card.highlight
 
 function Card:highlight(is_highlighted)
     local ret = ref(self,is_highlighted)
     if self.highlighted and self.area and self.area.config.type ~= 'shop' and not self.area.config.collection and DPP.vars.enable_card_inspector then
         self.children.DPP_card_info = UIBox{
-            definition = DPP.card_inspector_UI(self), 
+            definition = DPP.card_inspector_UI(self,self.DPP_data.inspector.path), 
             config = {
                 align = (self.playing_card and "tm" or "bm"),
                 offset = {x=0,y=0},

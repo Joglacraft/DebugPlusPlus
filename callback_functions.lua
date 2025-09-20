@@ -45,6 +45,8 @@ function G.FUNCS.DPP_reload_inspector_ui(e)
         else path[#path+1] = target end
     end
 
+    card.DPP_data.inspector.path = path
+
     -- Remove card's UI box
     card.children.DPP_card_info:remove()
     card.children.DPP_card_info = nil
