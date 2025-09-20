@@ -37,7 +37,10 @@ function G.FUNCS.DPP_reload_inspector_ui(e)
     local card = e.config.ref_table.card
     local target = e.config.ref_table.target
     local path = e.config.ref_table.path
+    local s_path = 'card'
     local page = e.config.ref_table.page
+
+    
 
     -- Change path
     if target ~= nil then
@@ -45,11 +48,20 @@ function G.FUNCS.DPP_reload_inspector_ui(e)
         else path[#path+1] = target end
     end
 
+    for _,v in ipairs(path) do
+        s_path = s_path.."/"..v
+    end
+
     card.DPP_data.inspector.path = path
 
+    if page then card.DPP_data.inspector.pages[s_path] = page
+    else page = card.DPP_data.inspector.pages[s_path] end
+
     -- Remove card's UI box
-    card.children.DPP_card_info:remove()
-    card.children.DPP_card_info = nil
+    if card.children.DPP_card_info then
+        card.children.DPP_card_info:remove()
+        card.children.DPP_card_info = nil
+    end
 
     -- Re-generate card's UI box
     card.children.DPP_card_info = UIBox{

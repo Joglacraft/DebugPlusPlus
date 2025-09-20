@@ -905,7 +905,7 @@ function DPP.card_inspector_UI (card,path,page)
                   minw = 0.8,
                   minh = 0.4,
                   button = "DPP_reload_inspector_ui",
-                  ref_table = {card = card, target = k, path = path, page = 0}
+                  ref_table = {card = card, target = k, path = path}
                } or {n = G.UIT.T, config = {text = tostring(v), scale = 0.3, colour = G.C.WHITE}})
             }}
          }}
@@ -942,7 +942,7 @@ function DPP.card_inspector_UI (card,path,page)
             minh = 0.5,
             button = (#path > 0 and "DPP_reload_inspector_ui") or nil,
             colour = (#path > 0 and G.C.RED) or G.C.GREY,
-            ref_table = {card = card, target = false, path = path, page = 0}
+            ref_table = {card = card, target = false, path = path}
          }}},
          {n = G.UIT.C, config = {align = "cm"}, nodes = {
          UIBox_button{
