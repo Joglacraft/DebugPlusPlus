@@ -69,6 +69,8 @@ function G.FUNCS.DPP_reload_inspector_ui(e)
     config = {
         align = (card.playing_card and "tm" or "bm"),
         offset = {x=0,y=0},
+        r_bond = 'Weak',
+        r = 0,
         parent = card
     }
 }
