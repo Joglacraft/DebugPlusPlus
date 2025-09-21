@@ -889,7 +889,7 @@ function DPP.card_inspector_UI (card,path,page)
             {n = G.UIT.C, config = {align = "cm"}, nodes = {{n = G.UIT.T, config = {text = tostring(k)..": ", scale = 0.3, colour = G.C.WHITE}}}},
             {n = G.UIT.C, config = {align = "cm"}, nodes = {
                ( type(v) == "boolean" and DPP.create_checkpark{
-                  scale = 0.5,
+                  scale = 0.7,
                   ref_table = ret,
                   ref_value = k,
                } or (type(v) == "string" or type(v) == "number") and DPP.create_text_input{
@@ -899,7 +899,8 @@ function DPP.card_inspector_UI (card,path,page)
                   w = 1,
                   h = 0,
                   text_scale = 0.3,
-                  cursor_scale = 0.3
+                  cursor_scale = 0.3,
+                  max_length = 64,
                } or UIBox_button{
                   label = {"Table"},
                   minw = 0.8,
@@ -939,7 +940,8 @@ function DPP.card_inspector_UI (card,path,page)
          UIBox_button{
             label = {localize("b_back")},
             minw = 0.8,
-            minh = 0.5,
+            minh = 0.4,
+            scale = 0.3,
             button = (#path > 0 and "DPP_reload_inspector_ui") or nil,
             colour = (#path > 0 and G.C.RED) or G.C.GREY,
             ref_table = {card = card, target = false, path = path}
@@ -948,7 +950,8 @@ function DPP.card_inspector_UI (card,path,page)
          UIBox_button{
             label = {"<"},
             minw = 0.8,
-            minh = 0.5,
+            minh = 0.4,
+            scale = 0.3,
             button = (page > 0 and "DPP_reload_inspector_ui") or nil,
             colour = (page > 0 and G.C.RED) or G.C.GREY,
             ref_table = {card = card, path = path, page = page-1}
@@ -957,7 +960,8 @@ function DPP.card_inspector_UI (card,path,page)
          UIBox_button{
             label = {">"},
             minw = 0.8,
-            minh = 0.5,
+            minh = 0.4,
+            scale = 0.3,
             button = (page < (math.ceil(total_entries/max_entries)-1) and "DPP_reload_inspector_ui") or nil,
             colour = (page < (math.ceil(total_entries/max_entries)-1) and G.C.RED) or G.C.GREY,
             ref_table = {card = card, path = path, page = page + 1}
