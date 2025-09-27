@@ -773,7 +773,7 @@ function DPP.main_menu ()
       if DPP.vars.pages[v.key] > #v.value then DPP.vars.pages[v.key] = 1 end
    end
 
-   t = {}
+   local t = {}
    for i,v in ipairs(tabs) do
       t[#t+1] = 
          {n = G.UIT.C, nodes = {{n = G.UIT.C, config = {align = "tm", colour = G.C[DPP.config.background_colour.selected], padding = 0.05, outline = 1, outline_colour = G.C.WHITE, r = 0.15}, nodes = { -- Tab
@@ -841,18 +841,18 @@ function DPP.dropdown_tab (args)
       {n = G.UIT.C, config = {hover = true, shadow = true, button = (max_pages > 1 and "DPP_dropdown_tab") or nil, ref_table = {type = args.type, page = args.page + 1}, align = "cm", r = 0.1, minw = 0.4, minh = 0.6, colour = (max_pages > 1 and G.C.BLUE) or G.C.GREY}, nodes = {{emboss = 0.1, n = G.UIT.T, config = {align = "cm", text = ">", scale = 0.5, colour = G.C.WHITE}}}},
    }}
 
-   local entries_label = {n = G.UIT.T, config = {align = "cm", text = "Total entries: "..#args.type['options'], scale = 0.5, colour = G.C.WHITE}}
+   local entries_label = {n = G.UIT.T, config = {align = "cm", text = "Entries "..((args.page-1)*colums*rows)+1 .." to "..math.min(args.page*colums*rows,#args.type['options']) .. " of "..#args.type['options'], scale = 0.5, colour = G.C.WHITE}}
 
 
    return {n = G.UIT.ROOT, config = {colour = G.C[DPP.config.background_colour.selected], align = "cm", padding = 0.2, r = 0.1, outline = 1, outline_colour = G.C.WHITE}, nodes = {
       --{n = G.UIT.R, config = {align = "cm"}, nodes = {
          {n = G.UIT.R, config = {align = "cm", padding = 0}, nodes = {UIText{text={args.type.func or "enhancement"},align = "cm", scale = 0.7}}},
-         {n = G.UIT.R, config = {align = "cm", padding = 0.1}, nodes = {page_cycler}},
-         {n = G.UIT.R, config = {align = "cm", padding = 0.1}, nodes = {entries_label}},
+         {n = G.UIT.R, config = {align = "cm", padding = 0}, nodes = {page_cycler}},
+         {n = G.UIT.R, config = {align = "cm", padding = 0}, nodes = {entries_label}},
       --}},
       {n = G.UIT.R, config = {align = "cm", minw = 3, minh = 5}, nodes = {{padding = 0, n = G.UIT.R, align = {"cm"}, nodes = t}}},
       UIBox_adv_button{
-         label = {{{"Cancel"}}},
+         label = {{{localize("b_back")}}},
          colour = G.C.ORANGE,
          text_scale = 0.5,
          w = 5, h = 0.6,
