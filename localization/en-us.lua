@@ -12,6 +12,7 @@ return {
             dpp_meta_menu_button_toggle = "Add DebugPlusPlus pause menu button",
             dpp_meta_require_ctrl = "Require to hold Ctrl too to toggle the menu",
             dpp_meta_open_og_debug = "Open original Debug menu",
+            dpp_meta_override_overlay = "Override overlay menu",
 
             -- Credits tab
             dpp_credits_label = "Credits",

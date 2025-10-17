@@ -48,6 +48,12 @@ DPP = {
       chips = 0,
       blind_chips = 0,
       dollars = 0,
+      HotPotato = {
+         plincoins = 0,
+         cryptocurrency = 0,
+         spark_points = 0, -- joker exchange
+         credits = 0,
+      }
    },
    gamespeed = 1,
    menu_width = 3,
@@ -92,6 +98,7 @@ SMODS.Keybind({
    event = "pressed",
    action = function()
       if DPP.config.require_ctrl and not DPP.keys.lctrl then return end
+      if not DPP.config.override_overlay and G.OVERLAY_MENU and not DPP.local_config.is_open then return end
       if not DPP.local_config.is_open or not G.OVERLAY_MENU then
          G.FUNCS.DPP_main_menu()
          DPP.local_config.is_open = true

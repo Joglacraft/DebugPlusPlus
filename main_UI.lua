@@ -483,11 +483,10 @@ function DPP.main_menu ()
                   ref_table = {"consumeables",3}
                }}},
             }},
-         },
-         {
+            
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.5}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_money")..": ", scale = 0.4, colour = G.C.WHITE}},
-               {n = G.UIT.T, config = {ref_table = DPP.vars, ref_value = "dollars", scale = 0.4, colour = G.C.GOLD}},
+               {n = G.UIT.T, config = {ref_table = G.GAME, ref_value = "dollars", scale = 0.4, colour = G.C.GOLD}},
             }},
             {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
                DPP.create_text_input{
@@ -505,17 +504,20 @@ function DPP.main_menu ()
                   label = {{{localize("dpp_gen_set")}}},
                   w = 1.2, h = 0.4,
                   scale = 0.3,
-                  ref_table = {"set"},
+                  --- mode - `set`|`var` \
+                  --- **gt, gv, dt, dv** - Game table and value, debug table and value. Like ref_table and ref_value \
+                  --- func -- function to execute 
+                  ref_table = {mode = "set", gt = G.GAME, gv = 'dollars', dt = DPP.run, dv = 'dollars', func = ease_dollars},
                   type = "C",
-                  button = "DPP_set_money"
+                  button = "DPP_set_currency"
                },
                UIBox_adv_button{
                   label = {{{localize("dpp_gen_mod")}}},
                   w = 1.2, h = 0.4,
                   scale = 0.3,
-                  ref_table = {"var"},
+                  ref_table = {mode = "var", gt = G.GAME, gv = 'dollars', dt = DPP.run, dv = 'dollars', func = ease_dollars},
                   type = "C",
-                  button = "DPP_set_money"
+                  button = "DPP_set_currency"
                }
             }},
             {n = G.UIT.R, config = {align = "cm"}, nodes = {create_toggle{
@@ -526,6 +528,187 @@ function DPP.main_menu ()
                w = 1, h = .5
             }}},
          },
+
+         -- Requires HotPotato
+         (next(SMODS.find_mod("HotPotato")) and
+         {
+            {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.5}, nodes = {
+               {n = G.UIT.T,config = {align = "tm", text = "$"..": ", scale = 0.4, colour = G.C.WHITE, font = SMODS.Fonts['hpot_plincoin']}},
+               {n = G.UIT.T, config = {ref_table = G.GAME, ref_value = "plincoins", scale = 0.4, colour = G.C.GOLD}},
+            }},
+            {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
+               DPP.create_text_input{
+                  id = "set_player_plincoin",
+                  ref_table = DPP.run.HotPotato,
+                  ref_value = "plincoins",
+                  prompt_text = "Input number",
+                  max_length = 12,
+                  w = 2.4,
+                  h = 0.2
+               },
+            }},
+            {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
+               UIBox_adv_button{
+                  label = {{{localize("dpp_gen_set")}}},
+                  w = 1.2, h = 0.4,
+                  scale = 0.3,
+                  --- mode - `set`|`var` \
+                  --- **gt, gv, dt, dv** - Game table and value, debug table and value. Like ref_table and ref_value \
+                  --- func - function to execute 
+                  ref_table = {mode = "set", gt = G.GAME, gv = 'plincoins', dt = DPP.run.HotPotato, dv = 'plincoins', func = ease_plincoins},
+                  type = "C",
+                  button = "DPP_set_currency"
+               },
+               UIBox_adv_button{
+                  label = {{{localize("dpp_gen_mod")}}},
+                  w = 1.2, h = 0.4,
+                  scale = 0.3,
+                  ref_table = {mode = "var", gt = G.GAME, gv = 'plincoins', dt = DPP.run.HotPotato, dv = 'plincoins', func = ease_plincoins},
+                  type = "C",
+                  button = "DPP_set_currency"
+               }
+            }},
+            --[[{n = G.UIT.R, config = {align = "cm"}, nodes = {create_toggle{
+               label = localize("dpp_player_unlimited"),
+               ref_table = DPP.vars.HotPotato,
+               ref_value = "unlimited_plincoins",
+               scale = 0.5,
+               w = 1, h = .5
+            }}},]]
+
+            {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.5}, nodes = {
+               {n = G.UIT.T,config = {align = "tm", text = "£"..": ", scale = 0.4, colour = G.C.WHITE, font = SMODS.Fonts['hpot_plincoin']}},
+               {n = G.UIT.T, config = {ref_table = G.GAME, ref_value = "cryptocurrency", scale = 0.4, colour = G.C.GOLD}},
+            }},
+            {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
+               DPP.create_text_input{
+                  id = "set_player_cryptocurrency",
+                  ref_table = DPP.run.HotPotato,
+                  ref_value = "cryptocurrency",
+                  prompt_text = "Input number",
+                  max_length = 12,
+                  w = 2.4,
+                  h = 0.2
+               },
+            }},
+            {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
+               UIBox_adv_button{
+                  label = {{{localize("dpp_gen_set")}}},
+                  w = 1.2, h = 0.4,
+                  scale = 0.3,
+                  --- mode - `set`|`var` \
+                  --- **gt, gv, dt, dv** - Game table and value, debug table and value. Like ref_table and ref_value \
+                  --- func -- function to execute 
+                  ref_table = {mode = "set", gt = G.GAME, gv = 'cryptocurrency', dt = DPP.run.HotPotato, dv = 'cryptocurrency', func = ease_cryptocurrency},
+                  type = "C",
+                  button = "DPP_set_currency"
+               },
+               UIBox_adv_button{
+                  label = {{{localize("dpp_gen_mod")}}},
+                  w = 1.2, h = 0.4,
+                  scale = 0.3,
+                  ref_table = {mode = "var", gt = G.GAME, gv = 'cryptocurrency', dt = DPP.run.HotPotato, dv = 'cryptocurrency', func = ease_cryptocurrency},
+                  type = "C",
+                  button = "DPP_set_currency"
+               }
+            }},
+            --[[{n = G.UIT.R, config = {align = "cm"}, nodes = {create_toggle{
+               label = localize("dpp_player_unlimited"),
+               ref_table = DPP.vars.HotPotato,
+               ref_value = "unlimited_cryptocurrency",
+               scale = 0.5,
+               w = 1, h = .5
+            }}},]]
+
+            {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.5}, nodes = {
+               {n = G.UIT.T,config = {align = "tm", text = "͸"..": ", scale = 0.4, colour = G.C.WHITE, font = SMODS.Fonts['hpot_plincoin']}},
+               {n = G.UIT.T, config = {ref_table = G.GAME, ref_value = "spark_points", scale = 0.4, colour = G.C.GOLD}},
+            }},
+            {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
+               DPP.create_text_input{
+                  id = "set_player_spark_points",
+                  ref_table = DPP.run.HotPotato,
+                  ref_value = "spark_points",
+                  prompt_text = "Input number",
+                  max_length = 12,
+                  w = 2.4,
+                  h = 0.2
+               },
+            }},
+            {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
+               UIBox_adv_button{
+                  label = {{{localize("dpp_gen_set")}}},
+                  w = 1.2, h = 0.4,
+                  scale = 0.3,
+                  --- mode - `set`|`var` \
+                  --- **gt, gv, dt, dv** - Game table and value, debug table and value. Like ref_table and ref_value \
+                  --- func -- function to execute 
+                  ref_table = {mode = "set", gt = G.GAME, gv = 'spark_points', dt = DPP.run.HotPotato, dv = 'spark_points', func = ease_spark_points},
+                  type = "C",
+                  button = "DPP_set_currency"
+               },
+               UIBox_adv_button{
+                  label = {{{localize("dpp_gen_mod")}}},
+                  w = 1.2, h = 0.4,
+                  scale = 0.3,
+                  ref_table = {mode = "var", gt = G.GAME, gv = 'spark_points', dt = DPP.run.HotPotato, dv = 'spark_points', func = ease_spark_points},
+                  type = "C",
+                  button = "DPP_set_currency"
+               }
+            }},
+            --[[{n = G.UIT.R, config = {align = "cm"}, nodes = {create_toggle{
+               label = localize("dpp_player_unlimited"),
+               ref_table = DPP.vars.HotPotato,
+               ref_value = "unlimited_spark_points",
+               scale = 0.5,
+               w = 1, h = .5
+            }}},]]
+            
+            {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.5}, nodes = {
+               {n = G.UIT.T,config = {align = "tm", text = "c."..": ", scale = 0.4, colour = G.C.WHITE}},
+               {n = G.UIT.T, config = {ref_table = G.PROFILES[G.SETTINGS.profile], ref_value = "TNameCredits", scale = 0.4, colour = G.C.GOLD}},
+            }},
+            {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
+               DPP.create_text_input{
+                  id = "set_player_credits",
+                  ref_table = DPP.run.HotPotato,
+                  ref_value = "credits",
+                  prompt_text = "Input number",
+                  max_length = 12,
+                  w = 2.4,
+                  h = 0.2
+               },
+            }},
+            {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
+               UIBox_adv_button{
+                  label = {{{localize("dpp_gen_set")}}},
+                  w = 1.2, h = 0.4,
+                  scale = 0.3,
+                  --- mode - `set`|`var` \
+                  --- **gt, gv, dt, dv** - Game table and value, debug table and value. Like ref_table and ref_value \
+                  --- func -- function to execute 
+                  ref_table = {mode = "set", gt = G.PROFILES[G.SETTINGS.profile], gv = 'TNameCredits', dt = DPP.run.HotPotato, dv = 'credits', func = HPTN.ease_credits},
+                  type = "C",
+                  button = "DPP_set_currency"
+               },
+               UIBox_adv_button{
+                  label = {{{localize("dpp_gen_mod")}}},
+                  w = 1.2, h = 0.4,
+                  scale = 0.3,
+                  ref_table = {mode = "var", gt = G.PROFILES[G.SETTINGS.profile], gv = 'TNameCredits', dt = DPP.run.HotPotato, dv = 'credits', func = HPTN.ease_credits},
+                  type = "C",
+                  button = "DPP_set_currency"
+               }
+            }},
+            --[[{n = G.UIT.R, config = {align = "cm"}, nodes = {create_toggle{
+               label = localize("dpp_player_unlimited"),
+               ref_table = DPP.vars.HotPotato,
+               ref_value = "unlimited_credits",
+               scale = 0.5,
+               w = 1, h = .5
+            }}},]]
+         }
+         ),
       }},
       {key = "run", value = {
          {
@@ -1000,6 +1183,13 @@ SMODS.current_mod.config_tab = function ()
          minw = 2, minh = 0.5,
          ref_table = DPP.config,
          ref_value = "open_og_debug"
+      }}},
+      {n = G.UIT.R, config = {align = "tm"}, nodes = {create_toggle{
+         label = localize("dpp_meta_override_overlay"),
+         scale = 1,
+         minw = 2, minh = 0.5,
+         ref_table = DPP.config,
+         ref_value = "override_overlay"
       }}}
    }}
 end

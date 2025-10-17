@@ -12,6 +12,7 @@ return {
             dpp_meta_menu_button_toggle = "Añadir butón de DebugPlusPlus en el menú de pausa",
             dpp_meta_require_ctrl = "Matener Ctrl para abrír el menú.",
             dpp_meta_open_og_debug = "Abrir el menú de desarollo original",
+            dpp_meta_override_overlay = "Sobreescribir menú activo",
             
             -- Credits tab
             dpp_credits_label = "Créditos",

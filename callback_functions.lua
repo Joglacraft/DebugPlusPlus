@@ -198,13 +198,13 @@ function G.FUNCS.DPP_ease_discards(e)
 end
 
 
-function G.FUNCS.DPP_set_money(e)
-    DPP.run.dollars = to_big(DPP.replace_text_input(DPP.run.dollars)) or DPP.run.dollars
+function G.FUNCS.DPP_set_currency(e)
+    e.config.ref_table.dt[e.config.ref_table.dv] = to_big(DPP.replace_text_input(e.config.ref_table.dt[e.config.ref_table.dv])) or e.config.ref_table.dt[e.config.ref_table.dv]
     if not G.jokers then return end
-    if e.config.ref_table[1] == "set" then
-        ease_dollars(DPP.run.dollars-G.GAME.dollars,true)
-    elseif e.config.ref_table[1] == "var" then
-        ease_dollars(DPP.run.dollars,true)
+    if e.config.ref_table.mode == "set" then
+        e.config.ref_table.func(e.config.ref_table.dt[e.config.ref_table.dv]-e.config.ref_table.gt[e.config.ref_table.gv],true)
+    elseif e.config.ref_table.mode == "var" then
+        e.config.ref_table.func(e.config.ref_table.dt[e.config.ref_table.dv],true)
     end
 end
 
