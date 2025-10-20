@@ -53,6 +53,7 @@ return {
             dpp_player_hand_label = "Mano",
             dpp_player_hands_label = "Manos",
             dpp_player_discards_label = "Descartes",
+            dpp_player_draw_hand = "Robar mano",
             dpp_player_unlimited = "Ilimitado",
             dpp_player_jokers_label = "Comodines",
             dpp_player_consumable_label = "Consumibles",

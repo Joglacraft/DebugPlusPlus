@@ -281,3 +281,22 @@ function G.FUNCS.DPP_set_gamespeed(e)
         G.SETTINGS.GAMESPEED = tonumber(DPP.gamespeed)/e.config.ref_table[1]
     end
 end
+
+function G.FUNCS.DPP_draw_hand (e)
+    G.E_MANAGER:add_event(Event({
+        func = function()
+            if not (G.hand or G.GAME.blind) or G.FUNCS.draw_from_deck_to_hand(nil) then
+                return true
+            end
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                G.STATE = G.STATES.SELECTING_HAND
+                G.STATE_COMPLETE = false
+                G.GAME.blind:drawn_to_hand()
+                return true
+                end
+            }))
+            return true
+        end
+    }))
+end

@@ -54,6 +54,7 @@ return {
             dpp_player_hand_label = "Hand",
             dpp_player_hands_label = "Hands",
             dpp_player_discards_label = "Discards",
+            dpp_player_draw_hand = 'Draw hand',
             dpp_player_unlimited = "Unlimited",
             dpp_player_jokers_label = "Jokers",
             dpp_player_consumable_label = "Consumables",

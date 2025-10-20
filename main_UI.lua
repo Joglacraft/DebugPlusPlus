@@ -323,6 +323,14 @@ function DPP.main_menu ()
                scale = 0.5,
                w = 1, h = .5
             }}},
+            {n = G.UIT.R, config = {align = "cm"}, nodes = {
+               UIBox_button{
+               label = {localize("dpp_player_draw_hand")},
+               button = 'DPP_draw_hand',
+               scale = 0.4,
+               minw = 2.6, minh = 0.5
+            },
+            }},
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_jokers_label"), scale = 0.4, colour = G.C.WHITE}}
             }},
