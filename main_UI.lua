@@ -1056,7 +1056,11 @@ function DPP.card_inspector_UI (card,path,page)
    path = path or {}
    page = page or 0
 
-   local t = {}
+   local t = {
+      {n = G.UIT.C, config = {align = 'cm'}, nodes = {}},
+      {n = G.UIT.C, config = {align = 'cm'}, nodes = {}},
+      {n = G.UIT.C, config = {align = 'cm'}, nodes = {}}
+   }
    local i = 0
    local max_entries = 5
    local total_entries = 0
@@ -1070,39 +1074,71 @@ function DPP.card_inspector_UI (card,path,page)
    end
    table.sort(ret)
 
-   for _,_ in pairs(ret) do total_entries = total_entries + 1 end
+   total_entries = table.size(ret)
 
    for k,v in pairs(ret) do
       i = i + 1
       --print(i)
       if i > max_entries*page and i < (max_entries*(page+1))+1 then
-         t[#t+1] = {n = G.UIT.R, config = {align = "cm"}, nodes = {
-            {n = G.UIT.C, config = {align = "cm"}, nodes = {{n = G.UIT.T, config = {text = tostring(k)..": ", scale = 0.3, colour = G.C.WHITE}}}},
-            {n = G.UIT.C, config = {align = "cm"}, nodes = {
-               ( type(v) == "boolean" and DPP.create_checkpark{
-                  scale = 0.7,
-                  ref_table = ret,
-                  ref_value = k,
-               } or (type(v) == "string" or type(v) == "number") and DPP.create_text_input{
-                  id = tostring(i).."_input",
-                  ref_table = ret,
-                  ref_value = k,
-                  w = 1,
-                  h = 0,
-                  text_scale = 0.3,
-                  cursor_scale = 0.3,
-                  max_length = 64,
-               } or UIBox_button{
-                  label = {"Table"},
-                  minw = 0.8,
-                  minh = 0.4,
-                  button = "DPP_reload_inspector_ui",
-                  ref_table = {card = card, target = k, path = path}
-               } or {n = G.UIT.T, config = {text = tostring(v), scale = 0.3, colour = G.C.WHITE}})
-            }}
+         t[1].nodes[#t[1].nodes+1] = {n = G.UIT.R, config = {align = "cm", minh = 0.5}, nodes = {
+            UIBox_button{
+               label = {"O"},
+               minw = 0.4,
+               minh = 0.4,
+               scale = 0.3,
+               button = 'DPP_inspector_variable',
+               colour = G.C.RED,
+               ref_table = {card = card, path = path, page = page, target = k}
+            },
          }}
       end
    end
+
+   i = 0
+   for k,v in pairs(ret) do
+      i = i + 1
+      --print(i)
+      if i > max_entries*page and i < (max_entries*(page+1))+1 then
+         t[2].nodes[#t[2].nodes+1] = {n = G.UIT.R, config = {align = "cm", minh = 0.5}, nodes = {{n = G.UIT.T, config = {text = tostring(k), scale = 0.3, colour = G.C.WHITE}}}}
+      end
+   end
+
+   i = 0
+   for k,v in pairs(ret) do
+      i = i + 1
+      --print(i)
+      if i > max_entries*page and i < (max_entries*(page+1))+1 then
+         t[3].nodes[#t[3].nodes+1] = {n = G.UIT.R, config = {align = "cm", minh = 0.5}, nodes = {
+            ( type(v) == "boolean" and DPP.create_checkpark{
+               scale = 0.7,
+               ref_table = ret,
+               ref_value = k,
+            } or (type(v) == "string" or type(v) == "number") and DPP.create_text_input{
+               id = tostring(i).."_input",
+               ref_table = ret,
+               ref_value = k,
+               w = 1,
+               h = 0,
+               text_scale = 0.3,
+               cursor_scale = 0.3,
+               max_length = 64,
+            } or UIBox_button{
+               label = {"Table"},
+               minw = 0.8,
+               minh = 0.4,
+               button = "DPP_reload_inspector_ui",
+               ref_table = {card = card, target = k, path = path}
+            } or {n = G.UIT.T, config = {text = tostring(v), scale = 0.3, colour = G.C.WHITE}})
+         }}
+      end
+   end
+
+   if #t[1].nodes == 0 then
+      t = {
+         {n = G.UIT.R, config = {align = 'cm'}, nodes = {{n = G.UIT.T, config = {text = 'No entries', colour = G.C.WHITE, scale = 0.35}}}}
+      }
+   end
+            
    --[[
       print("----")
       print(max_entries*page)
@@ -1117,6 +1153,9 @@ function DPP.card_inspector_UI (card,path,page)
    else
       path_string = path_string.."/.../"..path[#path-1].."/"..path[#path]
    end
+   if string.len(path_string) > 20 then
+        path_string = "..."..string.sub(path_string,string.len(path_string)-17,string.len(path_string))
+    end
 
    local c = {
       {n = G.UIT.R, config = {align = "cm"}, nodes = {
@@ -1156,6 +1195,16 @@ function DPP.card_inspector_UI (card,path,page)
             button = (page < (math.ceil(total_entries/max_entries)-1) and "DPP_reload_inspector_ui") or nil,
             colour = (page < (math.ceil(total_entries/max_entries)-1) and G.C.RED) or G.C.GREY,
             ref_table = {card = card, path = path, page = page + 1}
+         }}},
+         {n = G.UIT.C, config = {align = "cm"}, nodes = {
+         UIBox_button{
+            label = {"+"},
+            minw = 0.8,
+            minh = 0.4,
+            scale = 0.3,
+            button = 'DPP_inspector_variable',
+            colour = G.C.RED,
+            ref_table = {card = card, path = path, page = page}
          }}},
       }}
    }

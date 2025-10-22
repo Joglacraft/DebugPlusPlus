@@ -34,24 +34,28 @@ function G.FUNCS.DPP_dropdown_tab (e)
 end
 
 function G.FUNCS.DPP_reload_inspector_ui(e)
-    local card = e.config.ref_table.card
-    local target = e.config.ref_table.target
-    local path = e.config.ref_table.path
-    local s_path = 'card'
-    local page = e.config.ref_table.page
+    local card = e.config.ref_table.card -- The card object
+    local target = e.config.ref_table.target -- The path to attatch
+    local path = e.config.ref_table.path -- The current path
+    local s_path = 'card' -- The path as a astring
+    local page = e.config.ref_table.page -- The current page
 
     
 
     -- Change path
     if target ~= nil then
+        -- Remove last path entry
         if target == false then path[#path] = nil
+        -- Add target to path entry
         else path[#path+1] = target end
     end
 
+    -- String formatting for the string path display
     for _,v in ipairs(path) do
         s_path = s_path.."/"..v
     end
 
+    -- Update the card's stored path for if the menu is closed and re-opened
     card.DPP_data.inspector.path = path
 
     if page then card.DPP_data.inspector.pages[s_path] = page
@@ -74,6 +78,177 @@ function G.FUNCS.DPP_reload_inspector_ui(e)
         parent = card
     }
 }
+end
+
+function G.FUNCS.DPP_inspector_variable(e)
+    local card = e.config.ref_table.card -- The card object
+    local target = e.config.ref_table.target -- The path to attatch
+    local path = e.config.ref_table.path -- The current path
+    local t_path = card -- The actual path to the data, excluding the last key
+    local s_path = 'card' -- The path as a astring
+    local page = e.config.ref_table.page -- The current page
+
+    -- String formatting for the string path display
+        if #path <= 3 then
+        for i=1, #path do
+            s_path = s_path.."/"..path[i]
+        end
+    else
+        s_path = s_path.."/.../"..path[#path-1].."/"..path[#path]
+    end
+    if string.len(s_path) > 20 then
+        s_path = "..."..string.sub(s_path,string.len(s_path)-17,string.len(s_path))
+    end
+
+    DPP.vars.inspector.val = target and tostring(t_path[target]) or ''
+    DPP.vars.inspector.new = ''
+
+    G.FUNCS.overlay_menu{
+        definition = {n = G.UIT.ROOT, config = {colour = G.C[DPP.config.background_colour.selected], align = "cm", padding = 0.2, r = 0.1, outline = 1, outline_colour = G.C.WHITE}, nodes = {
+            {n = G.UIT.R, config = {align = 'cm', padding = 0.1}, nodes = {
+                {n = G.UIT.R, config = {align = 'tm'}, nodes = {
+                    {n = G.UIT.R, config = {align = 'cm'}, nodes = {{n = G.UIT.T, config = {align = 'tm', text = s_path, colour = G.C.WHITE, scale = 0.5}}}},
+                    target and {n = G.UIT.R, config = {align = 'cm'}, nodes = {{n = G.UIT.T, config = {align = 'tm', text = tostring(type(t_path[target])), colour = G.C.GREY, scale = 0.4}}}},
+                }},
+            }},
+            {n = G.UIT.R, config = {align = 'cm', padding = 0.1, minw = 3, minh = 5}, nodes = {
+                {n = G.UIT.R, config = {align = "cm", minh = 0.3}, nodes = {{n = G.UIT.T, config = {text = 'Name', scale = 0.3, colour = G.C.WHITE}}}},
+                (not target and
+                {n = G.UIT.R, config = {align = 'cm'}, nodes = {
+                    DPP.create_text_input{
+                    id = 'name',
+                    ref_table = DPP.vars.inspector,
+                    ref_value = 'new',
+                    max_lenght = 60,
+                    w = 5
+                    }
+                }}
+                or nil),
+                (target and 
+                {n = G.UIT.R, config = {align = 'cm'}, nodes = {{n = G.UIT.T, config = {text = tostring(target), scale = 0.4, colour = G.C.WHITE}}}} or nil),
+                {n = G.UIT.R, config = {align = "cm", minh = 0.3}, nodes = {{n = G.UIT.T, config = {text = 'Value', scale = 0.3, colour = G.C.WHITE}}}},
+                {n = G.UIT.R, config = {align = 'cm'}, nodes = {
+                    DPP.create_text_input{
+                        id = 'value',
+                        ref_table = DPP.vars.inspector,
+                        ref_value = 'val',
+                        max_lenght = 60,
+                        w = 5
+                    }
+                }},
+                {n = G.UIT.R, config = {align = "cm", minh = 0.3}, nodes = {{n = G.UIT.T, config = {text = 'Type', scale = 0.3, colour = G.C.WHITE}}}},
+                {n = G.UIT.R, config = {align = 'cm'}, nodes = {
+                    {n = G.UIT.C, config = {align = 'cm'}, nodes = {
+                        UIBox_adv_button{
+                            label = {{{'String'}}},
+                            text_scale = 0.4,
+                            w = 1.8, h = 0.5,
+                            button = "DPP_inspector_variable_set",
+                            func = "DPP_inspector_variable_check",
+                            ref_table = {type = 'string', card = card, path = path, rt = t_path, rv = target, page = page, value = DPP.vars.inspector.val}
+                        },
+                    }},
+                    {n = G.UIT.C, config = {align = 'cm'}, nodes = {
+                        UIBox_adv_button{
+                            label = {{{'Number'}}},
+                            text_scale = 0.4,
+                            w = 1.8, h = 0.5,
+                            button = "DPP_inspector_variable_set",
+                            func = "DPP_inspector_variable_check",
+                            ref_table = {type = 'string', card = card, path = path, rt = t_path, rv = target, page = page, value = DPP.vars.inspector.val}
+                        },
+                    }},
+                }},
+                {n = G.UIT.R, config = {align = 'cm'}, nodes = {
+                    {n = G.UIT.C, config = {align = 'cm'}, nodes = {
+                        UIBox_adv_button{
+                            label = {{{'Boolean'}}},
+                            text_scale = 0.4,
+                            w = 1.8, h = 0.5,
+                            button = "DPP_inspector_variable_set",
+                            func = "DPP_inspector_variable_check",
+                            ref_table = {type = 'boolean', card = card, path = path, rt = t_path, rv = target, page = page, value = DPP.vars.inspector.val}
+                        },
+                    }},
+                    {n = G.UIT.C, config = {align = 'cm'}, nodes = {
+                        UIBox_adv_button{
+                            label = {{{'Table'}}},
+                            text_scale = 0.4,
+                            w = 1.8, h = 0.5,
+                            button = "DPP_inspector_variable_set",
+                            func = "DPP_inspector_variable_check",
+                            ref_table = {type = 'table', card = card, path = path, rt = t_path, rv = target, page = page}
+                        },
+                    }},
+                }},
+                target and {n = G.UIT.R, config = {align = 'cm'}, nodes = {
+                    {n = G.UIT.C, config = {align = 'cm'}, nodes = {
+                        UIBox_adv_button{
+                            label = {{{'Remove'}}},
+                            text_scale = 0.4,
+                            w = 1.8, h = 0.5,
+                            button = "DPP_inspector_variable_set",
+                            func = "DPP_inspector_variable_check",
+                            ref_table = {type = 'remove', card = card, path = path, rt = t_path, rv = target, page = page}
+                        },
+                    }},
+                }} or nil
+            }},
+            UIBox_adv_button{
+                label = {{{localize("b_back")}}},
+                colour = G.C.ORANGE,
+                text_scale = 0.5,
+                w = 5, h = 0.6,
+                button = "exit_overlay_menu"
+            },
+        }},
+        config = {
+            offset = {x = 0, y = 0}
+        }
+    }
+end
+
+function G.FUNCS.DPP_inspector_variable_set(e)
+    local type = e.config.ref_table.type
+    local card = e.config.ref_table.card -- The card object
+    local ref_value = e.config.ref_table.rv -- The path to attatch
+    local path = e.config.ref_table.path -- The current path, as an array
+    local ref_table = card -- The actual path to the data, excluding the last key
+    local page = e.config.ref_table.page -- The current page
+
+    if DPP.vars.inspector.new ~= '' then ref_value = DPP.vars.inspector.new end
+
+    for _,v in ipairs(path) do
+        ref_table = ref_table[v]
+    end
+
+    if type == 'string' then
+        ref_table[ref_value] = tostring(DPP.vars.inspector.val) or 'test'
+    elseif type == 'number' then
+        ref_table[ref_value] = tonumber(DPP.vars.inspector.val) or 1
+    elseif type == 'boolean' then
+        ref_table[ref_value] = DPP.vars.inspector.val == 'true' and true or false
+    elseif type == 'table' then
+        ref_table[ref_value] = {}
+    elseif type == 'remove' then
+        ref_table[ref_value] = nil
+    end
+
+    DPP.vars.inspector.new = ''
+
+    G.FUNCS.DPP_reload_inspector_ui{config = {ref_table = {card = card, path = path, page = page}}}
+    if ref_table[ref_value] ~= nil then G.FUNCS.DPP_inspector_variable{config = {ref_table = {card = card, path = path, target = ref_value, page = page}}} else G.FUNCS.exit_overlay_menu() end
+end
+
+function G.FUNCS.DPP_inspector_variable_check(e)
+    local type = e.config.ref_table.type
+
+    if type == 'String' then
+    elseif type == 'number' then
+    elseif type == 'boolean' then
+    elseif type == 'table' then
+    elseif type == 'remove' then
+    end
 end
 
 function G.FUNCS.DPP_reload_lists(e)

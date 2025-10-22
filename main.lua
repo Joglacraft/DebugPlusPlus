@@ -58,6 +58,10 @@ DPP = {
    gamespeed = 1,
    menu_width = 3,
    vars = {
+      inspector = {
+         new = '',
+         val = ''
+      },
       pages = {
          meta = 1,
          card = 1,
