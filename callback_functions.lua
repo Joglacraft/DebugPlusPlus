@@ -160,7 +160,7 @@ function G.FUNCS.DPP_inspector_variable(e)
                             w = 1.8, h = 0.5,
                             button = "DPP_inspector_variable_set",
                             func = "DPP_inspector_variable_check",
-                            ref_table = {type = 'string', card = card, path = path, rt = t_path, rv = target, page = page, value = DPP.vars.inspector.val}
+                            ref_table = {type = 'number', card = card, path = path, rt = t_path, rv = target, page = page, value = DPP.vars.inspector.val}
                         },
                     }},
                 }},
@@ -229,9 +229,9 @@ function G.FUNCS.DPP_inspector_variable_set(e)
     end
 
     if type == 'string' then
-        ref_table[ref_value] = tostring(DPP.vars.inspector.val) or 'test'
+        ref_table[ref_value] = tostring(DPP.vars.inspector.val) or ref_table[ref_value]
     elseif type == 'number' then
-        ref_table[ref_value] = tonumber(DPP.vars.inspector.val) or 1
+        ref_table[ref_value] = tonumber(DPP.vars.inspector.val) or ref_table[ref_value]
     elseif type == 'boolean' then
         ref_table[ref_value] = DPP.vars.inspector.val == 'true' and true or false
     elseif type == 'table' then
