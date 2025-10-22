@@ -1082,7 +1082,7 @@ function DPP.card_inspector_UI (card,path,page)
       if i > max_entries*page and i < (max_entries*(page+1))+1 then
          t[1].nodes[#t[1].nodes+1] = {n = G.UIT.R, config = {align = "cm", minh = 0.5}, nodes = {
             UIBox_button{
-               label = {"O"},
+               label = {type(v) == 'string' and 'S' or type(v) == 'number' and 'n' or type(v) == 'boolean' and 'b' or type(v) == 'table' and 't' or 'o'},
                minw = 0.4,
                minh = 0.4,
                scale = 0.3,

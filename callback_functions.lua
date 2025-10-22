@@ -100,6 +100,11 @@ function G.FUNCS.DPP_inspector_variable(e)
         s_path = "..."..string.sub(s_path,string.len(s_path)-17,string.len(s_path))
     end
 
+    -- Navigate through the path, starting at the card
+    for _,v in ipairs(path) do
+        t_path = t_path[v]
+    end
+
     DPP.vars.inspector.val = target and tostring(t_path[target]) or ''
     DPP.vars.inspector.new = ''
 
@@ -218,6 +223,7 @@ function G.FUNCS.DPP_inspector_variable_set(e)
 
     if DPP.vars.inspector.new ~= '' then ref_value = DPP.vars.inspector.new end
 
+    -- Navigate through the path, starting at the card
     for _,v in ipairs(path) do
         ref_table = ref_table[v]
     end
