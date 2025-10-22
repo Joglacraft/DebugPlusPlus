@@ -1009,15 +1009,17 @@ function DPP.dropdown_tab (args)
       for ii = 1, rows do -- The second ii is the entry in the column. Use `rows*(i-1))+ii` to get the current entry
          local entry = args.type['options'][(rows*(i-1))+ii]
          if not entry then break end
-         if string.len(entry) > max_length then entry = string.sub(entry,1,max_length).."..." end
-         c[#c+1] = UIBox_adv_button{
-            label = {{{entry}}},
-            colour = G.C.RED,
-            text_scale = 0.4,
-            w = 4.25, h = 0.5,
-            button = "DPP_set_"..args.type.func,
-            ref_table = {entry},
-         }
+         if entry ~= 'pinned' then
+            if string.len(entry) > max_length then entry = string.sub(entry,1,max_length).."..." end
+            c[#c+1] = UIBox_adv_button{
+               label = {{{entry}}},
+               colour = G.C.RED,
+               text_scale = 0.4,
+               w = 4.25, h = 0.5,
+               button = "DPP_set_"..args.type.func,
+               ref_table = {entry},
+            }
+         end
       end
       t[#t+1] = {n = G.UIT.C, config = {align = "tm", padding = 0.1}, nodes = c}
    end
