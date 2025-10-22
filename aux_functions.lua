@@ -182,6 +182,7 @@ function DPP.create_text_input(args)
     args.prompt_text = args.prompt_text or ''
     args.current_prompt_text = ''
     args.id = args.id or "text_input"
+    args.extended_corpus = true
     
     local suc, val = pcall(function () return string.len(args.ref_table[args.ref_value]) end)
     local text = {ref_table = args.ref_table, ref_value = args.ref_value, letters = {}, current_position = suc and val or 1}
@@ -199,7 +200,7 @@ function DPP.create_text_input(args)
 
     local t = 
         {n=G.UIT.C, config={align = "cm", colour = G.C.CLEAR}, nodes = {
-            {n=G.UIT.C, config={id = args.id, align = "cm", padding = 0, r = 0.1, hover = true, colour = args.colour,minw = args.w, min_h = args.h, func = "DPP_load_text_input", button = 'select_text_input', shadow = true}, nodes={
+            {n=G.UIT.C, config={id = args.id, align = "cm", padding = 0, r = 0.1, hover = true, colour = args.colour,minw = args.w, min_h = args.h, func = "DPP_load_text_input", button = 'select_text_input', shadow = true,}, nodes={
                 {n=G.UIT.R, config={ref_table = args, padding = 0.05, align = "cm", r = 0.1, colour = G.C.CLEAR}, nodes={
                 {n=G.UIT.R, config={ref_table = args, align = "cm", r = 0.1, colour = G.C.CLEAR, func = 'text_input'}, nodes=
                     ui_letters
