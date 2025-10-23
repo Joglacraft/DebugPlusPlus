@@ -78,7 +78,19 @@ return {
 
             -- Game tab
             dpp_game_label = "Game",
-            dpp_game_speed_label = "Speed"
+            dpp_game_speed_label = "Speed",
+
+            -- Savestate
+            dpp_savestate_label = 'Savestates',
+            dpp_savestate_save = "Save",
+            dpp_savestate_load = "Load",
+            dpp_savestate_delete = "Delete",
+            dpp_savestate_new_label = 'New savestate',
+            dpp_savestate_no_savestates_label = {
+                "No savestates available",
+                "To create a savestate insert a name",
+                "in the text input and select 'save'"
+            }
         }
     }
 }

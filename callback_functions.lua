@@ -277,19 +277,19 @@ function G.FUNCS.DPP_savestate(e)
                 {n = G.UIT.C, config = {align = 'lm', minw = 4}, nodes = {{n = G.UIT.T, config = {text = v, colour = G.C.WHITE, scale = 0.4}}}},
                 {n = G.UIT.C, config = {minw = 0.2}},
                 UIBox_adv_button{
-                    label = {{{'Save'}}},
+                    label = {{{localize('dpp_savestate_save')}}},
                     w = 1, h = 0.5, scale = 1, type = 'C',
                     button = 'DPP_savestate_button',
                     ref_table = {mode_b = 'save', extra = {id = v}}
                 },
                 UIBox_adv_button{
-                    label = {{{'Load'}}},
+                    label = {{{localize('dpp_savestate_load')}}},
                     w = 1, h = 0.5, scale = 1, type = 'C',
                     button = 'DPP_savestate_button',
                     ref_table = {mode_b = 'load', extra = {id = v}}
                 },
                 UIBox_adv_button{
-                    label = {{{'Delete'}}},
+                    label = {{{localize('dpp_savestate_delete')}}},
                     w = 1, h = 0.5, scale = 1, type = 'C',
                     button = 'DPP_savestate_button',
                     ref_table = {mode_b = 'delete', extra = {id = v, max = max_pages/rows}}
@@ -302,11 +302,7 @@ function G.FUNCS.DPP_savestate(e)
         t = {
             {n = G.UIT.R, config = {align = 'cm'}, nodes = {
                 DPP.UIBox_text{
-                    text = {
-                        "No savestates available",
-                        "To create a savestate insert a name",
-                        "in the text input and select 'save'"
-                    },
+                    text = G.localization.misc.dictionary['dpp_savestate_no_savestates_label'],
                     scale = 0.4
                 }
             }}
@@ -338,7 +334,7 @@ function G.FUNCS.DPP_savestate(e)
             {n = G.UIT.R, config = {align = 'tm', padding = 0.1}, nodes = {
                 {n = G.UIT.C, config = {align = 'cm'}, nodes = {
                     DPP.create_text_input{
-                        prompt_text = 'New savestate',
+                        prompt_text = localize('dpp_savestate_new_label'),
                         id = '',
                         ref_table = DPP.vars.savestates,
                         ref_value = 'id',
@@ -347,7 +343,7 @@ function G.FUNCS.DPP_savestate(e)
                 }},
                 {n = G.UIT.C, config = {align = 'cm'}, nodes = {
                     UIBox_adv_button{
-                        label = {{{"Save"}}},
+                        label = {{{localize('dpp_savestate_save')}}},
                         w = 1.5, h = 0.5, scale = 1,
                         button = 'DPP_savestate_button',
                         func = 'DPP_savestate_update',

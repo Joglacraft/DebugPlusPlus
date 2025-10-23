@@ -958,7 +958,7 @@ function DPP.main_menu ()
             }},
             {n = G.UIT.R, config = {align = 'cm'}, nodes = {
                UIBox_button{
-               label = {'Savestates'},
+               label = {localize('dpp_savestate_label')},
                scale = 0.3,
                minw = 2, minh = 0.4,
                button = 'DPP_savestate',

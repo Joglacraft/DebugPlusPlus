@@ -73,7 +73,19 @@ return {
 
             -- Game tab
             dpp_game_label = "Juego",
-            dpp_game_speed_label = "Velocidad"
+            dpp_game_speed_label = "Velocidad",
+
+            -- Savestate
+            dpp_savestate_label = 'Estados de guardado',
+            dpp_savestate_save = "Guardar",
+            dpp_savestate_load = "Cargar",
+            dpp_savestate_delete = "Eliminar",
+            dpp_savestate_new_label = 'Nuevo estado de guardado',
+            dpp_savestate_no_savestates_label = {
+                "No hay estados de guardado disponibles",
+                "Para crear un estado de guardado inserta un nombre",
+                "en la entrada de texto y pulsa 'Guardar'"
+            }
         }
     }
 }
