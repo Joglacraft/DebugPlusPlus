@@ -327,8 +327,8 @@ function DPP.main_menu ()
                UIBox_button{
                label = {localize("dpp_player_draw_hand")},
                button = 'DPP_draw_hand',
-               scale = 0.4,
-               minw = 2.6, minh = 0.5
+               scale = 0.3,
+               minw = 2.6, minh = 0.4
             },
             }},
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {
@@ -924,6 +924,7 @@ function DPP.main_menu ()
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_game_speed_label"), scale = 0.4, colour = G.C.WHITE}}
             }},
+            {n = G.UIT.R, config = {minh = 0.1}},
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {
                DPP.create_text_input{
                   id = "set_gamespeed",
@@ -954,6 +955,16 @@ function DPP.main_menu ()
                   scale = 0.3,
                   ref_table = {10}
                }}},
+            }},
+            {n = G.UIT.R, config = {align = 'cm'}, nodes = {
+               UIBox_button{
+               label = {'Savestates'},
+               scale = 0.3,
+               minw = 2, minh = 0.4,
+               button = 'DPP_savestate',
+               ref_table = {mode_b = 'view'}
+            },
+            {n = G.UIT.R, config = {minh = 0.1}}
             }}
          }
       }}

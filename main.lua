@@ -62,6 +62,10 @@ DPP = {
          new = '',
          val = ''
       },
+      savestates = {
+         page = 1,
+         id = '',
+      },
       pages = {
          meta = 1,
          card = 1,
@@ -77,6 +81,19 @@ DPP = {
 
 SMODS.Atlas{key = "modicon", path = "modicon.png", px = 32, py = 32}
 
+local exists
+exists = love.filesystem.exists('DebugPlusPlus')
+if not exists then love.filesystem.createDirectory('DebugPlusPlus') end
+exists = nil
+
+local required_folders = {
+   'settings',
+   'savestates'
+}
+for _, v in ipairs(required_folders) do
+   local exists = love.filesystem.exists('DebugPlusPlus/'..v)
+   if not exits then love.filesystem.createDirectory('DebugPlusPlus/'..v) end
+end
 
 -- Load mod files
 DPP.config = SMODS.current_mod.config

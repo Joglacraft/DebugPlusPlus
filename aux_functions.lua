@@ -396,3 +396,52 @@ function DPP.create_checkpark(args)
    end
   return t
 end
+
+-- TAKEN FROM FOOL'S GAMBIT WITH PERMISSION (MY OWN)
+
+---Allows to easily create multi-line texts.
+---@param args {text:table|string,colour:string,scale:number,padding:number,tooltip:{}|nil,align:"tl"|"tm"|"tr"|"cl"|"cm"|"cr"|"bl"|"bm"|"br",mode:"R"|"C"} The settings for the text.
+---`text = {"No text"}` is a table (array), each string represents an entire line.
+---`colour = "white` is the colour of the text.<br>
+---`scale = 0.3` is the size of the text.<br>
+---`padding = 0.05` is the distance between lines.<br>
+---`tooltip` is a tooltip that will appear when hovering over the text.<br>
+---`align = "cm"` sets the alignment of the text. `l`,`m`,`r` for horizontal, `t`,`m`,`b` for vertical alignment.<br>
+---`mode = "R"` sets the container alignment for rows or colums.<br>
+---
+---@return table node The entire node structure. Do note it has a wrapper node.
+function DPP.UIBox_text (args)
+	if not args or not type(args) == "table" then return 
+	{ n = G.UIT.R, nodes = {{n = G.UIT.T, config = {text = "ERROR", scale = 0.3, colour = G.C.RED}}}} end
+	
+	local text = args.text or {"No text"}
+	local colour = args.colour or "white"
+	local scale = args.scale or 0.3
+	local padding = args.padding or 0.05
+	local hover = args.tooltip or nil
+	local align = args.align or "cm"
+	local mode = args.mode or "R"
+	
+	local ret = {n = G.UIT[string.upper(mode)], config = {padding = padding}, nodes = {}}
+	
+	if type(text) ~= "table" then return ret end
+	for _,text in ipairs(text) do
+		local tooltip = nil
+
+		if hover then
+			tooltip = {text = {}}
+			for _,h_text in ipairs(hover) do
+				if h_text == "" then h_text = " " end
+				table.insert(tooltip.text,h_text)
+			end
+		end
+
+		local cur_txt = {n = G.UIT.R, config = {align = align}, nodes = {
+			{n = G.UIT.T, config = { text = text, colour = G.C[string.upper(colour)], scale = scale, tooltip = tooltip}}
+		}}
+		
+		table.insert(ret.nodes,cur_txt)
+	end
+
+	return ret
+end

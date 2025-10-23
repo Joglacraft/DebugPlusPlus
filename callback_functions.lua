@@ -257,6 +257,175 @@ function G.FUNCS.DPP_inspector_variable_check(e)
     end
 end
 
+function G.FUNCS.DPP_savestate(e)
+
+    -- Shortcut variables
+    local _rt = e.config.ref_table
+    local extra = _rt.extra
+
+    local items = love.filesystem.getDirectoryItems('DebugPlusPlus/savestates')
+
+    local max_pages = #items
+
+    local rows = 8
+
+    local t = {}
+
+    for i,v in ipairs(items) do
+        if i >= (DPP.vars.savestates.page-1)*rows+1 and i <= DPP.vars.savestates.page*rows then
+            t[#t+1] = {n = G.UIT.R, config = {align = 'cm', padding = 0.05}, nodes = {
+                {n = G.UIT.C, config = {align = 'lm', minw = 4}, nodes = {{n = G.UIT.T, config = {text = v, colour = G.C.WHITE, scale = 0.4}}}},
+                {n = G.UIT.C, config = {minw = 0.2}},
+                UIBox_adv_button{
+                    label = {{{'Save'}}},
+                    w = 1, h = 0.5, scale = 1, type = 'C',
+                    button = 'DPP_savestate_button',
+                    ref_table = {mode_b = 'save', extra = {id = v}}
+                },
+                UIBox_adv_button{
+                    label = {{{'Load'}}},
+                    w = 1, h = 0.5, scale = 1, type = 'C',
+                    button = 'DPP_savestate_button',
+                    ref_table = {mode_b = 'load', extra = {id = v}}
+                },
+                UIBox_adv_button{
+                    label = {{{'Delete'}}},
+                    w = 1, h = 0.5, scale = 1, type = 'C',
+                    button = 'DPP_savestate_button',
+                    ref_table = {mode_b = 'delete', extra = {id = v, max = max_pages/rows}}
+                }
+            }}
+        end
+    end
+
+    if #t == 0 then
+        t = {
+            {n = G.UIT.R, config = {align = 'cm'}, nodes = {
+                DPP.UIBox_text{
+                    text = {
+                        "No savestates available",
+                        "To create a savestate insert a name",
+                        "in the text input and select 'save'"
+                    },
+                    scale = 0.4
+                }
+            }}
+        }
+    end
+
+    local page_cycler = {
+        {n = G.UIT.C, config = {minw = 4}, nodes = {{n = G.UIT.T, config = {text = (DPP.vars.savestates.page-1)*rows+1 .." to ".. math.min(max_pages,DPP.vars.savestates.page*rows) .. " out of " .. max_pages, colour = G.C.WHITE, scale = 0.5, align = 'tl'}}}},
+        UIBox_adv_button{
+            label = {{{'<'}}},
+            w = 0.5,
+            h = 0.5,
+            type = 'C',
+            button = 'DPP_savestate_button',
+            ref_table = {mode_b = 'change_page', extra = {q = -1, max = max_pages/rows}}
+        },
+        UIBox_adv_button{
+            label = {{{'>'}}},
+            w = 0.5,
+            h = 0.5,
+            type = 'C',
+            button = 'DPP_savestate_button',
+            ref_table = {mode_b = 'change_page', extra = {q = 1, max = max_pages/rows}}
+        },
+    }
+
+    G.FUNCS.overlay_menu{
+        definition = {n = G.UIT.ROOT, config = {colour = G.C[DPP.config.background_colour.selected], align = "cm", padding = 0.2, r = 0.1, outline = 1, outline_colour = G.C.WHITE}, nodes = {
+            {n = G.UIT.R, config = {align = 'tm', padding = 0.1}, nodes = {
+                {n = G.UIT.C, config = {align = 'cm'}, nodes = {
+                    DPP.create_text_input{
+                        prompt_text = 'New savestate',
+                        id = '',
+                        ref_table = DPP.vars.savestates,
+                        ref_value = 'id',
+                        w = 6.5
+                    }
+                }},
+                {n = G.UIT.C, config = {align = 'cm'}, nodes = {
+                    UIBox_adv_button{
+                        label = {{{"Save"}}},
+                        w = 1.5, h = 0.5, scale = 1,
+                        button = 'DPP_savestate_button',
+                        func = 'DPP_savestate_update',
+                        ref_table = {mode_b = 'save_new', mode_f = 'save_filter_check', extra = {id = DPP.vars.savestates.id}}
+                    },
+                }}
+            }},
+            {n = G.UIT.R, config = {align = 'cm'}, nodes = page_cycler},
+            {n = G.UIT.R, config = {align = 'cm', minw = 3.5, minh = 6.5, padding = 0}, nodes = t},
+            UIBox_adv_button{
+                label = {{{localize("b_back")}}},
+                colour = G.C.ORANGE,
+                text_scale = 0.5,
+                w = 7, h = 0.6,
+                button = "exit_overlay_menu"
+            }
+        }},
+        config = {
+            offset = {x = 0, y = 0}
+        }
+    }
+end
+
+function G.FUNCS.DPP_savestate_button(e)
+    local _rt = e.config.ref_table
+    local extra = _rt.extra
+
+    local mode = _rt.mode_b
+
+    if mode == 'save' or mode == 'save_new' then
+        local id = mode == 'save' and extra.id or mode == 'save_new' and DPP.vars.savestates.id
+        if mode == 'save_new' then id = id..'.jkr' end
+        if G.STAGE == G.STAGES.RUN then
+            if not (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE ==
+                G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.STANDARD_PACK or G.STATE == G.STATES.BUFFOON_PACK or
+                G.STATE == G.STATES.SMODS_BOOSTER_OPENED) then
+                save_run()
+            end
+            compress_and_save('DebugPlusPlus/savestates/'..id, G.ARGS.save_run)
+        end
+    elseif mode == 'load' then
+        local id = extra.id
+        G:delete_run()
+        G.SAVED_GAME = get_compressed('DebugPlusPlus/savestates/'..id)
+        if G.SAVED_GAME ~= nil then
+            G.SAVED_GAME = STR_UNPACK(G.SAVED_GAME)
+        end
+        G:start_run({
+            savetext = G.SAVED_GAME
+        })
+    elseif mode == 'delete' then
+        local id = extra.id
+        love.filesystem.remove('DebugPlusPlus/savestates/'..id)
+    elseif mode == 'change_page' then
+        DPP.vars.savestates.page = DPP.vars.savestates.page + extra.q
+        if DPP.vars.savestates.page < 1 then DPP.vars.savestates.page = math.max(math.ceil(extra.max),1) end
+        if DPP.vars.savestates.page > math.ceil(extra.max) then DPP.vars.savestates.page = 1 end
+    end
+
+    G.FUNCS.DPP_savestate(e)
+end
+
+function G.FUNCS.DPP_savestate_update(e)
+    local _rt = e.config.ref_table
+    local extra = _rt.extra
+
+    local mode = _rt.mode_f
+
+    if mode == 'save_filter_check' then
+        e.config.colour = DPP.vars.savestates.id ~= '' and G.C.RED or G.C.GREY
+        e.config.button = DPP.vars.savestates.id ~= '' and 'DPP_savestate_button' or nil
+    end
+end
+
+---------------
+---- OTHER ----
+---------------
+
 function G.FUNCS.DPP_reload_lists(e)
     if G.OVERLAY_MENU then
         G.OVERLAY_MENU:remove()
