@@ -1021,9 +1021,10 @@ function DPP.dropdown_tab (args)
          local entry = args.type['options'][(rows*(i-1))+ii]
          if not entry then break end
          if entry ~= 'pinned' then
-            if string.len(entry) > max_length then entry = string.sub(entry,1,max_length).."..." end
+            local label = entry
+            if string.len(label) > max_length then label = string.sub(label,1,max_length).."..." end
             c[#c+1] = UIBox_adv_button{
-               label = {{{entry}}},
+               label = {{{label}}},
                colour = G.C.RED,
                text_scale = 0.4,
                w = 4.25, h = 0.5,
