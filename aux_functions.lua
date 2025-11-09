@@ -173,6 +173,7 @@ function DPP.create_text_input(args)
     args = args or {}
     args.colour = copy_table(args.colour) or copy_table(G.C.BLUE)
     args.hooked_colour = copy_table(args.hooked_colour) or darken(copy_table(G.C.BLUE), 0.3)
+    args.text_colour = args.text_colour or G.C.UI.TEXT_LIGHT
     args.w = args.w or 2.5
     args.h = args.h or 0.7
     args.text_scale = args.text_scale or 0.4
@@ -183,13 +184,15 @@ function DPP.create_text_input(args)
     args.current_prompt_text = ''
     args.id = args.id or "text_input"
     args.extended_corpus = true
+    args.shadow = args.shadow or true
+    args.hover = args.hover or true
     
     local suc, val = pcall(function () return string.len(args.ref_table[args.ref_value]) end)
     local text = {ref_table = args.ref_table, ref_value = args.ref_value, letters = {}, current_position = suc and val or 1}
     local ui_letters = {}
     for i = 1, args.max_length do
         text.letters[i] = (args.ref_table[args.ref_value] and (string.sub(args.ref_table[args.ref_value], i, i) or '')) or ''
-        ui_letters[i] = {n=G.UIT.T, config={ref_table = text.letters, ref_value = i, scale = args.text_scale, colour = G.C.UI.TEXT_LIGHT, id = args.id..'_letter_'..i}}
+        ui_letters[i] = {n=G.UIT.T, config={ref_table = text.letters, ref_value = i, scale = args.text_scale, colour = args.text_colour, id = args.id..'_letter_'..i}}
     end
     args.text = text
 
@@ -200,7 +203,7 @@ function DPP.create_text_input(args)
 
     local t = 
         {n=G.UIT.C, config={align = "cm", colour = G.C.CLEAR}, nodes = {
-            {n=G.UIT.C, config={id = args.id, align = "cm", padding = 0, r = 0.1, hover = true, colour = args.colour,minw = args.w, min_h = args.h, func = "DPP_load_text_input", button = 'select_text_input', shadow = true,}, nodes={
+            {n=G.UIT.C, config={id = args.id, align = "cm", padding = 0, r = 0.1, hover = args.hover, colour = args.colour,minw = args.w, min_h = args.h, func = "DPP_load_text_input", button = 'select_text_input', shadow = args.shadow,}, nodes={
                 {n=G.UIT.R, config={ref_table = args, padding = 0.05, align = "cm", r = 0.1, colour = G.C.CLEAR}, nodes={
                 {n=G.UIT.R, config={ref_table = args, align = "cm", r = 0.1, colour = G.C.CLEAR, func = 'text_input'}, nodes=
                     ui_letters

@@ -917,6 +917,14 @@ function DPP.main_menu ()
                   }}},
                }},
             }},
+
+            {n = G.UIT.R, config = {align = "cm"}, nodes = {
+               UIBox_button{
+               label = {'Poker Hands'},
+               button = 'DPP_poker_hands',
+               scale = 0.3,
+               minw = 2.6, minh = 0.4
+            }}}
          }
       }},
       {key = "game", value = {
@@ -1088,7 +1096,7 @@ function DPP.card_inspector_UI (card,path,page)
    end
    table.sort(ret)
 
-   total_entries = table.size(ret)
+   total_entries = 0; for _,_ in pairs(ret) do total_entries = total_entries + 1 end
 
    for k,v in pairs(ret) do
       i = i + 1

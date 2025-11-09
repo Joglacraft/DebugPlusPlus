@@ -3,7 +3,9 @@ DPP = {
    TABS = {},
    libs = {},
    local_config = {
-      is_open = false
+      is_open = false,
+      poker_hand_page = 1,
+      hands_per_page = 4,
    },
    -- config values in the config file
    set_blind_number = "1",
