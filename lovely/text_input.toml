@@ -35,7 +35,7 @@ pattern = '''
 '''
 position = "at"
 payload = '''
-        text.current_position = math.min(position_child-1, string.len(tostring(to_number(text.ref_table[text.ref_value])) ))
+        text.current_position = math.min(position_child-1, string.len(to_number(text.ref_table[text.ref_value]) ))
 '''
 match_indent = true
 
@@ -48,5 +48,19 @@ pattern = '''
 position = "at"
 payload = '''
         if not self.config.no_recalc and self.config.prev_value and string.len(tostring(to_number(self.config.prev_value)) ) ~= string.len(tostring(to_number(self.config.text)) ) then self.UIBox:recalculate() end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+        local col = G.C.MONEY
+        if mod < 0 then
+'''
+position = "at"
+payload = '''
+        local col = G.C.MONEY
+        if tonumber(mod) or to_big(mod) < to_big(0) then
 '''
 match_indent = true

@@ -1,5 +1,5 @@
 to_big = to_big or function (x) return tonumber(x) or x end
-to_number = to_number or function(x) return tonumber(x) end
+to_number = to_number or function(x) return x end
 
 local ref = Game.update
 function Game:update(dt)
