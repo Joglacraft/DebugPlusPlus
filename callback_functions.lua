@@ -231,7 +231,7 @@ function G.FUNCS.DPP_inspector_variable_set(e)
     if type == 'string' then
         ref_table[ref_value] = tostring(DPP.vars.inspector.val) or ref_table[ref_value]
     elseif type == 'number' then
-        ref_table[ref_value] = tonumber(DPP.vars.inspector.val) or ref_table[ref_value]
+        ref_table[ref_value] = to_big(DPP.vars.inspector.val) or ref_table[ref_value]
     elseif type == 'boolean' then
         ref_table[ref_value] = DPP.vars.inspector.val == 'true' and true or false
     elseif type == 'table' then
@@ -556,9 +556,9 @@ end
 
 function G.FUNCS.DPP_set_chips(e)
 
-    DPP.run.chips = tonumber(DPP.run.chips) or DPP.run.chips
+    DPP.run.chips = to_big(DPP.run.chips) or DPP.run.chips
 
-    if tonumber(DPP.run.chips) then
+    if to_big(DPP.run.chips) then
         if e.config.ref_table[1] == "set" then
             G.GAME.chips = to_big(DPP.run.chips)
         elseif e.config.ref_table[1] == "var" then
@@ -568,9 +568,9 @@ function G.FUNCS.DPP_set_chips(e)
 end
 
 function G.FUNCS.DPP_set_blind_chips(e)
-    DPP.run.blind_chips = tonumber(DPP.run.blind_chips) or DPP.run.blind_chips
+    DPP.run.blind_chips = to_big(DPP.run.blind_chips) or DPP.run.blind_chips
 
-    if G.GAME.blind and tonumber(DPP.run.blind_chips) then
+    if G.GAME.blind and to_big(DPP.run.blind_chips) then
         if e.config.ref_table[1] == "set" then
             G.GAME.blind.chips = to_big(DPP.run.blind_chips)
         elseif e.config.ref_table[1] == "var" then
@@ -621,10 +621,10 @@ end
 
 function G.FUNCS.DPP_set_gamespeed(e)
 
-    DPP.gamespeed = tonumber(DPP.gamespeed) or DPP.gamespeed
+    DPP.gamespeed = to_big(DPP.gamespeed) or DPP.gamespeed
 
-    if tonumber(DPP.gamespeed) then
-        G.SETTINGS.GAMESPEED = tonumber(DPP.gamespeed)/e.config.ref_table[1]
+    if to_big(DPP.gamespeed) then
+        G.SETTINGS.GAMESPEED = to_big(DPP.gamespeed)/e.config.ref_table[1]
     end
 end
 

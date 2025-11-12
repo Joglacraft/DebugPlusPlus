@@ -26,3 +26,27 @@ payload = '''
         if key == 'tab' and not G.debug_tools and DPP.config.open_og_debug then
 '''
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = '''
+        text.current_position = math.min(position_child-1, string.len(text.ref_table[text.ref_value]))
+'''
+position = "at"
+payload = '''
+        text.current_position = math.min(position_child-1, string.len(tostring(to_number(text.ref_table[text.ref_value])) ))
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "engine/ui.lua"
+pattern = '''
+        if not self.config.no_recalc and self.config.prev_value and string.len(self.config.prev_value) ~= string.len(self.config.text) then self.UIBox:recalculate() end
+'''
+position = "at"
+payload = '''
+        if not self.config.no_recalc and self.config.prev_value and string.len(tostring(to_number(self.config.prev_value)) ) ~= string.len(tostring(to_number(self.config.text)) ) then self.UIBox:recalculate() end
+'''
+match_indent = true
