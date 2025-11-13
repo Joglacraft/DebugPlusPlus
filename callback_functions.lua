@@ -231,7 +231,7 @@ function G.FUNCS.DPP_inspector_variable_set(e)
     if type == 'string' then
         ref_table[ref_value] = tostring(DPP.vars.inspector.val) or ref_table[ref_value]
     elseif type == 'number' then
-        ref_table[ref_value] = to_big(DPP.vars.inspector.val) or ref_table[ref_value]
+        ref_table[ref_value] = to_big(tonumber(DPP.vars.inspector.val)) or ref_table[ref_value]
     elseif type == 'boolean' then
         ref_table[ref_value] = DPP.vars.inspector.val == 'true' and true or false
     elseif type == 'table' then
@@ -545,7 +545,7 @@ end
 
 
 function G.FUNCS.DPP_set_currency(e)
-    e.config.ref_table.dt[e.config.ref_table.dv] = to_big(DPP.replace_text_input(e.config.ref_table.dt[e.config.ref_table.dv])) or e.config.ref_table.dt[e.config.ref_table.dv]
+    e.config.ref_table.dt[e.config.ref_table.dv] = to_big(tonumber(DPP.replace_text_input(e.config.ref_table.dt[e.config.ref_table.dv]))) or e.config.ref_table.dt[e.config.ref_table.dv]
     if not G.jokers then return end
     if e.config.ref_table.mode == "set" then
         e.config.ref_table.func(e.config.ref_table.dt[e.config.ref_table.dv]-e.config.ref_table.gt[e.config.ref_table.gv],true)
@@ -556,25 +556,25 @@ end
 
 function G.FUNCS.DPP_set_chips(e)
 
-    DPP.run.chips = to_big(DPP.run.chips) or DPP.run.chips
+    DPP.run.chips = to_big(tonumber(DPP.run.chips)) or DPP.run.chips
 
-    if to_big(DPP.run.chips) then
+    if to_big(tonumber(DPP.run.chips)) then
         if e.config.ref_table[1] == "set" then
-            G.GAME.chips = to_big(DPP.run.chips)
+            G.GAME.chips = to_big(tonumber(DPP.run.chips))
         elseif e.config.ref_table[1] == "var" then
-            G.GAME.chips = to_big(G.GAME.chips + DPP.run.chips)
+            G.GAME.chips = to_big(tonumber(G.GAME.chips + DPP.run.chips))
         end
     end
 end
 
 function G.FUNCS.DPP_set_blind_chips(e)
-    DPP.run.blind_chips = to_big(DPP.run.blind_chips) or DPP.run.blind_chips
+    DPP.run.blind_chips = to_big(tonumber(DPP.run.blind_chips)) or DPP.run.blind_chips
 
-    if G.GAME.blind and to_big(DPP.run.blind_chips) then
+    if G.GAME.blind and to_big(tonumber(DPP.run.blind_chips)) then
         if e.config.ref_table[1] == "set" then
-            G.GAME.blind.chips = to_big(DPP.run.blind_chips)
+            G.GAME.blind.chips = to_big(tonumber(DPP.run.blind_chips))
         elseif e.config.ref_table[1] == "var" then
-            G.GAME.blind.chips = to_big(G.GAME.blind.chips + DPP.run.blind_chips)
+            G.GAME.blind.chips = to_big(tonumber(G.GAME.blind.chips)) + to_big(tonumber(DPP.run.blind_chips))
         end
         G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
         G.FUNCS.blind_chip_UI_scale(G.hand_text_area.blind_chips)
@@ -621,10 +621,10 @@ end
 
 function G.FUNCS.DPP_set_gamespeed(e)
 
-    DPP.gamespeed = to_big(DPP.gamespeed) or DPP.gamespeed
+    DPP.gamespeed = to_big(tonumber(DPP.gamespeed)) or DPP.gamespeed
 
-    if to_big(DPP.gamespeed) then
-        G.SETTINGS.GAMESPEED = to_big(DPP.gamespeed)/e.config.ref_table[1]
+    if to_big(tonumber(DPP.gamespeed)) then
+        G.SETTINGS.GAMESPEED = to_big(tonumber(DPP.gamespeed))/e.config.ref_table[1]
     end
 end
 

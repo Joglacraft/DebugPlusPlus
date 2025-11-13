@@ -61,6 +61,6 @@ pattern = '''
 position = "at"
 payload = '''
         local col = G.C.MONEY
-        if tonumber(mod) or to_big(mod) < to_big(0) then
+        if to_big(mod) < to_big(0) then
 '''
 match_indent = true
