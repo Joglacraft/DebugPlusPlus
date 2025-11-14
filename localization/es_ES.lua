@@ -68,6 +68,7 @@ return {
             dpp_run_player_chips = "Fichas jugador",
             dpp_run_blind_chips = "Fichas requeridas",
             dpp_run_ante_label = "Apuesta inicial",
+            dpp_run_modify_poker_hands_label = 'Modificar manos de póker',
             dpp_run_dismiss = "Continuar",
             dpp_run_disclaimer = "Modificado por DebugPlusPlus",
 

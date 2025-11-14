@@ -73,6 +73,7 @@ return {
             dpp_run_round_label = "Round",
             dpp_run_win_label = "Win run",
             dpp_run_lose_label = "Lose run",
+            dpp_run_modify_poker_hands_label = 'Modify poker hands',
             dpp_run_dismiss = "Dismiss",
             dpp_run_disclaimer = "Modified by DebugPlusPlus",
 

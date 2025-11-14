@@ -668,7 +668,7 @@ function G.FUNCS.DPP_poker_hands()
                             max_length = 6,
                             w = 1, h = 0.7,
                             colour = G.C.HAND_LEVELS[math.min(7, G.GAME.hands[handname].level)],
-                            hooked_colour = darken(G.C.HAND_LEVELS[math.min(7, G.GAME.hands[handname].level)],0.3),
+                            hooked_colour = darken(G.C.HAND_LEVELS[math.min(7, G.GAME.hands[handname].level)] or G.C.WHITE,0.3),
                             text_colour = G.C.UI.TEXT_DARK
                         }
                     }},
@@ -703,7 +703,7 @@ function G.FUNCS.DPP_poker_hands()
 
     G.FUNCS.overlay_menu{
         definition = {n = G.UIT.ROOT, config = {colour = G.C[DPP.config.background_colour.selected], align = "cm", padding = 0.2, r = 0.1, outline = 1, outline_colour = G.C.WHITE}, nodes = {
-            {n = G.UIT.R, config = {align = 'cm'}, nodes = {{n = G.UIT.T, config = {text = 'Modify Poker hands', colour = G.C.WHITE, scale = 0.5}}}},
+            {n = G.UIT.R, config = {align = 'cm'}, nodes = {{n = G.UIT.T, config = {text = localize('dpp_run_modify_poker_hands_label'), colour = G.C.WHITE, scale = 0.5}}}},
             {n = G.UIT.R, config = {align = "cm", padding = 0.04}, nodes = t},
             {n = G.UIT.R, config = {align = 'cm'}, nodes = {
                 {n = G.UIT.C, config = {align = 'c,'}, nodes = {UIBox_button{

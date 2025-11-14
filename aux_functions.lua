@@ -191,7 +191,7 @@ function DPP.create_text_input(args)
     local text = {ref_table = args.ref_table, ref_value = args.ref_value, letters = {}, current_position = suc and val or 1}
     local ui_letters = {}
     for i = 1, args.max_length do
-        text.letters[i] = (args.ref_table[args.ref_value] and (string.sub(args.ref_table[args.ref_value], i, i) or '')) or ''
+        text.letters[i] = (args.ref_table[args.ref_value] and (string.sub(to_number(args.ref_table[args.ref_value]), i, i) or '')) or ''
         ui_letters[i] = {n=G.UIT.T, config={ref_table = text.letters, ref_value = i, scale = args.text_scale, colour = args.text_colour, id = args.id..'_letter_'..i}}
     end
     args.text = text
