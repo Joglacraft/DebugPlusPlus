@@ -620,12 +620,7 @@ function G.FUNCS.DPP_set_round(e)
 end
 
 function G.FUNCS.DPP_set_gamespeed(e)
-
-    DPP.gamespeed = to_big(tonumber(DPP.gamespeed)) or DPP.gamespeed
-
-    if to_big(tonumber(DPP.gamespeed)) then
-        G.SETTINGS.GAMESPEED = to_big(tonumber(DPP.gamespeed))/e.config.ref_table[1]
-    end
+    G.SETTINGS.GAMESPEED = tonumber(DPP.gamespeed)
 end
 
 function G.FUNCS.DPP_draw_hand (e)
