@@ -1073,9 +1073,7 @@ function DPP.card_inspector_UI (card,path,page)
       {n = G.UIT.C, config = {align = 'cm'}, nodes = {}},
       {n = G.UIT.C, config = {align = 'cm'}, nodes = {}}
    }
-   local i = 0
    local max_entries = 5
-   local total_entries = 0
 
    
 
@@ -1084,12 +1082,14 @@ function DPP.card_inspector_UI (card,path,page)
       ret = ret and ret[key]
       if ret == nil then break end
    end
-   table.sort(ret)
+   local keys = {}
+   for k in pairs(ret) do keys[#keys+1] = k end
+   table.sort(keys,function (a,b) return to_number(a) and to_number(b) and to_number(a) < to_number(b) or tostring(a) < tostring(b) end)
 
-   total_entries = 0; for _,_ in pairs(ret) do total_entries = total_entries + 1 end
+   local total_entries = 0; for _,_ in pairs(ret) do total_entries = total_entries + 1 end
 
-   for k,v in pairs(ret) do
-      i = i + 1
+   for i,k in pairs(keys) do
+      local v = card[k]
       --print(i)
       if i > max_entries*page and i < (max_entries*(page+1))+1 then
          t[1].nodes[#t[1].nodes+1] = {n = G.UIT.R, config = {align = "cm", minh = 0.5}, nodes = {
@@ -1106,22 +1106,20 @@ function DPP.card_inspector_UI (card,path,page)
       end
    end
 
-   i = 0
-   for k,v in pairs(ret) do
-      i = i + 1
+   for i,k in pairs(keys) do
+      local v = card[k]
       --print(i)
       if i > max_entries*page and i < (max_entries*(page+1))+1 then
          t[2].nodes[#t[2].nodes+1] = {n = G.UIT.R, config = {align = "cm", minh = 0.5}, nodes = {{n = G.UIT.T, config = {text = tostring(k), scale = 0.3, colour = G.C.WHITE}}}}
       end
    end
 
-   i = 0
-   for k,v in pairs(ret) do
-      i = i + 1
+   for i,k in pairs(keys) do
+      local v = ret[k]
       --print(i)
       if i > max_entries*page and i < (max_entries*(page+1))+1 then
          t[3].nodes[#t[3].nodes+1] = {n = G.UIT.R, config = {align = "cm", minh = 0.5}, nodes = {
-            ( type(v) == "boolean" and DPP.create_checkpark{
+            ( type(v) == "boolean" and DPP.create_checkmark{
                scale = 0.7,
                ref_table = ret,
                ref_value = k,
@@ -1134,13 +1132,13 @@ function DPP.card_inspector_UI (card,path,page)
                text_scale = 0.3,
                cursor_scale = 0.3,
                max_length = 64,
-            } or UIBox_button{
+            } or (type(v) == 'table') and UIBox_button{
                label = {"Table"},
                minw = 0.8,
                minh = 0.4,
                button = "DPP_reload_inspector_ui",
                ref_table = {card = card, target = k, path = path}
-            } or {n = G.UIT.T, config = {text = tostring(v), scale = 0.3, colour = G.C.WHITE}})
+            } or {n = G.UIT.T, config = {text = tostring(v), scale = 0.3, colour = G.C.GREY}})
          }}
       end
    end

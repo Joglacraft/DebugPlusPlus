@@ -359,7 +359,7 @@ function UIBox_adv_button (args)
     }
 end
 
-function DPP.create_checkpark(args)
+function DPP.create_checkmark(args)
   args = args or {}
   args.active_colour = args.active_colour or G.C.RED
   args.inactive_colour = args.inactive_colour or G.C.BLACK
