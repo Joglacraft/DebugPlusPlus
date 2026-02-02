@@ -5,7 +5,7 @@ DPP = {
    local_config = {
       is_open = false,
       poker_hand_page = 1,
-      hands_per_page = 4,
+      hands_per_page = 10,
    },
    -- config values in the config file
    set_blind_number = "1",

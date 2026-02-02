@@ -1,0 +1,6 @@
+{
+  "Lua.workspace.library": [
+    "../smods",
+    "../lovely/dump"
+  ]
+}

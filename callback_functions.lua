@@ -642,8 +642,10 @@ function G.FUNCS.DPP_draw_hand (e)
     }))
 end
 
-function G.FUNCS.DPP_poker_hands()
-
+---comment
+---@param hand string? Key to the desired poker hand
+function G.FUNCS.DPP_poker_hands(hand)
+    hand_t = hand
     
     local t = {}
 
@@ -651,68 +653,126 @@ function G.FUNCS.DPP_poker_hands()
         DPP.local_config.poker_hand_page*DPP.local_config.hands_per_page do
         local handname = G.handlist[i]
         if handname then
-            local e =
-            {n=G.UIT.R, config={align = "cm", padding = 0.05, r = 0.1, colour = darken(G.C.JOKER_GREY, 0.1), emboss = 0.05}, nodes={
-                {n=G.UIT.C, config={align = "cl", padding = 0, minw = 5}, nodes={
-                    {n=G.UIT.C, config={align = "cm", padding = 0.01, r = 0.1, colour = G.C.HAND_LEVELS[math.min(7, G.GAME.hands[handname].level)], minw = 1.5, outline = 0.8, outline_colour = G.C.WHITE}, nodes={
-                        {n=G.UIT.T, config={text = localize('k_level_prefix'), scale = 0.5, colour = G.C.UI.TEXT_DARK}},
-                        DPP.create_text_input{
-                            id = handname..'_level',
-                            ref_table = G.GAME.hands[handname],
-                            ref_value = 'level',
-                            max_length = 6,
-                            w = 1, h = 0.7,
-                            colour = G.C.HAND_LEVELS[math.min(7, G.GAME.hands[handname].level)],
-                            hooked_colour = darken(G.C.HAND_LEVELS[math.min(7, G.GAME.hands[handname].level)] or G.C.WHITE,0.3),
-                            text_colour = G.C.UI.TEXT_DARK
-                        }
-                    }},
-                    {n=G.UIT.C, config={align = "cm", minw = 4.5, maxw = 4.5}, nodes={
-                        {n=G.UIT.T, config={text = ' '..localize(handname,'poker_hands'), scale = 0.45, colour = G.C.UI.TEXT_LIGHT, shadow = true}}
-                    }}
-                }},
-                {n=G.UIT.C, config={align = "cm", padding = 0, colour = G.C.BLACK,r = 0.1}, nodes={
-                    DPP.create_text_input{
-                        id = handname..'_chips',
-                        ref_table = G.GAME.hands[handname],
-                        ref_value = 'chips',
-                        max_length = 6,
-                        w = 1, h = 0.35,
-                        colour = G.C.CHIPS,
-                    },
-                    {n=G.UIT.T, config={text = "X", scale = 0.45, colour = G.C.MULT}},
-                    DPP.create_text_input{
-                        id = handname..'_mult',
-                        ref_table = G.GAME.hands[handname],
-                        ref_value = 'mult',
-                        max_length = 6,
-                        w = 1, h = 0.34,
-                        colour = G.C.MULT,
-                        hooked_colour = darken(G.C.MULT, 0.3),
-                    },
-                }}
-            }}
+            local e = create_UIBox_current_hand_row(SMODS.PokerHands[handname].key,true,true)
+            e.config.align = 'tm'
+            e.config.button = 'DPP_poker_hands_change'
+            e.config.on_demand_tooltip = nil
+            e.config.filler = nil
+            e.nodes[1].nodes[1].config.text = SMODS.PokerHands[handname].key
+            e.config.ref_table = {0,SMODS.PokerHands[handname].key}
             t[#t+1] = e
         end
     end
 
     G.FUNCS.overlay_menu{
-        definition = {n = G.UIT.ROOT, config = {colour = G.C[DPP.config.background_colour.selected], align = "cm", padding = 0.2, r = 0.1, outline = 1, outline_colour = G.C.WHITE}, nodes = {
+        definition = {n = G.UIT.ROOT, config = {minw = 12, colour = G.C[DPP.config.background_colour.selected], align = "cm", padding = 0.2, r = 0.1, outline = 1, outline_colour = G.C.WHITE}, nodes = {
             {n = G.UIT.R, config = {align = 'cm'}, nodes = {{n = G.UIT.T, config = {text = localize('dpp_run_modify_poker_hands_label'), colour = G.C.WHITE, scale = 0.5}}}},
-            {n = G.UIT.R, config = {align = "cm", padding = 0.04}, nodes = t},
-            {n = G.UIT.R, config = {align = 'cm'}, nodes = {
-                {n = G.UIT.C, config = {align = 'c,'}, nodes = {UIBox_button{
-                    label = {"<"},
-                    button = 'DPP_poker_hands_change',
-                    ref_table = {-1},
-                    minw = 1, minh = 0.35
-                }}},
-                {n = G.UIT.C, config = {align = 'c,'}, nodes = {UIBox_button{
-                    label = {">"},
-                    button = 'DPP_poker_hands_change',
-                    ref_table = {1},
-                    minw = 1, minh = 0.35
-                }}}
+            {n = G.UIT.R, config = {align = 'cm', padding = 0.3}, nodes = {
+                {n = G.UIT.C, config = {align = 'cm', padding = 0.1}, nodes = {
+                    UIBox_adv_button{
+                        label = {{{localize("b_back")}}},
+                        colour = G.C.ORANGE,
+                        text_scale = 0.5,
+                        w = 4, h = 0.6,
+                        button = "DPP_main_menu"
+                    },
+                    {n = G.UIT.R, config = {align = 'cm'}, nodes = {
+                        {n = G.UIT.C, config = {align = 'cm'}, nodes = {UIBox_button{
+                            label = {"<"},
+                            button = 'DPP_poker_hands_change',
+                            ref_table = {-1,hand},
+                            minw = 2, minh = 0.35
+                        }}},
+                        {n = G.UIT.C, config = {align = 'cm'}, nodes = {UIBox_button{
+                            label = {">"},
+                            button = 'DPP_poker_hands_change',
+                            ref_table = {1,hand},
+                            minw = 2, minh = 0.35
+                        }}}
+                    }},
+                    {n = G.UIT.R, config = {align = "tl", padding = 0.04, minh = 6}, nodes = t},
+                }},
+                {n = G.UIT.C, config = {align = 'cm'}, nodes = {
+                    hand and {n = G.UIT.R, config = {align = 'cm'}, nodes = {{n = G.UIT.T, config = {text = tostring(SMODS.PokerHands[hand].key), colour = G.C.WHITE, scale = 0.6}}}} or nil,
+                    {n = G.UIT.R, config = {align = 'cm',minw = 12, minh = 4}, nodes = (hand and {
+                        {n = G.UIT.R, config = {align = 'cm', padding = 0.1}, nodes = {
+                            {n = G.UIT.C, config = {minw = 2.5, align = 'cm'}, nodes = {{n = G.UIT.T, config = {text = 'Level:', colour = G.C.WHITE, scale = 0.4}}}},
+                            {n = G.UIT.C, config = {minw = 2.5, align = 'cm'}, nodes = {DPP.create_text_input{
+                                id = 'hand_level',
+                                ref_table = G.GAME.hands[hand],
+                                ref_value = 'level',
+                                max_lenght = 4,
+                                w = 2,
+                            }}},
+                            {n = G.UIT.C, config = {minw = 2.5, align = 'cm'}, nodes = {{n = G.UIT.T, config = {text = 'Times Played:', colour = G.C.WHITE, scale = 0.4}}}},
+                            {n = G.UIT.C, config = {minw = 2.5, align = 'cm'}, nodes = {DPP.create_text_input{
+                                id = 'hand_played',
+                                ref_table = G.GAME.hands[hand],
+                                ref_value = 'played',
+                                max_lenght = 4,
+                                w = 2,
+                            }}},
+                        }},
+                        {n = G.UIT.R, config = {align = 'cm', padding = 0.1}, nodes = {
+                            {n = G.UIT.C, config = {minw = 2.5, align = 'cm'}, nodes = {{n = G.UIT.T, config = {text = 'Chips:', colour = G.C.WHITE, scale = 0.4}}}},
+                            {n = G.UIT.C, config = {minw = 2.5, align = 'cm'}, nodes = {{n = G.UIT.T, config = {text = '', colour = G.C.WHITE, scale = 0.4}}}},
+                            {n = G.UIT.C, config = {minw = 2.5, align = 'cm'}, nodes = {{n = G.UIT.T, config = {text = 'Mult:', colour = G.C.WHITE, scale = 0.4}}}},
+                        }},
+                        {n = G.UIT.R, config = {align = 'cm', padding = 0.1}, nodes = {
+                            {n = G.UIT.C, config = {minw = 2.5, align = 'cm'}, nodes = {DPP.create_text_input{
+                                id = 'hand_chips',
+                                ref_table = G.GAME.hands[hand],
+                                ref_value = 'chips',
+                                max_lenght = 4,
+                                w = 2,
+                            }}},
+                            {n = G.UIT.C, config = {minw = 2.5, align = 'cm'}, nodes = {{n = G.UIT.T, config = {text = 'Current', colour = G.C.WHITE, scale = 0.4}}}},
+                            {n = G.UIT.C, config = {minw = 2.5, align = 'cm'}, nodes = {DPP.create_text_input{
+                                id = 'hand_mult',
+                                ref_table = G.GAME.hands[hand],
+                                ref_value = 'mult',
+                                max_lenght = 4,
+                                w = 2,
+                            }}},
+                        }},
+                        {n = G.UIT.R, config = {align = 'cm', padding = 0.1}, nodes = {
+                            {n = G.UIT.C, config = {minw = 2.5, align = 'cm'}, nodes = {DPP.create_text_input{
+                                id = 'hand_s_chips',
+                                ref_table = G.GAME.hands[hand],
+                                ref_value = 's_chips',
+                                max_lenght = 4,
+                                w = 2,
+                            }}},
+                            {n = G.UIT.C, config = {minw = 2.5, align = 'cm'}, nodes = {{n = G.UIT.T, config = {text = 'Starting', colour = G.C.WHITE, scale = 0.4}}}},
+                            {n = G.UIT.C, config = {minw = 2.5, align = 'cm'}, nodes = {DPP.create_text_input{
+                                id = 'hand_s_mult',
+                                ref_table = G.GAME.hands[hand],
+                                ref_value = 's_mult',
+                                max_lenght = 4,
+                                w = 2,
+                            }}},
+                        }},
+                        {n = G.UIT.R, config = {align = 'cm', padding = 0.1}, nodes = {
+                            {n = G.UIT.C, config = {minw = 2.5, align = 'cm'}, nodes = {DPP.create_text_input{
+                                id = 'hand_l_chips',
+                                ref_table = G.GAME.hands[hand],
+                                ref_value = 'l_chips',
+                                max_lenght = 4,
+                                w = 2,
+                            }}},
+                            {n = G.UIT.C, config = {minw = 2.5, align = 'cm'}, nodes = {{n = G.UIT.T, config = {text = 'Leveling', colour = G.C.WHITE, scale = 0.4}}}},
+                            {n = G.UIT.C, config = {minw = 2.5, align = 'cm'}, nodes = {DPP.create_text_input{
+                                id = 'hand_l_mult',
+                                ref_table = G.GAME.hands[hand],
+                                ref_value = 'l_mult',
+                                max_lenght = 4,
+                                w = 2,
+                            }}},
+                        }},
+                    }) or {
+                        {n = G.UIT.T, config = {text = 'No hand selected', colour = G.C.WHITE, scale = 0.6}}
+                    }}
+                }}
             }}
         }},
         config = {
@@ -722,9 +782,9 @@ function G.FUNCS.DPP_poker_hands()
 end
 
 function G.FUNCS.DPP_poker_hands_change(e)
-    local change = e.config.ref_table[1]
+    local change = e.config.ref_table[1] or 0
     DPP.local_config.poker_hand_page = DPP.local_config.poker_hand_page + change
     if DPP.local_config.poker_hand_page < 1 then DPP.local_config.poker_hand_page = 1 end
     if DPP.local_config.poker_hand_page > #G.handlist/DPP.local_config.hands_per_page then DPP.local_config.poker_hand_page = math.ceil(#G.handlist/DPP.local_config.hands_per_page) end
-    G.FUNCS.DPP_poker_hands()
+    G.FUNCS.DPP_poker_hands(e.config.ref_table[2])
 end

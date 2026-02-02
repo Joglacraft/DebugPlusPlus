@@ -918,10 +918,11 @@ function DPP.main_menu ()
                }},
             }},
 
-            {n = G.UIT.R, config = {align = "cm"}, nodes = {
+            {n = G.UIT.R, config = {align = "cm", ref_table = {}}, nodes = {
                UIBox_button{
                label = {localize('b_poker_hands')},
-               button = 'DPP_poker_hands',
+               button = 'DPP_poker_hands_change',
+               ref_table = {},
                scale = 0.3,
                minw = 2.6, minh = 0.4
             }}}
