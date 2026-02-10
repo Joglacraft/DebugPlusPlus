@@ -1,0 +1,25 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "engine/controller.lua"
+pattern = "if key == 'v' then"
+position = "before"
+payload = '''
+-- I took this from DebugPlus lol - Jogla (DebugPlusPlus)
+if key == "4" and DPP and DPP.config.enable_undiscover_cards and G.CONTROLLER.cursor_hover.target then
+    local _element = G.CONTROLLER.cursor_hover.target
+    if _element.config.tag then G.P_TAGS[_element.config.tag.key].discovered = false
+    elseif _element.config.center then G.P_CENTERS[_element.config.center.key].discovered = false
+    end
+    if _element.stop_hover and _element.hover then
+        _element:stop_hover()
+        _element:hover()
+    end
+end
+'''
+match_indent = true
+overwrite = false

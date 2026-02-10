@@ -13,6 +13,8 @@ return {
             dpp_meta_require_ctrl = "Matener Ctrl para abrír el menú.",
             dpp_meta_open_og_debug = "Abrir el menú de desarollo original",
             dpp_meta_override_overlay = "Sobreescribir menú activo",
+            dpp_meta_undiscover_cards = "Des-descubrir cartas",
+            dpp_meta_undiscover_cards_hint = "(Pulsa [4] mientras el cursor está sobre una carta)",
             
             -- Credits tab
             dpp_credits_label = "Créditos",

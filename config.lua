@@ -9,4 +9,5 @@ return {
     require_ctrl = false,
     open_og_debug = true,
     override_overlay = true,
+    enable_undiscover_cards = true,
 }
