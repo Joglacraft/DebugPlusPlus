@@ -5,7 +5,7 @@ function G.FUNCS.DPP_main_menu()
     end
     DPP.local_config.is_open = true
     G.OVERLAY_MENU = UIBox{
-        definition = DPP.main_menu(),
+        definition = DPP.load_menu(),
         config = {
             align = "cm",
             offset = {x=0,y=0},

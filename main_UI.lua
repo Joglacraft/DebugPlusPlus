@@ -1,7 +1,7 @@
 local function create_title (args)
-   args.loc_title = args.loc_title or "dpp_name"
-   args.area = args.area or nil
-   args.pages = args.pages or 1
+   args.key = args.key or nil
+   local page = DPP.vars.pages[args.key]
+   local contents = DPP.main_menu_tabs()
 
    return
    {n = G.UIT.R, config = {align = "tm", colour = G.C.CLEAR, r = 0}, nodes = { -- Title
@@ -9,13 +9,13 @@ local function create_title (args)
          label = {{{"<"}}},
          type = "C",
          w = 0.4, h = 0.4,
-         ref_table = {args.area,-1},
-         button = (args.pages > 1 and "DPP_reload_lists") or nil,
-         colour = (args.pages <= 1 and G.C.UI.TEXT_INACTIVE) or nil,
+         ref_table = {args.key,-1},
+         button = (page > 1 and "DPP_reload_lists") or nil,
+         colour = (page <= 1 and G.C.UI.TEXT_INACTIVE) or nil,
       },
       {n = G.UIT.C, config = {align = "cm", minw = DPP.menu_width-1, minh = 0.5, colour = G.C.RED, r = 0.15}, nodes = { -- Title
          UIText{
-            text = {localize(args.loc_title)},
+            text = {localize("dpp_"..args.key.."_label")},
             scale = 0.4,
             mode = "C"
          },
@@ -24,20 +24,19 @@ local function create_title (args)
          label = {{{">"}}},
          type = "C",
          w = 0.4, h = 0.4,
-         ref_table = {args.area,1},
-         button = (args.pages > 1 and "DPP_reload_lists") or nil,
-         colour = (args.pages <= 1 and G.C.UI.TEXT_INACTIVE) or nil
+         ref_table = {args.key,1},
+         button = (page < #contents[args.key].definitions and "DPP_reload_lists") or nil,
+         colour = (page >= #contents[args.key].definitions and G.C.UI.TEXT_INACTIVE) or nil
       },
    }}
    
 end
 
-
-function DPP.main_menu ()
-   DPP.reload_lists()
-
-   local tabs = {
-      {key = "meta", value = {
+---# Hook this function to add more tabs
+---@return table
+function DPP.main_menu_tabs ()
+   return {
+      meta = {definitions = {
          {
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.1}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_meta_background_colour"), scale = 0.3, colour = G.C.GREY}}
@@ -63,7 +62,7 @@ function DPP.main_menu ()
 
          }
       }},
-      {key = "card", value = {
+      card = {definitions = {
          {
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.3}, nodes = {
                UIText{
@@ -151,7 +150,7 @@ function DPP.main_menu ()
             }},
          },
       }},
-      {key = "player", value = {
+      player = {definitions = {
          {
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_player_hand_label"), scale = 0.4, colour = G.C.WHITE}}
@@ -718,7 +717,7 @@ function DPP.main_menu ()
          }
          ),
       }},
-      {key = "run", value = {
+      run = {definitions = {
          {
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_run_blind_label"), scale = 0.4, colour = G.C.WHITE}}
@@ -928,7 +927,7 @@ function DPP.main_menu ()
             }}}
          }
       }},
-      {key = "game", value = {
+      game = {definitions = {
          {
             {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {
                {n = G.UIT.T,config = {align = "tm", text = localize("dpp_game_speed_label"), scale = 0.4, colour = G.C.WHITE}}
@@ -968,10 +967,20 @@ function DPP.main_menu ()
          }
       }}
    }
+end
+
+---Definition for the DPP main menu
+---@param tabs string[]
+---@return table
+function DPP.load_menu (tabs)
+   tabs = tabs or {"meta","card","player","run","game"}
+   DPP.reload_lists()
+   local contents = DPP.main_menu_tabs()
 
    for i,v in ipairs(tabs) do
-      if DPP.vars.pages[v.key] <= 0 then DPP.vars.pages[v.key] = #v.value end
-      if DPP.vars.pages[v.key] > #v.value then DPP.vars.pages[v.key] = 1 end
+      DPP.vars.pages[v] = DPP.vars.pages[v] or 1
+      if DPP.vars.pages[v] <= 0 then DPP.vars.pages[v] = #contents[v].definitions end
+      if DPP.vars.pages[v] > #contents[v].definitions then DPP.vars.pages[v] = 1 end
    end
 
    local t = {}
@@ -979,16 +988,15 @@ function DPP.main_menu ()
       t[#t+1] = 
          {n = G.UIT.C, nodes = {{n = G.UIT.C, config = {align = "tm", colour = G.C[DPP.config.background_colour.selected], padding = 0.05, outline = 1, outline_colour = G.C.WHITE, r = 0.15}, nodes = { -- Tab
          create_title {
-               loc_title = "dpp_"..v.key.."_label",
-               area = v.key,
-               pages = #v.value
+               key = v,
          },
-         {n = G.UIT.R, config = {align = "cm"}, nodes = v.value[DPP.vars.pages[v.key]]},
+         {n = G.UIT.R, config = {align = "cm"}, nodes = contents[v].definitions[DPP.vars.pages[v]]},
          }}}}
    end
 
    return {
-      n = G.UIT.ROOT, config = {align = "tl", minw = 22.75, minh = 13, padding = 0.15, colour = G.C.CLEAR}, nodes = t}
+      n = G.UIT.ROOT, config = {align = "tl", minw = 22.75, minh = 13, padding = 0.15, colour = G.C.CLEAR}, nodes = t
+   }
 end
 
 function DPP.dropdown_tab (args)
