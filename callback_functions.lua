@@ -649,3 +649,26 @@ function G.FUNCS.DPP_poker_hands_change(e)
     if DPP.local_config.poker_hand_page > #G.handlist/DPP.local_config.hands_per_page then DPP.local_config.poker_hand_page = math.ceil(#G.handlist/DPP.local_config.hands_per_page) end
     DPP_poker_hands(e.config.ref_table[2])
 end
+
+function G.FUNCS.DPP_set_language (e)
+    local language = e.config.ref_table.language
+
+    local function recur (t,c)
+        for i,v in pairs(t) do
+            if type(t) == 'table' then
+                recur(t,c.v)
+            else
+                v = c and c.v or v
+            end
+        end
+    end
+
+
+    local old_local = copy_table(G.localization)
+    local localization = love.filesystem.getInfo('localization/'..G.SETTINGS.language..'.lua')
+    if localization ~= nil then
+        G.localization = assert(load(love.filesystem.read('localization/'..G.SETTINGS.language..'.lua')))()
+        init_localization()
+        recur(old_local,G.localization)
+    end
+end

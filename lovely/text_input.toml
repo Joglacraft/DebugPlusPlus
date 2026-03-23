@@ -31,7 +31,7 @@ match_indent = true
 [patches.pattern]
 target = "functions/button_callbacks.lua"
 pattern = '''
-        text.current_position = math.min(position_child-1, string.len(text.ref_table[text.ref_value]))
+nope        text.current_position = math.min(position_child-1, string.len(text.ref_table[text.ref_value]))
 '''
 position = "at"
 payload = '''

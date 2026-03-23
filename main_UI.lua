@@ -954,6 +954,7 @@ function DPP.main_menu_tabs ()
                   scale = 0.3,
                }}},
             }},
+            {n = G.UIT.R, config = {minh = 0.1}},
             {n = G.UIT.R, config = {align = 'cm'}, nodes = {
                UIBox_button{
                label = {localize('dpp_savestate_label')},
@@ -963,7 +964,22 @@ function DPP.main_menu_tabs ()
                ref_table = {mode_b = 'view'}
             },
             {n = G.UIT.R, config = {minh = 0.1}}
-            }}
+            }},
+            {n = G.UIT.R, config = {padding = 0.05, align = "tm"}, nodes = { -- Vertical buttons
+               {n = G.UIT.R, config = {align = "cm", minw = 2, minh = 0.2}, nodes = {
+                  {n = G.UIT.T,config = {align = "tm", text = localize("dpp_game_language_label"), scale = 0.4, colour = G.C.WHITE}}
+               }},
+               {n = G.UIT.R, config = {align = 'cm'}, nodes = {
+                  UIBox_button{
+                  label = {localize('DPP_set_language')},
+                  scale = 0.3,
+                  minw = 2, minh = 0.4,
+                  button = 'DPP_set_language',
+                  ref_table = {language = G.SETTINGS.language}
+               },
+               {n = G.UIT.R, config = {minh = 0.1}}
+               }},
+            }},
          }
       }}
    }

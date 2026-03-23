@@ -82,6 +82,8 @@ return {
             -- Game tab
             dpp_game_label = "Game",
             dpp_game_speed_label = "Speed",
+            dpp_game_language_label = 'Language',
+            dpp_game_set_language = 'Reload',
 
             -- Savestate
             dpp_savestate_label = 'Savestates',
