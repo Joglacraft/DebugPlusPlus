@@ -971,7 +971,7 @@ function DPP.main_menu_tabs ()
                }},
                {n = G.UIT.R, config = {align = 'cm'}, nodes = {
                   UIBox_button{
-                  label = {localize('DPP_set_language')},
+                  label = {localize('dpp_game_set_language')},
                   scale = 0.3,
                   minw = 2, minh = 0.4,
                   button = 'DPP_set_language',

@@ -653,12 +653,16 @@ end
 function G.FUNCS.DPP_set_language (e)
     local language = e.config.ref_table.language
 
-    local function recur (t,c)
-        for i,v in pairs(t) do
-            if type(t) == 'table' then
-                recur(t,c.v)
-            else
-                v = c and c.v or v
+    local function is_list (t)
+        return type(t) == 'table' and rawget(t, 1) ~= nil
+    end
+
+    local function recur (source, target)
+        for key, value in pairs(source) do
+            if target[key] == nil then
+                target[key] = copy_table(value)
+            elseif type(value) == 'table' and type(target[key]) == 'table' and not is_list(value) and not is_list(target[key]) then
+                recur(value, target[key])
             end
         end
     end
@@ -668,7 +672,29 @@ function G.FUNCS.DPP_set_language (e)
     local localization = love.filesystem.getInfo('localization/'..G.SETTINGS.language..'.lua')
     if localization ~= nil then
         G.localization = assert(load(love.filesystem.read('localization/'..G.SETTINGS.language..'.lua')))()
+
+        for _, mod in ipairs(SMODS.mod_list or {}) do
+            if mod.can_load and not mod.lovely_only then
+                SMODS.load_mod_localization(mod.path, mod.id)
+            end
+        end
+
+        for _, mod in ipairs(SMODS.mod_list or {}) do
+            if mod.process_loc_text and type(mod.process_loc_text) == 'function' then
+                mod.process_loc_text()
+            end
+        end
+
+        recur(old_local, G.localization)
         init_localization()
-        recur(old_local,G.localization)
+
+        for _, card in pairs(G.I.CARD or {}) do
+            card.ability_UIBox_table = nil
+            card.config.h_popup = nil
+            card.config.h_popup_config = nil
+        end
+
+        G.LANG = G.LANGUAGES[G.SETTINGS.real_language or language] or G.LANGUAGES['en-us']
+        G.FUNCS.DPP_main_menu()
     end
 end
